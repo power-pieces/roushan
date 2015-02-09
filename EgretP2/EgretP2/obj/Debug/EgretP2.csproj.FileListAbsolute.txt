@@ -1,0 +1,4 @@
+C:\inetpub\wwwroot\EgretP2\EgretP2\bin\EgretP2.dll
+C:\inetpub\wwwroot\EgretP2\EgretP2\bin\EgretP2.pdb
+C:\inetpub\wwwroot\EgretP2\EgretP2\obj\Debug\EgretP2.dll
+C:\inetpub\wwwroot\EgretP2\EgretP2\obj\Debug\EgretP2.pdb
