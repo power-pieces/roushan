@@ -1,0 +1,12 @@
+{
+"isDebug":false,
+"factor":50,
+"bossHP":255,
+"blockInterval":1000,
+"carom":["b0_png"],
+"fall":["b5_png","b2_png","b4_png"],
+"drop":["b5_png","b7_png"],
+"stop":["b1_png","b2_png","b3_png","b4_png","b5_png","b6_png","b7_png","b8_png"],
+"layerHeight":50,
+"damage":[[1,3,7],[2,6,13],[4,11,22],[8,20,37],[16,37,64],[32,70,115],[64,135],[128]]
+}
