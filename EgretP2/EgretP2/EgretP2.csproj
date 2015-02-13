@@ -140,8 +140,30 @@
     <Content Include="libs\core\jslib\NumberUtils.js" />
     <TypeScriptCompile Include="src\LoadingUI.ts" />
     <TypeScriptCompile Include="src\p2\p2.d.ts" />
-    <Content Include="resource\assets\circle.png" />
-    <Content Include="resource\assets\rect.png" />
+    <TypeScriptCompile Include="src\cores\P2World.ts" />
+    <TypeScriptCompile Include="src\DataCenter.ts" />
+    <Content Include="resource\assets\b0.png" />
+    <Content Include="resource\assets\b1.png" />
+    <Content Include="resource\assets\b2.png" />
+    <Content Include="resource\assets\b3.png" />
+    <Content Include="resource\assets\b4.png" />
+    <Content Include="resource\assets\b5.png" />
+    <Content Include="resource\assets\b6.png" />
+    <Content Include="resource\assets\b7.png" />
+    <Content Include="resource\assets\b8.png" />
+    <Content Include="resource\assets\r1.png" />
+    <Content Include="resource\assets\r2.png" />
+    <Content Include="resource\assets\r3.png" />
+    <Content Include="resource\assets\rf1.png" />
+    <Content Include="resource\assets\rf2.png" />
+    <Content Include="resource\assets\rf3.png" />
+    <Content Include="resource\assets\rf4.png" />
+    <Content Include="resource\assets\rf5.png" />
+    <Content Include="resource\assets\Roshan-Background.png" />
+    <Content Include="src\jinglibs\notice\Notice.js" />
+    <TypeScriptCompile Include="src\jinglibs\notice\Notice.ts" />
+    <Content Include="src\jinglibs\notice\NoticeManager.js" />
+    <TypeScriptCompile Include="src\jinglibs\notice\NoticeManager.ts" />
     <Content Include="src\p2\collision\AABB.js" />
     <Content Include="src\p2\collision\Broadphase.js" />
     <Content Include="src\p2\collision\GridBroadphase.js" />
@@ -189,6 +211,10 @@
     <Content Include="src\p2\world\IslandManager.js" />
     <Content Include="src\p2\world\IslandNode.js" />
     <Content Include="src\p2\world\World.js" />
+    <TypeScriptCompile Include="src\views\Battle.ts" />
+    <TypeScriptCompile Include="src\Util.ts" />
+    <TypeScriptCompile Include="src\views\Block.ts" />
+    <TypeScriptCompile Include="src\views\Boss.ts" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +225,7 @@
     <Content Include="run.bat" />
     <Content Include="resource\resource.json" />
     <Content Include="p2.json" />
+    <Content Include="resource\configs\config.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

@@ -83,8 +83,16 @@ class Main extends egret.DisplayObjectContainer {
     /**
      * 创建游戏场景
      */
-    private createGameScene():void {
+    private createGameScene(): void {
+        Util.cfg = RES.getRes("config_json");
+
+        Util.stage = this.stage;
+
         egret.Profiler.getInstance().run();
+
+        this.addChild(new Battle());
+        return;
+
         var factor:number = 50;
         
         //创建world

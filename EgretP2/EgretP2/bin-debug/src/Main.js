@@ -77,7 +77,11 @@ var Main = (function (_super) {
      * 创建游戏场景
      */
     Main.prototype.createGameScene = function () {
+        Util.cfg = RES.getRes("config_json");
+        Util.stage = this.stage;
         egret.Profiler.getInstance().run();
+        this.addChild(new Battle());
+        return;
         var factor = 50;
         //创建world
         var world = new p2.World();

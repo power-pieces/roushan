@@ -839,6 +839,8 @@ declare module p2 {
          * @return {boolean}
          */
         overlaps(body: Body): boolean;
+
+        
     }
 
     export class Spring {
