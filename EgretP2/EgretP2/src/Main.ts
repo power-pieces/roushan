@@ -84,7 +84,7 @@ class Main extends egret.DisplayObjectContainer {
      * 创建游戏场景
      */
     private createGameScene(): void {
-        Util.cfg = RES.getRes("config_json");
+        DataCenter.cfg = RES.getRes("config_json");
 
         Util.stage = this.stage;
 

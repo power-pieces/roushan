@@ -211,10 +211,11 @@
     <Content Include="src\p2\world\IslandManager.js" />
     <Content Include="src\p2\world\IslandNode.js" />
     <Content Include="src\p2\world\World.js" />
-    <TypeScriptCompile Include="src\views\Battle.ts" />
+    <TypeScriptCompile Include="src\views\battle\Battle.ts" />
     <TypeScriptCompile Include="src\Util.ts" />
-    <TypeScriptCompile Include="src\views\Block.ts" />
-    <TypeScriptCompile Include="src\views\Boss.ts" />
+    <TypeScriptCompile Include="src\views\battle\Block.ts" />
+    <TypeScriptCompile Include="src\views\battle\Boss.ts" />
+    <TypeScriptCompile Include="src\views\battle\BossHP.ts" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
