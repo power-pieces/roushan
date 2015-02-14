@@ -8,4 +8,7 @@
     }
     */
     public static cfg: any = null;
+
+    //方块的层数
+    public static blockDeep: number = 0;
 }

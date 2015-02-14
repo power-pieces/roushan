@@ -9,14 +9,53 @@ var Boss = (function (_super) {
     function Boss() {
         _super.call(this);
         this.p2Bodys = [];
-        this.hp = 0;
+        this._hp = 0;
         //移动速度
         this._velocity = 0;
         //左 -1 右 1
         this._dir = 1;
-        this.hp = DataCenter.cfg.bossHP;
+        this._state = 1;
+        this.setHP(DataCenter.cfg.bossHP);
         this.createView();
     }
+    Boss.prototype.setHP = function (v) {
+        if (v < 0) {
+            v = 0;
+        }
+        if (this._hp == v) {
+            return;
+        }
+        var state = 0;
+        var hpPer = v / DataCenter.cfg.bossHP;
+        if (hpPer > 0.7) {
+            state = 1;
+        }
+        else if (hpPer > 0.3) {
+            state = 2;
+        }
+        else if (hpPer > 0) {
+            state = 3;
+        }
+        else if (hpPer == 0) {
+            state = 4;
+        }
+        this._state = state;
+        //更新BOSS表情
+        if (v < this._hp) {
+            //血量减少,显示特殊效果
+            this.setState(5);
+            egret.setTimeout(function () {
+                this.setState(this._state);
+            }, this, 500);
+        }
+        else {
+            this.setState(this._state);
+        }
+        this._hp = v;
+    };
+    Boss.prototype.getHP = function () {
+        return this._hp;
+    };
     Boss.prototype.createView = function () {
         this.leftWing = Util.createBitmapByName("r2_png");
         this.rightWing = Util.createBitmapByName("r3_png");
@@ -39,8 +78,6 @@ var Boss = (function (_super) {
         this.face = Util.createBitmapByName("rf" + state + "_png");
         this.face.anchorX = this.face.anchorY = 0.5;
         this.addChild(this.face);
-    };
-    Boss.prototype.changeHP = function () {
     };
     //设置水平速度
     Boss.prototype.setVelocity = function (value) {

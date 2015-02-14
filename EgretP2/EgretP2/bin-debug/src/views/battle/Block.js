@@ -60,7 +60,7 @@ var Block = (function (_super) {
         this.getRect();
         var pos = this.getPos();
         this._body;
-        if (pos[0] == this._lastPostion[0] && pos[1] == this._lastPostion[1]) {
+        if (pos[1] == this._lastPostion[1]) {
             //和上次位置一样
             if (0 == this._posUnchangedTime) {
                 this._posUnchangedTime = egret.getTimer();
@@ -77,10 +77,10 @@ var Block = (function (_super) {
             //else if ((this._state == Block.STATE_FALL || this._state == Block.STATE_DROP) && this._body.position[1] > this._lastPostion[1]) {
             //    this.setState(Block.STATE_CAROM);
             //}
-            this._lastPostion[0] = pos[0];
-            this._lastPostion[1] = pos[1];
             this._posUnchangedTime = 0;
         }
+        this._lastPostion[0] = pos[0];
+        this._lastPostion[1] = pos[1];
     };
     Block.prototype.setState = function (state) {
         if (this._state == state) {

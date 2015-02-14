@@ -78,7 +78,7 @@
         this.getRect();
         var pos: number[] = this.getPos();
         this._body;
-        if (pos[0] == this._lastPostion[0] && pos[1] == this._lastPostion[1]) {
+        if (pos[1] == this._lastPostion[1]) {
             //和上次位置一样
             if (0 == this._posUnchangedTime) {
                 this._posUnchangedTime = egret.getTimer();
@@ -96,11 +96,11 @@
             //    this.setState(Block.STATE_CAROM);
             //}
 
-            this._lastPostion[0] = pos[0];
-            this._lastPostion[1] = pos[1];
+
             this._posUnchangedTime = 0;
         }
-
+        this._lastPostion[0] = pos[0];
+        this._lastPostion[1] = pos[1];
 
     }
 

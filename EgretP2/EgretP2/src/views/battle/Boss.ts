@@ -11,17 +11,67 @@
 
     public p2Bodys: p2.Body[] = [];
 
-    public hp: number = 0;
+    private _hp: number = 0;
 
     //移动速度
     private _velocity: number = 0;
     //左 -1 右 1
     private _dir: number = 1;
 
+    private _state: number = 1;
+    
+
     public constructor() {
         super();
-        this.hp = DataCenter.cfg.bossHP;
+        this.setHP(DataCenter.cfg.bossHP);
         this.createView();
+    }
+
+    public setHP(v: number): void{
+        if (v < 0) {
+            v = 0;
+        }
+
+        if (this._hp == v) {
+            return;
+        } 
+
+        var state: number = 0;
+        var hpPer: number = v / DataCenter.cfg.bossHP;
+        if (hpPer > 0.7) {
+            state = 1;
+        }
+        else if (hpPer > 0.3) {
+            state = 2;
+        }
+        else if (hpPer > 0) {
+            state = 3;
+        }
+        else if (hpPer == 0) {
+            state = 4;
+        }
+        this._state = state;
+
+        //更新BOSS表情
+        if (v < this._hp) {
+            //血量减少,显示特殊效果
+            this.setState(5);
+            egret.setTimeout(function (): void {
+                this.setState(this._state);
+            }, this, 500);
+        }
+        else {
+            this.setState(this._state);
+        }
+
+        
+
+
+        this._hp = v;
+    }
+
+    public getHP(): number {
+        return this._hp;
     }
 
 
@@ -45,10 +95,10 @@
         this.leftWing.x = -this.rightWing.x;
         this.leftWing.y = this.rightWing.y = -27;     
 
-        this.setState(1);     
+        this.setState(1);    
     }
 
-    private setState(state: number): void {
+    private setState(state:number): void {
         if (this.face) {
             this.removeChild(this.face);
         }
@@ -57,9 +107,7 @@
         this.addChild(this.face);
     }
 
-    private changeHP(): void {
-        
-    }
+
 
     //设置水平速度
     public setVelocity(value: number): void {

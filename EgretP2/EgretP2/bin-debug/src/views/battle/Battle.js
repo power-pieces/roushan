@@ -25,6 +25,7 @@ var Battle = (function (_super) {
         this._useBlockCount = 0;
         //游戏状态 1正常 2结束
         this.gameState = 1;
+        this._checkDamageTime = 0;
         Battle.FACTOR = DataCenter.cfg.factor;
         this._isDebug = DataCenter.cfg.isDebug;
         this.width = Util.stage.stageWidth;
@@ -58,7 +59,7 @@ var Battle = (function (_super) {
         var bg = Util.createBitmapByName("Roshan-Background_png");
         this.addChild(bg);
         this.createBoss();
-        this._hp = new BossHP(this._boss.hp, Util.stage.stageHeight);
+        this._hp = new BossHP(this._boss.getHP(), Util.stage.stageHeight);
         this.addChild(this._hp);
         this._arrow = Util.createBitmapByName("arrow_png");
         this._arrow.anchorX = this._arrow.anchorY = 0.5;
@@ -113,7 +114,7 @@ var Battle = (function (_super) {
         body.displays = [boss];
         this.addChild(boss);
         boss.p2Bodys = [body];
-        //boss.setVelocity(20 / Battle.FACTOR);
+        boss.setVelocity(20 / Battle.FACTOR);
         this._boss = boss;
         //var shape: p2.Rectangle = new p2.Rectangle(5, 1);
         //var body: p2.Body = new p2.Body({ mass: 0, position: [(Util.stage.stageWidth >> 1) / Battle.FACTOR, 2], angle:this.angle2(76)});
@@ -185,15 +186,20 @@ var Battle = (function (_super) {
             }
         }
         this.updateBlocks();
-        var damage = this.calculateDamage();
-        this._hp.update(damage);
-        if (damage >= DataCenter.cfg.bossHP) {
-            this.gameOver();
+        if (egret.getTimer() > this._checkDamageTime) {
+            var damage = this.calculateDamage();
+            this._boss.setHP(DataCenter.cfg.bossHP - damage);
+            this._hp.update(damage);
+            if (damage >= DataCenter.cfg.bossHP) {
+                this.gameOver();
+            }
+            this._checkDamageTime = egret.getTimer() + 2000;
         }
     };
     //游戏结束
     Battle.prototype.gameOver = function () {
         this.gameState = 2;
+        this._useBlockCount;
         this.removeListeners();
         alert("game over " + this._useBlockCount);
     };
@@ -234,6 +240,8 @@ var Battle = (function (_super) {
         var deep = dmgDatas.length;
         for (var i = 0; i < deep; i++) {
             if (null == this._blockLayers[i] || 0 == this._blockLayers[i]) {
+                //断层了 结束计算
+                DataCenter.blockDeep = i;
                 break;
             }
             var dmgData = dmgDatas[i];

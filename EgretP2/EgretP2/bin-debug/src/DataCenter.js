@@ -10,6 +10,8 @@ var DataCenter = (function () {
     }
     */
     DataCenter.cfg = null;
+    //方块的层数
+    DataCenter.blockDeep = 0;
     return DataCenter;
 })();
 DataCenter.prototype.__class__ = "DataCenter";

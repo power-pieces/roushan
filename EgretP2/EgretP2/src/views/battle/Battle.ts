@@ -24,6 +24,8 @@
 
     //游戏状态 1正常 2结束
     public gameState: number = 1;
+
+    private _checkDamageTime: number = 0;
     
 
     public constructor() {
@@ -69,7 +71,7 @@
 
         this.createBoss();
 
-        this._hp = new BossHP(this._boss.hp,Util.stage.stageHeight);
+        this._hp = new BossHP(this._boss.getHP(),Util.stage.stageHeight);
         this.addChild(this._hp);
 
         this._arrow = Util.createBitmapByName("arrow_png");
@@ -140,7 +142,7 @@
         
 
         boss.p2Bodys = [body];
-        //boss.setVelocity(20 / Battle.FACTOR);
+        boss.setVelocity(20 / Battle.FACTOR);
         this._boss = boss;
         
 
@@ -234,10 +236,16 @@
 
 
         this.updateBlocks();
-        var damage:number = this.calculateDamage();
-        this._hp.update(damage);
-        if (damage >= DataCenter.cfg.bossHP) {
-            this.gameOver();
+
+
+        if (egret.getTimer() > this._checkDamageTime) {
+            var damage: number = this.calculateDamage();
+            this._boss.setHP(DataCenter.cfg.bossHP - damage);
+            this._hp.update(damage);
+            if (damage >= DataCenter.cfg.bossHP) {
+                this.gameOver();
+            }
+            this._checkDamageTime = egret.getTimer() + 2000;
         }
         
         
@@ -246,6 +254,7 @@
     //游戏结束
     private gameOver(): void {
         this.gameState = 2;        
+        this._useBlockCount;
         this.removeListeners();
         alert("game over " + this._useBlockCount);
     }
@@ -294,6 +303,7 @@
         for (var i = 0; i < deep; i++) {
             if (null == this._blockLayers[i] || 0 == this._blockLayers[i]) {
                 //断层了 结束计算
+                DataCenter.blockDeep = i;
                 break;
             }
 
