@@ -1,1 +1,0 @@
-"C:\Users\Jing\AppData\Roaming\npm\egret.cmd" %*
