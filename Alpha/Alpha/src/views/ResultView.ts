@@ -188,5 +188,7 @@ class ResultView extends ViewBase
     private touchShareBtnHandler(e:egret.TouchEvent)
     {
         console.log("点击分享");
+        var shareView:ShareView = new ShareView();
+        this.addChild(shareView);
     }
 }
