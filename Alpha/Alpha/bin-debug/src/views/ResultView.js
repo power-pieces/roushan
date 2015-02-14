@@ -93,6 +93,36 @@ var ResultView = (function (_super) {
         this._againBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchAgainBtnHandler, this);
         this._shareBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchShareBtnHandler, this);
     };
+    ResultView.prototype.requestRank = function () {
+        this.touchEnabled = false;
+        //创建POST请求
+        var url = DataCenter.cfg.server;
+        var loader = new egret.URLLoader();
+        loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
+        loader.addEventListener(egret.Event.COMPLETE, this.onRequestData, this);
+        var request = new egret.URLRequest(url);
+        request.method = egret.URLRequestMethod.GET;
+        var values = new egret.URLVariables("id=" + Util.getUserID() + "&block=" + DataCenter.score);
+        request.data = values;
+        loader.load(request);
+    };
+    ResultView.prototype.onRequestData = function (e) {
+        this.touchEnabled = true;
+        var loader = e.target;
+        var json = loader.data;
+        var data = JSON.parse(json);
+        if (0 == data.code) {
+            DataCenter.percent = data.percent;
+            if (DataCenter.percent >= 100) {
+                DataCenter.percent = 99;
+            }
+            Util.setUserInfo(DataCenter.score, DataCenter.percent);
+            this.showGameInfo();
+        }
+        else {
+            alert(data.des);
+        }
+    };
     /*
      * 显示游戏信息
      */
@@ -160,6 +190,8 @@ var ResultView = (function (_super) {
      */
     ResultView.prototype.touchShareBtnHandler = function (e) {
         console.log("点击分享");
+        var shareView = new ShareView();
+        this.addChild(shareView);
     };
     return ResultView;
 })(ViewBase);

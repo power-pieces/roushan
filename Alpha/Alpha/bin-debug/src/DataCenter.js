@@ -17,9 +17,9 @@ var DataCenter = (function () {
     //冰模式
     DataCenter.isIceMode = false;
     //最后得分
-    DataCenter.score = 56;
+    DataCenter.score = 0;
     //战胜人数百分比
-    DataCenter.percent = 34;
+    DataCenter.percent = 0;
     return DataCenter;
 })();
 DataCenter.prototype.__class__ = "DataCenter";

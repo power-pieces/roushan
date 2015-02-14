@@ -136,7 +136,11 @@ class ResultView extends ViewBase
         var data = JSON.parse(json);
         if (0 == data.code) {
             DataCenter.percent = data.percent;
+            if (DataCenter.percent >= 100) {
+                DataCenter.percent = 99;
+            }
             Util.setUserInfo(DataCenter.score, DataCenter.percent);
+            
             this.showGameInfo();
         }
         else {

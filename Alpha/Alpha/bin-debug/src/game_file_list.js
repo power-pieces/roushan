@@ -5,6 +5,7 @@ var game_file_list = [
     "Util.js",
     "jinglibs/notice/NoticeManager.js",
     "vo/NoticeCode.js",
+    "views/ShareView.js",
     "views/TipsView.js",
     "views/battle/Block.js",
     "views/battle/Boss.js",

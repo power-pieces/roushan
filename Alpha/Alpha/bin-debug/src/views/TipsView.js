@@ -34,12 +34,16 @@ var TipsView = (function (_super) {
         if (this._totalNum < this._tipIndex) {
             NoticeManager.sendNotice(new Notice(NoticeCode.CLOSE_TIP_VIEW));
             this._tipIndex = 0;
-            this.removeChild(this._tipTxt);
+            if (this._tipTxt.parent != null) {
+                this.removeChild(this._tipTxt);
+            }
             this.clearTip();
             return;
         }
         if (this._currentTip != null) {
-            this.removeChild(this._tipTxt);
+            if (this._tipTxt.parent != null) {
+                this.removeChild(this._tipTxt);
+            }
             this._currentTip.alpha = 1;
             var tw = egret.Tween.get(this._currentTip);
             tw.to({ alpha: 0.2 }, 200);
@@ -52,7 +56,12 @@ var TipsView = (function (_super) {
      * 清理tip
      */
     TipsView.prototype.clearTip = function () {
-        this._currentTip.parent.removeChild(this._currentTip);
+        if (this._currentTip == null) {
+            return;
+        }
+        if (this._currentTip.parent != null) {
+            this._currentTip.parent.removeChild(this._currentTip);
+        }
         this._currentTip = null;
     };
     /*

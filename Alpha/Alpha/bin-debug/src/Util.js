@@ -64,6 +64,23 @@ var Util = (function () {
         }
         return DataCenter.cfg.resultContents[tempIndex];
     };
+    //获取用户ID
+    Util.getUserID = function () {
+        if (window["getMyOpenId"]) {
+            var id = window["getMyOpenId"]();
+            return id;
+        }
+        else {
+            return "test";
+        }
+    };
+    //设置分享信息
+    Util.setUserInfo = function (block, per) {
+        if (window["setTimeLine"]) {
+            window["setTimeLine"](block, per);
+            window["setAppMessage"](block, per);
+        }
+    };
     Util.stage = null;
     return Util;
 })();

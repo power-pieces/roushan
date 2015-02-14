@@ -52,15 +52,23 @@ var Block = (function (_super) {
     };
     //获得位置（处理过的，主要用来比较)
     Block.prototype.getPos = function () {
-        var posX = (this._body.position[0] * 100) >> 0;
-        var posY = (this._body.position[1] * 100) >> 0;
+        var posX = this.x >> 0;
+        var posY = this.y >> 0;
         return [posX, posY];
     };
     Block.prototype.update = function () {
         this.getRect();
         var pos = this.getPos();
-        this._body;
-        if (pos[1] == this._lastPostion[1]) {
+        var isMoved = false;
+        //var dx: number = pos[0] - this._lastPostion[0];
+        var dy = pos[1] - this._lastPostion[1];
+        var tolerance = DataCenter.cfg.tolerance;
+        if (dy * dy > tolerance * tolerance) {
+            isMoved = true;
+            this._lastPostion[0] = pos[0];
+            this._lastPostion[1] = pos[1];
+        }
+        if (false == isMoved) {
             //和上次位置一样
             if (0 == this._posUnchangedTime) {
                 this._posUnchangedTime = egret.getTimer();
@@ -79,8 +87,6 @@ var Block = (function (_super) {
             //}
             this._posUnchangedTime = 0;
         }
-        this._lastPostion[0] = pos[0];
-        this._lastPostion[1] = pos[1];
     };
     Block.prototype.setState = function (state) {
         if (this._state == state) {

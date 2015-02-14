@@ -28,6 +28,7 @@ var Battle = (function (_super) {
         this._checkDamageTime = 0;
         this._leftWingMaterial = null;
         this._rightWingMaterial = null;
+        egret.Profiler.getInstance().run();
         Battle.FACTOR = DataCenter.cfg.factor;
         this._isDebug = DataCenter.cfg.isDebug;
         this.width = Util.stage.stageWidth;
@@ -35,7 +36,6 @@ var Battle = (function (_super) {
         this.touchEnabled = true;
         this.createP2World();
         this.createView();
-        egret.Ticker.getInstance().register(this.onTick, this);
     }
     /**
     * 创建物理世界
@@ -78,11 +78,13 @@ var Battle = (function (_super) {
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegionHandler, this);
         this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.touchMoveHandler, this);
         this.addEventListener(egret.TouchEvent.TOUCH_END, this.touchEndHandler, this);
+        egret.Ticker.getInstance().register(this.onTick, this);
     };
     Battle.prototype.removeListeners = function () {
         this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegionHandler, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.touchMoveHandler, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_END, this.touchEndHandler, this);
+        egret.Ticker.getInstance().unregister(this.onTick, this);
     };
     Battle.prototype.touchBegionHandler = function (e) {
         if (egret.getTimer() < this._blockCD) {

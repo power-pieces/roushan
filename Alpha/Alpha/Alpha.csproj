@@ -177,6 +177,7 @@
     <Content Include="resource\assets\r3.png" />
     <Content Include="resource\assets\r4.png" />
     <Content Include="resource\assets\result_bg.png" />
+    <Content Include="resource\assets\share.png" />
     <Content Include="resource\assets\share_btn.png" />
     <Content Include="resource\assets\special_mode_btn.png" />
     <Content Include="resource\assets\start_bg.png" />
@@ -258,6 +259,7 @@
     <TypeScriptCompile Include="src\vo\NoticeCode.ts" />
     <TypeScriptCompile Include="src\Roushan.ts" />
     <TypeScriptCompile Include="src\Util.ts" />
+    <TypeScriptCompile Include="src\views\ShareView.ts" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

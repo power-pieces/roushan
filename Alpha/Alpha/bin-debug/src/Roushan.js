@@ -107,7 +107,7 @@ var Roushan = (function (_super) {
     Roushan.prototype.showResultView = function () {
         this.removeCurrentView();
         var showView = new ResultView();
-        showView.showGameInfo();
+        showView.requestRank();
         this._nowView = showView;
         Util.stage.addChild(this._nowView);
         this._nowView.addListeners();
