@@ -42,6 +42,31 @@ var egret;
         __extends(MainContext, _super);
         function MainContext() {
             _super.call(this);
+            /**
+             * 渲染Context
+             * @member egret.MainContext#rendererContext
+             */
+            this.rendererContext = null;
+            /**
+             * 触摸Context
+             * @member egret.MainContext#touchContext
+             */
+            this.touchContext = null;
+            /**
+             * 网络Context
+             * @member egret.MainContext#netContext
+             */
+            this.netContext = null;
+            /**
+             * 设备divice
+             * @member egret.MainContext#deviceContext
+             */
+            this.deviceContext = null;
+            /**
+             * 舞台
+             * @member egret.MainContext#stage
+             */
+            this.stage = null;
             this.reuseEvent = new egret.Event("");
         }
         /**
@@ -156,6 +181,7 @@ var egret;
                 }
             }
         };
+        MainContext.deviceType = null;
         MainContext.DEVICE_PC = "web";
         MainContext.DEVICE_MOBILE = "native";
         MainContext.RUNTIME_HTML5 = "runtime_html5";

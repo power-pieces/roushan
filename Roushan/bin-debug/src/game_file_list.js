@@ -1,14 +1,17 @@
 var game_file_list = [
     "views/ViewBase.js",
     "jinglibs/notice/Notice.js",
+    "DataCenter.js",
     "Util.js",
     "jinglibs/notice/NoticeManager.js",
     "vo/NoticeCode.js",
-    "DataCenter.js",
     "views/TipsView.js",
+    "views/battle/Block.js",
+    "views/battle/Boss.js",
+    "views/battle/BossHP.js",
     "LoadingUI.js",
-    "views/GameView.js",
     "views/ResultView.js",
     "views/StartView.js",
+    "views/battle/Battle.js",
     "Roushan.js"
 ];

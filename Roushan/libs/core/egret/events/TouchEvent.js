@@ -66,6 +66,34 @@ var egret;
             _super.call(this, type, bubbles, cancelable);
             this._stageX = 0;
             this._stageY = 0;
+            /**
+             * 分配给触摸点的唯一标识号
+             * @member {number} egret.TouchEvent#touchPointID
+             */
+            this.touchPointID = NaN;
+            /**
+             * 事件发生时ctrl键是否被按下。 (Mac OS下为 Cmd 或 Ctrl)
+             * @deprecated
+             * @member {boolean} egret.TouchEvent#ctrlKey
+             */
+            this.ctrlKey = false;
+            /**
+             * 事件发生时shift键是否被按下。
+             * @deprecated
+             * @member {boolean} egret.TouchEvent#shiftKey
+             */
+            this.shiftKey = false;
+            /**
+             * 事件发生时alt键是否被按下。
+             * @deprecated
+             * @member {boolean} egret.TouchEvent#altKey
+             */
+            this.altKey = false;
+            /**
+             * 表示触摸已按下 (true) 还是未按下 (false)。
+             * @member {boolean} egret.TouchEvent#touchDown
+             */
+            this.touchDown = false;
             this.touchPointID = touchPointID;
             this._stageX = stageX;
             this._stageY = stageY;

@@ -39,6 +39,7 @@ var egret;
             this._renderPerformanceCost = 0;
             this._updateTransformPerformanceCost = 0;
             this._preDrawCount = 0;
+            this._txt = null;
             this._tick = 0;
             this._maxDeltaTime = 500;
             this._totalDeltaTime = 0;

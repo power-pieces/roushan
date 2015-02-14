@@ -69,6 +69,15 @@ var egret;
             this._offsetY = 0;
             this._textureWidth = 0;
             this._textureHeight = 0;
+            /**
+             * 表示bitmapData.width
+             */
+            this._sourceWidth = 0;
+            /**
+             * 表示bitmapData.height
+             */
+            this._sourceHeight = 0;
+            this._bitmapData = null;
         }
         Object.defineProperty(Texture.prototype, "textureWidth", {
             /**
@@ -104,7 +113,7 @@ var egret;
             configurable: true
         });
         Texture.prototype._setBitmapData = function (value) {
-            var scale = egret.MainContext.instance.rendererContext.texture_scale_factor;
+            var scale = egret.MainContext.instance.rendererContext._texture_scale_factor;
             this._bitmapData = value;
             this._sourceWidth = value.width;
             this._sourceHeight = value.height;

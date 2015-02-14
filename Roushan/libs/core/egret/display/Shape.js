@@ -40,6 +40,11 @@ var egret;
         __extends(Shape, _super);
         function Shape() {
             _super.call(this);
+            /**
+             * 获取 Shape 中的 Graphics 对象。【只读】
+             * @member {egret.Graphics} egret.Shape#graphics
+             */
+            this._graphics = null;
         }
         Object.defineProperty(Shape.prototype, "graphics", {
             get: function () {

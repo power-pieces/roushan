@@ -34,6 +34,12 @@ var egret;
      */
     var Graphics = (function () {
         function Graphics() {
+            this.canvasContext = null;
+            this.commandQueue = null;
+            this.renderContext = null;
+            this.strokeStyleColor = null;
+            this.fillStyleColor = null;
+            this._dirty = false;
             this._minX = 0;
             this._minY = 0;
             this._maxX = 0;
@@ -61,7 +67,6 @@ var egret;
          * @param y {number} 相对于父显示对象注册点的圆心的 y 位置（以像素为单位）。
          * @param width {number} 矩形的宽度（以像素为单位）。
          * @param height {number} 矩形的高度（以像素为单位）。
-         * @param r? {number} 圆的半径（以像素为单位）,不设置就为直角矩形。
          */
         Graphics.prototype.drawRect = function (x, y, width, height) {
             this.checkRect(x, y, width, height);
@@ -78,7 +83,7 @@ var egret;
         };
         /**
          * 绘制一个圆角矩形
-         * @method egret.Graphics#drawRect
+         * @method egret.Graphics#drawRoundRect
          * @param x {number} 圆心相对于父显示对象注册点的 x 位置（以像素为单位）。
          * @param y {number} 相对于父显示对象注册点的圆心的 y 位置（以像素为单位）。
          * @param width {number} 矩形的宽度（以像素为单位）。

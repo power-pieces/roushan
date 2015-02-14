@@ -27,6 +27,7 @@ var RES;
         __extends(AnalyzerBase, _super);
         function AnalyzerBase() {
             _super.call(this);
+            this.resourceConfig = null;
             this.resourceConfig = (RES["configInstance"]);
         }
         /**

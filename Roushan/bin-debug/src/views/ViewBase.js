@@ -15,9 +15,9 @@ var ViewBase = (function (_super) {
     function ViewBase() {
         _super.call(this);
     }
-    ViewBase.prototype.addListener = function () {
+    ViewBase.prototype.addListeners = function () {
     };
-    ViewBase.prototype.removeListener = function () {
+    ViewBase.prototype.removeListeners = function () {
     };
     return ViewBase;
 })(egret.DisplayObjectContainer);

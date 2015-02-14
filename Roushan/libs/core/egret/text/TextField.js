@@ -51,6 +51,7 @@ var egret;
              * @member {string} egret.TextField#type
              */
             this._type = "";
+            this._inputUtils = null;
             /**
              * 作为文本字段中当前文本的字符串
              * @member {string} egret.TextField#text
@@ -75,6 +76,20 @@ var egret;
              * @member {number} egret.TextField#size
              */
             this._size = 30;
+            /**
+             * 表示使用此文本格式的文本是否为斜体。
+             * 如果值为 true，则文本为斜体；false，则为不使用斜体。
+             * 默认值为 false。
+             * @member {boolean} egret.TextField#italic
+             */
+            this._italic = false;
+            /**
+             * 指定文本是否为粗体字。
+             * 如果值为 true，则文本为粗体字；false，则为非粗体字。
+             * 默认值为 false。
+             * @member {boolean} egret.TextField#bold
+             */
+            this._bold = false;
             this._textColorString = "#FFFFFF";
             /**
              * 表示文本的颜色。
@@ -223,7 +238,7 @@ var egret;
                 value = "";
             }
             this._isFlow = false;
-            if (this._text != value || this._displayAsPassword) {
+            if (this._text != value) {
                 this._setTextDirty();
                 this._text = value;
                 var text = "";
@@ -258,7 +273,15 @@ var egret;
         TextField.prototype._setDisplayAsPassword = function (value) {
             if (this._displayAsPassword != value) {
                 this._displayAsPassword = value;
-                this._setText(this._text);
+                this._setTextDirty();
+                var text = "";
+                if (this._displayAsPassword) {
+                    text = this.changeToPassText(this._text);
+                }
+                else {
+                    text = this._text;
+                }
+                this.setMiddleStyle([{ text: text }]);
             }
         };
         Object.defineProperty(TextField.prototype, "fontFamily", {
@@ -545,7 +568,11 @@ var egret;
          * 测量显示对象坐标与大小
          */
         TextField.prototype._measureBounds = function () {
-            return this.measureText();
+            var lines = this._getLinesArr();
+            if (!lines) {
+                return egret.Rectangle.identity.initialize(0, 0, 0, 0);
+            }
+            return egret.Rectangle.identity.initialize(0, 0, this._textMaxWidth, this._textMaxHeight + (this._numLines - 1) * this._lineSpacing);
         };
         Object.defineProperty(TextField.prototype, "textFlow", {
             get: function () {
@@ -630,7 +657,6 @@ var egret;
             this._textMaxWidth = 0;
             //宽度被设置为0
             if (this._hasWidthSet && this._explicitWidth == 0) {
-                console.warn("文本宽度被设置为0");
                 this._numLines = 0;
                 return [{ width: 0, height: 0, elements: [] }];
             }
@@ -717,15 +743,6 @@ var egret;
             }
             this._numLines = linesArr.length;
             return linesArr;
-        };
-        TextField.prototype.measureText = function () {
-            var lines = this._getLinesArr();
-            if (!lines) {
-                return egret.Rectangle.identity.initialize(0, 0, 0, 0);
-            }
-            var maxWidth = this._hasWidthSet ? this._explicitWidth : this._textMaxWidth;
-            var maxHeight = this._hasHeightSet ? this._explicitHeight : this._textMaxHeight + (this._numLines - 1) * this._lineSpacing;
-            return egret.Rectangle.identity.initialize(0, 0, maxWidth, maxHeight);
         };
         /**
          * @private

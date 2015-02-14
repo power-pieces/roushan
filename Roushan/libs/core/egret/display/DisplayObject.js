@@ -56,6 +56,17 @@ var egret;
             this._normalDirty = true;
             //对宽高有影响
             this._sizeDirty = true;
+            /**
+             * 尺寸发生改变的回调函数。若此对象被添加到UIAsset里，此函数将被赋值，在尺寸发生改变时通知UIAsset重新测量。
+             */
+            this._sizeChangeCallBack = null;
+            this._sizeChangeCallTarget = null;
+            /**
+             * 表示 DisplayObject 的实例名称。
+             * 通过调用父显示对象容器的 getChildByName() 方法，可以在父显示对象容器的子列表中标识该对象。
+             * @member {string} egret.DisplayObject#name
+             */
+            this.name = null;
             this._texture_to_render = null;
             this._parent = null;
             /**
@@ -160,6 +171,16 @@ var egret;
              *  @member {egret.Rectangle} egret.DisplayObject#scrollRect
              */
             this._scrollRect = null;
+            /**
+             * 显式设置宽度
+             * @returns {number}
+             */
+            this._explicitWidth = NaN;
+            /**
+             * 显式设置高度
+             * @returns {number}
+             */
+            this._explicitHeight = NaN;
             this._hasWidthSet = false;
             this._hasHeightSet = false;
             /**
@@ -170,10 +191,12 @@ var egret;
             this.mask = null;
             this._worldBounds = null;
             this.worldAlpha = 1;
+            this._hitTestPointTexture = null;
             this._rectW = 0;
             this._rectH = 0;
             this._stage = null;
             this._cacheAsBitmap = false;
+            this.renderTexture = null;
             this._cacheDirty = false;
             /**
              * beta功能，请勿调用此方法
@@ -203,6 +226,15 @@ var egret;
             this._setDirty();
             this._setCacheDirty();
             this._setParentSizeDirty();
+            if (this._sizeChangeCallBack != null) {
+                if (this._sizeChangeCallTarget == this._parent) {
+                    this._sizeChangeCallBack.call(this._sizeChangeCallTarget);
+                }
+                else {
+                    this._sizeChangeCallBack = null;
+                    this._sizeChangeCallTarget = null;
+                }
+            }
         };
         DisplayObject.prototype._clearDirty = function () {
             //todo 这个除了文本的，其他都没有clear过
@@ -374,7 +406,7 @@ var egret;
             set: function (value) {
                 if (egret.NumberUtils.isNumber(value) && this._rotation != value) {
                     this._rotation = value;
-                    this._setSizeDirty();
+                    this._setParentSizeDirty();
                 }
             },
             enumerable: true,
@@ -401,7 +433,7 @@ var egret;
             set: function (value) {
                 if (egret.NumberUtils.isNumber(value) && this._skewX != value) {
                     this._skewX = value;
-                    this._setSizeDirty();
+                    this._setParentSizeDirty();
                 }
             },
             enumerable: true,
@@ -414,7 +446,7 @@ var egret;
             set: function (value) {
                 if (egret.NumberUtils.isNumber(value) && this._skewY != value) {
                     this._skewY = value;
-                    this._setSizeDirty();
+                    this._setParentSizeDirty();
                 }
             },
             enumerable: true,
@@ -576,9 +608,12 @@ var egret;
         };
         DisplayObject.prototype.drawCacheTexture = function (renderContext) {
             var display = this;
-            if (display._cacheAsBitmap == false)
+            if (display._cacheAsBitmap == false) {
                 return false;
-            if (display._cacheDirty || display._texture_to_render == null || Math.round(display.width) != Math.round(display._texture_to_render._sourceWidth) || Math.round(display.height) != Math.round(display._texture_to_render._sourceHeight)) {
+            }
+            var bounds = display.getBounds();
+            var texture_scale_factor = egret.MainContext.instance.rendererContext._texture_scale_factor;
+            if (display._cacheDirty || display._texture_to_render == null || Math.round(bounds.width) != Math.round(display._texture_to_render._sourceWidth * texture_scale_factor) || Math.round(bounds.height) != Math.round(display._texture_to_render._sourceHeight * texture_scale_factor)) {
                 var cached = display._makeBitmapCache();
                 display._cacheDirty = !cached;
             }
@@ -593,9 +628,8 @@ var egret;
             display._updateTransform();
             renderContext.setAlpha(display.worldAlpha, display.blendMode);
             renderContext.setTransform(display._worldTransform);
-            var scale_factor = egret.MainContext.instance.rendererContext.texture_scale_factor;
             var renderFilter = egret.RenderFilter.getInstance();
-            renderFilter.drawImage(renderContext, display, 0, 0, width * scale_factor, height * scale_factor, offsetX, offsetY, width, height);
+            renderFilter.drawImage(renderContext, display, 0, 0, width, height, offsetX, offsetY, width, height);
             return true;
         };
         /**
@@ -812,9 +846,17 @@ var egret;
         };
         DisplayObject.prototype._getSize = function (resultRect) {
             if (this._hasHeightSet && this._hasWidthSet) {
+                this._clearSizeDirty();
                 return resultRect.initialize(0, 0, this._explicitWidth, this._explicitHeight);
             }
-            return this._measureSize(resultRect);
+            this._measureSize(resultRect);
+            if (this._hasWidthSet) {
+                resultRect.width = this._explicitWidth;
+            }
+            if (this._hasHeightSet) {
+                resultRect.height = this._explicitHeight;
+            }
+            return resultRect;
         };
         /**
          * 测量显示对象坐标与大小

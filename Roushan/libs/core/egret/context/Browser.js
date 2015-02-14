@@ -39,6 +39,7 @@ var egret;
         __extends(Browser, _super);
         function Browser() {
             _super.call(this);
+            this.trans = null;
             this.ua = navigator.userAgent.toLowerCase();
             this.trans = this._getTrans();
         }

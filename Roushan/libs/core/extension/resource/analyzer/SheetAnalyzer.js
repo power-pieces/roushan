@@ -64,52 +64,61 @@ var RES;
             var compFunc = data.func;
             resItem.loaded = (event.type == egret.Event.COMPLETE);
             if (resItem.loaded) {
-                this.analyzeData(resItem, loader.data);
+                if (typeof (loader.data) == "string") {
+                    resItem.loaded = false;
+                    var imageUrl = this.analyzeConfig(resItem, loader.data);
+                    if (imageUrl) {
+                        resItem.url = imageUrl;
+                        this._dataFormat = egret.URLLoaderDataFormat.TEXTURE;
+                        this.loadFile(resItem, compFunc, data.thisObject);
+                        this._dataFormat = egret.URLLoaderDataFormat.TEXT;
+                        return;
+                    }
+                }
+                else {
+                    this.analyzeBitmap(resItem, loader.data);
+                }
             }
-            if (typeof (loader.data) == "string") {
-                this._dataFormat = egret.URLLoaderDataFormat.TEXTURE;
-                this.loadFile(resItem, compFunc, data.thisObject);
-                this._dataFormat = egret.URLLoaderDataFormat.TEXT;
-            }
-            else {
-                compFunc.call(data.thisObject, resItem);
-            }
+            resItem.url = resItem.data.url;
+            compFunc.call(data.thisObject, resItem);
         };
         /**
-         * 解析并缓存加载成功的数据
+         * 解析并缓存加载成功的配置文件
          */
-        SheetAnalyzer.prototype.analyzeData = function (resItem, data) {
+        SheetAnalyzer.prototype.analyzeConfig = function (resItem, data) {
+            var name = resItem.name;
+            var config;
+            var imageUrl = "";
+            try {
+                var str = data;
+                config = JSON.parse(str);
+            }
+            catch (e) {
+                egret.Logger.warning("JSON文件格式不正确: " + resItem.url);
+            }
+            if (config) {
+                this.sheetMap[name] = config;
+                imageUrl = this.getRelativePath(resItem.url, config["file"]);
+            }
+            return imageUrl;
+        };
+        /**
+         * 解析并缓存加载成功的位图数据
+         */
+        SheetAnalyzer.prototype.analyzeBitmap = function (resItem, data) {
             var name = resItem.name;
             if (this.fileDic[name] || !data) {
                 return;
             }
-            var config;
-            if (typeof (data) == "string") {
-                try {
-                    var str = data;
-                    config = JSON.parse(str);
-                }
-                catch (e) {
-                    egret.Logger.warning("JSON文件格式不正确: " + resItem.url);
-                }
-                if (!config) {
-                    return;
-                }
-                this.sheetMap[name] = config;
-                resItem.loaded = false;
-                resItem.url = this.getRelativePath(resItem.url, config["file"]);
-            }
-            else {
-                var texture = data;
-                config = this.sheetMap[name];
-                delete this.sheetMap[name];
-                if (texture) {
-                    var targetName = resItem.data && resItem.data.subkeys ? "" : name;
-                    var spriteSheet = this.parseSpriteSheet(texture, config, targetName);
-                    this.fileDic[name] = spriteSheet;
-                }
-            }
+            var config = this.sheetMap[name];
+            delete this.sheetMap[name];
+            var targetName = resItem.data && resItem.data.subkeys ? "" : name;
+            var spriteSheet = this.parseSpriteSheet(data, config, targetName);
+            this.fileDic[name] = spriteSheet;
         };
+        /**
+         * 获取相对位置
+         */
         SheetAnalyzer.prototype.getRelativePath = function (url, file) {
             url = url.split("\\").join("/");
             var index = url.lastIndexOf("/");
@@ -144,6 +153,22 @@ var RES;
                 }
             }
             return spriteSheet;
+        };
+        /**
+         * @inheritDoc
+         */
+        SheetAnalyzer.prototype.destroyRes = function (name) {
+            var sheet = this.fileDic[name];
+            if (sheet) {
+                delete this.fileDic[name];
+                for (var subkey in sheet._textureMap) {
+                    if (this.textureMap[subkey]) {
+                        delete this.textureMap[subkey];
+                    }
+                }
+                return true;
+            }
+            return false;
         };
         return SheetAnalyzer;
     })(RES.BinAnalyzer);

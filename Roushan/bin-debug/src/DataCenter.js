@@ -1,18 +1,15 @@
 var DataCenter = (function () {
     function DataCenter() {
     }
-    //服务器地址
-    DataCenter.server = "http://localhost/paper/";
-    //选中的类型
-    DataCenter.selectedId = 0;
-    //别人的数据
-    DataCenter.datas = [];
-    //openid
-    DataCenter.openId = "";
-    //文字id
-    DataCenter.linkid = 0;
-    //对方文字数据
-    DataCenter.linkData = null;
+    //配置文件
+    /**
+     {
+     "isDebug":false,
+     "factor":50,
+     "bossHP":255
+     }
+     */
+    DataCenter.cfg = null;
     //冰模式
     DataCenter.isIceMode = false;
     //最后得分

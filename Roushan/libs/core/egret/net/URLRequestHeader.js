@@ -28,6 +28,16 @@ var egret;
 (function (egret) {
     var URLRequestHeader = (function () {
         function URLRequestHeader(name, value) {
+            /**
+             * HTTP 请求标头名称，如 Content-Type
+             * @member {string} egret.URLRequestHeader#name
+             */
+            this.name = "";
+            /**
+             * 与 name 属性相关联的值，如 text/plain
+             * @member {string} egret.URLRequestHeader#value
+             */
+            this.value = "";
             this.name = name;
             this.value = value;
         }

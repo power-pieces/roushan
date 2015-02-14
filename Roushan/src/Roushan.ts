@@ -56,9 +56,10 @@ class Roushan extends egret.DisplayObjectContainer
     //创建游戏场景
     private createGameScene():void
     {
+        DataCenter.cfg = RES.getRes("config_json");
+
         egret.Profiler.getInstance().run();
         Util.stage = this.stage;
-        //this.addEventListener(ChangeViewEvent.CHANGE_VIEW, this.changeViewHandler, this);
 
         NoticeManager.addNoticeAction(NoticeCode.SHOW_START_VIEW,
             function (n: Notice): void {
@@ -90,7 +91,7 @@ class Roushan extends egret.DisplayObjectContainer
         if (null != this._nowView)
         {
             this._nowView.parent.removeChild(this._nowView);
-            this._nowView.removeListener();
+            this._nowView.removeListeners();
             this._nowView = null;
         }
     }
@@ -103,7 +104,7 @@ class Roushan extends egret.DisplayObjectContainer
         var showView:StartView = new StartView();
         this._nowView = showView;
         Util.stage.addChild(this._nowView);
-        this._nowView.addListener();
+        this._nowView.addListeners();
     }
     /*
      * 显示游戏界面
@@ -111,10 +112,11 @@ class Roushan extends egret.DisplayObjectContainer
     private showGameView():void
     {
         this.removeCurrentView();
-        var showView:GameView = new GameView();
+        //var showView:GameView = new GameView();
+        var showView:Battle = new Battle();
         this._nowView = showView;
         Util.stage.addChild(this._nowView);
-        this._nowView.addListener();
+        this._nowView.addListeners();
     }
     /*
      * 显示结算界面
@@ -126,7 +128,7 @@ class Roushan extends egret.DisplayObjectContainer
         showView.showGameInfo();
         this._nowView = showView;
         Util.stage.addChild(this._nowView);
-        this._nowView.addListener();
+        this._nowView.addListeners();
     }
 
 }

@@ -32,56 +32,18 @@ var __extends = this.__extends || function (d, b) {
 };
 var egret;
 (function (egret) {
+    /**
+     * @deprecated
+     * 位图字体,此类已废弃，请使用egret.BitmapFont代替。
+     */
     var BitmapTextSpriteSheet = (function (_super) {
         __extends(BitmapTextSpriteSheet, _super);
         function BitmapTextSpriteSheet(texture, fntText) {
-            _super.call(this, texture);
-            this.charList = this.parseConfig(fntText);
+            _super.call(this, texture, fntText);
+            egret.Logger.warning("egret.BitmapTextSpriteSheet已废弃，请使用egret.BitmapFont代替。");
         }
-        BitmapTextSpriteSheet.prototype.getTexture = function (name) {
-            var texture = this._textureMap[name];
-            if (!texture) {
-                var c = this.charList[name];
-                if (!c) {
-                    return null;
-                }
-                texture = this.createTexture(name, c.x, c.y, c.width, c.height, c.offsetX, c.offsetY);
-                this._textureMap[name] = texture;
-            }
-            return texture;
-        };
-        BitmapTextSpriteSheet.prototype.parseConfig = function (fntText) {
-            fntText = fntText.split("\r\n").join("\n");
-            var lines = fntText.split("\n");
-            var charsCount = this.getConfigByKey(lines[3], "count");
-            var chars = {};
-            for (var i = 4; i < 4 + charsCount; i++) {
-                var charText = lines[i];
-                var letter = String.fromCharCode(this.getConfigByKey(charText, "id"));
-                var c = {};
-                chars[letter] = c;
-                c["x"] = this.getConfigByKey(charText, "x");
-                c["y"] = this.getConfigByKey(charText, "y");
-                c["width"] = this.getConfigByKey(charText, "width");
-                c["height"] = this.getConfigByKey(charText, "height");
-                c["offsetX"] = this.getConfigByKey(charText, "xoffset");
-                c["offsetY"] = this.getConfigByKey(charText, "yoffset");
-            }
-            return chars;
-        };
-        BitmapTextSpriteSheet.prototype.getConfigByKey = function (configText, key) {
-            var itemConfigTextList = configText.split(" ");
-            for (var i = 0, length = itemConfigTextList.length; i < length; i++) {
-                var itemConfigText = itemConfigTextList[i];
-                if (key == itemConfigText.substring(0, key.length)) {
-                    var value = itemConfigText.substring(key.length + 1);
-                    return parseInt(value);
-                }
-            }
-            return 0;
-        };
         return BitmapTextSpriteSheet;
-    })(egret.SpriteSheet);
+    })(egret.BitmapFont);
     egret.BitmapTextSpriteSheet = BitmapTextSpriteSheet;
     BitmapTextSpriteSheet.prototype.__class__ = "egret.BitmapTextSpriteSheet";
 })(egret || (egret = {}));

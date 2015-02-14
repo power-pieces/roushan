@@ -12,11 +12,11 @@ class ViewBase extends egret.DisplayObjectContainer
         super();
     }
 
-    public addListener()
+    public addListeners()
     {
     }
 
-    public removeListener()
+    public removeListeners()
     {
     }
 }

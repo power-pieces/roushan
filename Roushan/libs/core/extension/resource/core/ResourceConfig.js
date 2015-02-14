@@ -91,8 +91,13 @@ var RES;
                 }
                 else {
                     item = this.keyMap[key];
-                    if (item && group.indexOf(item) == -1)
-                        group.push(item);
+                    if (item) {
+                        if (group.indexOf(item) == -1)
+                            group.push(item);
+                    }
+                    else {
+                        egret.Logger.warning("RES.createGroup()传入了配置中不存在的键值:" + key);
+                    }
                 }
             }
             if (group.length == 0)

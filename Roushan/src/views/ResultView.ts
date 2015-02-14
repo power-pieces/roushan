@@ -99,14 +99,14 @@ class ResultView extends ViewBase
         return txt;
     }
 
-    public addListener()
+    public addListeners()
     {
         this._bg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchBgHandler, this);
         this._againBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchAgainBtnHandler, this);
         this._shareBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchShareBtnHandler, this);
     }
 
-    public removeListener()
+    public removeListeners()
     {
         this._bg.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchBgHandler, this);
         this._againBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchAgainBtnHandler, this);

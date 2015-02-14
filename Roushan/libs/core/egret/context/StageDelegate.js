@@ -270,6 +270,7 @@ var egret;
         function FixedHeight(minWidth) {
             if (minWidth === void 0) { minWidth = 0; }
             _super.call(this);
+            this.minWidth = NaN;
             this.minWidth = minWidth;
         }
         /**
@@ -310,6 +311,7 @@ var egret;
         function FixedWidth(minHeight) {
             if (minHeight === void 0) { minHeight = 0; }
             _super.call(this);
+            this.minHeight = NaN;
             this.minHeight = minHeight;
         }
         FixedWidth.prototype._apply = function (delegate, designedResolutionWidth, designedResolutionHeight) {

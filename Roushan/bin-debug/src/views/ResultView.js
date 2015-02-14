@@ -83,12 +83,12 @@ var ResultView = (function (_super) {
         this.addChild(txt);
         return txt;
     };
-    ResultView.prototype.addListener = function () {
+    ResultView.prototype.addListeners = function () {
         this._bg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchBgHandler, this);
         this._againBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchAgainBtnHandler, this);
         this._shareBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchShareBtnHandler, this);
     };
-    ResultView.prototype.removeListener = function () {
+    ResultView.prototype.removeListeners = function () {
         this._bg.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchBgHandler, this);
         this._againBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchAgainBtnHandler, this);
         this._shareBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchShareBtnHandler, this);

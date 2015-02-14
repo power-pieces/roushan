@@ -45,6 +45,16 @@ var RES;
              */
             this.loadingCount = 0;
             /**
+             * 一项加载结束回调函数。无论加载成功或者出错都将执行回调函数。示例：callBack(resItem:ResourceItem):void;
+             * @member {Function} RES.ResourceLoader#callBack
+             */
+            this.callBack = null;
+            /**
+             * RES单例的引用
+             * @member {any} RES.ResourceLoader#resInstance
+             */
+            this.resInstance = null;
+            /**
              * 当前组加载的项总个数,key为groupName
              */
             this.groupTotalDic = {};

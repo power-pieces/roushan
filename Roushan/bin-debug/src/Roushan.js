@@ -50,9 +50,9 @@ var Roushan = (function (_super) {
     };
     //创建游戏场景
     Roushan.prototype.createGameScene = function () {
+        DataCenter.cfg = RES.getRes("config_json");
         egret.Profiler.getInstance().run();
         Util.stage = this.stage;
-        //this.addEventListener(ChangeViewEvent.CHANGE_VIEW, this.changeViewHandler, this);
         NoticeManager.addNoticeAction(NoticeCode.SHOW_START_VIEW, function (n) {
             this.showStartView();
         }.bind(this));
@@ -76,7 +76,7 @@ var Roushan = (function (_super) {
     Roushan.prototype.removeCurrentView = function () {
         if (null != this._nowView) {
             this._nowView.parent.removeChild(this._nowView);
-            this._nowView.removeListener();
+            this._nowView.removeListeners();
             this._nowView = null;
         }
     };
@@ -88,17 +88,18 @@ var Roushan = (function (_super) {
         var showView = new StartView();
         this._nowView = showView;
         Util.stage.addChild(this._nowView);
-        this._nowView.addListener();
+        this._nowView.addListeners();
     };
     /*
      * 显示游戏界面
      */
     Roushan.prototype.showGameView = function () {
         this.removeCurrentView();
-        var showView = new GameView();
+        //var showView:GameView = new GameView();
+        var showView = new Battle();
         this._nowView = showView;
         Util.stage.addChild(this._nowView);
-        this._nowView.addListener();
+        this._nowView.addListeners();
     };
     /*
      * 显示结算界面
@@ -109,7 +110,7 @@ var Roushan = (function (_super) {
         showView.showGameInfo();
         this._nowView = showView;
         Util.stage.addChild(this._nowView);
-        this._nowView.addListener();
+        this._nowView.addListeners();
     };
     return Roushan;
 })(egret.DisplayObjectContainer);

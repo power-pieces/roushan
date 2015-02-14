@@ -133,7 +133,7 @@ var egret;
         };
         HTML5CanvasRenderer.prototype.drawRepeatImage = function (texture, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight, repeat) {
             if (texture['pattern'] === undefined) {
-                var texture_scale_factor = egret.MainContext.instance.rendererContext.texture_scale_factor;
+                var texture_scale_factor = egret.MainContext.instance.rendererContext._texture_scale_factor;
                 var image = texture._bitmapData;
                 var tempImage = image;
                 if (image.width != sourceWidth || image.height != sourceHeight || texture_scale_factor != 1) {
@@ -291,11 +291,11 @@ var egret_h5_graphics;
         var _colorRed = color >> 16;
         var _colorStr = "rgba(" + _colorRed + "," + _colorGreen + "," + _colorBlue + "," + alpha + ")";
         this.fillStyleColor = _colorStr;
-        this.commandQueue.push(new Command(this._setStyle, this, [_colorStr]));
+        this._pushCommand(new Command(this._setStyle, this, [_colorStr]));
     }
     egret_h5_graphics.beginFill = beginFill;
     function drawRect(x, y, width, height) {
-        this.commandQueue.push(new Command(function (x, y, width, height) {
+        this._pushCommand(new Command(function (x, y, width, height) {
             var rendererContext = this.renderContext;
             this.canvasContext.beginPath();
             this.canvasContext.rect(rendererContext._transformTx + x, rendererContext._transformTy + y, width, height);
@@ -305,7 +305,7 @@ var egret_h5_graphics;
     }
     egret_h5_graphics.drawRect = drawRect;
     function drawCircle(x, y, r) {
-        this.commandQueue.push(new Command(function (x, y, r) {
+        this._pushCommand(new Command(function (x, y, r) {
             var rendererContext = this.renderContext;
             this.canvasContext.beginPath();
             this.canvasContext.arc(rendererContext._transformTx + x, rendererContext._transformTy + y, r, 0, Math.PI * 2);
@@ -316,7 +316,7 @@ var egret_h5_graphics;
     egret_h5_graphics.drawCircle = drawCircle;
     function drawRoundRect(x, y, width, height, ellipseWidth, ellipseHeight) {
         //非等值椭圆角实现
-        this.commandQueue.push(new Command(function (x, y, width, height, ellipseWidth, ellipseHeight) {
+        this._pushCommand(new Command(function (x, y, width, height, ellipseWidth, ellipseHeight) {
             var rendererContext = this.renderContext;
             var _x = rendererContext._transformTx + x; //控制X偏移
             var _y = rendererContext._transformTy + y; //控制Y偏移
@@ -345,7 +345,7 @@ var egret_h5_graphics;
     egret_h5_graphics.drawRoundRect = drawRoundRect;
     function drawEllipse(x, y, width, height) {
         //基于均匀压缩算法
-        this.commandQueue.push(new Command(function (x, y, width, height) {
+        this._pushCommand(new Command(function (x, y, width, height) {
             var rendererContext = this.renderContext;
             this.canvasContext.save();
             var _x = rendererContext._transformTx + x; //控制X偏移
@@ -375,18 +375,20 @@ var egret_h5_graphics;
         if (miterLimit === void 0) { miterLimit = 3; }
         if (this.strokeStyleColor) {
             this.createEndLineCommand();
-            this.commandQueue.push(this.endLineCommand);
+            this._pushCommand(this.endLineCommand);
         }
         var _colorBlue = color & 0x0000FF;
         var _colorGreen = (color & 0x00ff00) >> 8;
         var _colorRed = color >> 16;
         var _colorStr = "rgba(" + _colorRed + "," + _colorGreen + "," + _colorBlue + "," + alpha + ")";
         this.strokeStyleColor = _colorStr;
-        this.commandQueue.push(new Command(function (lineWidth, strokeStyle) {
+        this._pushCommand(new Command(function (lineWidth, strokeStyle, lineCap, lineJoin) {
             this.canvasContext.lineWidth = lineWidth;
             this.canvasContext.strokeStyle = strokeStyle;
+            this.canvasContext.lineCap = lineCap;
+            this.canvasContext.lineJoin = lineJoin;
             this.canvasContext.beginPath();
-        }, this, [thickness, _colorStr]));
+        }, this, [thickness, _colorStr, caps, joints]));
         if (typeof (this.lineX) === "undefined") {
             this.lineX = 0;
             this.lineY = 0;
@@ -395,7 +397,7 @@ var egret_h5_graphics;
     }
     egret_h5_graphics.lineStyle = lineStyle;
     function lineTo(x, y) {
-        this.commandQueue.push(new Command(function (x, y) {
+        this._pushCommand(new Command(function (x, y) {
             var rendererContext = this.renderContext;
             var canvasContext = this.canvasContext;
             canvasContext.lineTo(rendererContext._transformTx + x, rendererContext._transformTy + y);
@@ -405,7 +407,7 @@ var egret_h5_graphics;
     }
     egret_h5_graphics.lineTo = lineTo;
     function curveTo(controlX, controlY, anchorX, anchorY) {
-        this.commandQueue.push(new Command(function (x, y, ax, ay) {
+        this._pushCommand(new Command(function (x, y, ax, ay) {
             var rendererContext = this.renderContext;
             var canvasContext = this.canvasContext;
             canvasContext.quadraticCurveTo(rendererContext._transformTx + x, rendererContext._transformTy + y, rendererContext._transformTx + ax, rendererContext._transformTy + ay);
@@ -415,7 +417,7 @@ var egret_h5_graphics;
     }
     egret_h5_graphics.curveTo = curveTo;
     function moveTo(x, y) {
-        this.commandQueue.push(new Command(function (x, y) {
+        this._pushCommand(new Command(function (x, y) {
             var rendererContext = this.renderContext;
             var canvasContext = this.canvasContext;
             canvasContext.moveTo(rendererContext._transformTx + x, rendererContext._transformTy + y);
@@ -428,6 +430,7 @@ var egret_h5_graphics;
         this.lineY = 0;
         this.strokeStyleColor = null;
         this.fillStyleColor = null;
+        this._dirty = false;
     }
     egret_h5_graphics.clear = clear;
     function createEndFillCommand() {
@@ -443,13 +446,13 @@ var egret_h5_graphics;
         if (this.fillStyleColor != null) {
             this._fill();
         }
-        this.fillStyleColor = null;
     }
     egret_h5_graphics.endFill = endFill;
     function _fill() {
         if (this.fillStyleColor) {
             this.createEndFillCommand();
-            this.commandQueue.push(this.endFillCommand);
+            this._pushCommand(this.endFillCommand);
+            this.fillStyleColor = null;
         }
     }
     egret_h5_graphics._fill = _fill;
@@ -462,6 +465,11 @@ var egret_h5_graphics;
         }
     }
     egret_h5_graphics.createEndLineCommand = createEndLineCommand;
+    function _pushCommand(cmd) {
+        this.commandQueue.push(cmd);
+        this._dirty = true;
+    }
+    egret_h5_graphics._pushCommand = _pushCommand;
     function _draw(renderContext) {
         var length = this.commandQueue.length;
         if (length == 0) {
@@ -473,7 +481,7 @@ var egret_h5_graphics;
         canvasContext.save();
         if (this.strokeStyleColor && length > 0 && this.commandQueue[length - 1] != this.endLineCommand) {
             this.createEndLineCommand();
-            this.commandQueue.push(this.endLineCommand);
+            this._pushCommand(this.endLineCommand);
             length = this.commandQueue.length;
         }
         for (var i = 0; i < length; i++) {
@@ -481,6 +489,7 @@ var egret_h5_graphics;
             command.method.apply(command.thisObject, command.args);
         }
         canvasContext.restore();
+        this._dirty = false;
     }
     egret_h5_graphics._draw = _draw;
     var Command = (function () {

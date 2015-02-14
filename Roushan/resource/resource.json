@@ -1,7 +1,7 @@
 {
 	"groups":[
 	{
-		"keys":"start_bg, start_tip, des_btn, normal_mode_btn, special_mode_btn, tip_bg, tip_1, tip_2, tip_3, tip_4, tip_5, tip_6, tip_7, tip_8, tip_9, tip_10, tip_11, drop_flag, game_bg, result_bg, share_btn, again_btn, number0, number1, number2, number3, number4, number5, number6, number7, number8, number9, r1, r2, r3, r4",
+		"keys":"start_bg, start_tip, des_btn, normal_mode_btn, special_mode_btn, tip_bg, tip_1, tip_2, tip_3, tip_4, tip_5, tip_6, tip_7, tip_8, tip_9, tip_10, tip_11, drop_flag, game_bg, result_bg, share_btn, again_btn, number0, number1, number2, number3, number4, number5, number6, number7, number8, number9, r1, r2, r3, r4, b0_png,b1_png,b2_png,b3_png,b4_png,b5_png,b6_png,b7_png,b8_png,r1_png,r2_png,r3_png,rf1_png,rf2_png,rf3_png,rf4_png,rf5_png,Roshan-Background_png,config_json,arrow_png",
 		"name":"preload"
 	}],
 	"resources":[
@@ -184,6 +184,106 @@
             "name":"r4",
             "type":"image",
             "url":"assets/r4.png"
+        },
+        {
+            "name":"b0_png",
+            "type":"image",
+            "url":"assets/game/b0.png"
+        },
+        {
+            "name":"b1_png",
+            "type":"image",
+            "url":"assets/game/b1.png"
+        },
+        {
+            "name":"b2_png",
+            "type":"image",
+            "url":"assets/game/b2.png"
+        },
+        {
+            "name":"b3_png",
+            "type":"image",
+            "url":"assets/game/b3.png"
+        },
+        {
+            "name":"b4_png",
+            "type":"image",
+            "url":"assets/game/b4.png"
+        },
+        {
+            "name":"b5_png",
+            "type":"image",
+            "url":"assets/game/b5.png"
+        },
+        {
+            "name":"b6_png",
+            "type":"image",
+            "url":"assets/game/b6.png"
+        },
+        {
+            "name":"b7_png",
+            "type":"image",
+            "url":"assets/game/b7.png"
+        },
+        {
+            "name":"b8_png",
+            "type":"image",
+            "url":"assets/game/b8.png"
+        },
+        {
+            "name":"r1_png",
+            "type":"image",
+            "url":"assets/game/r1.png"
+        },
+        {
+            "name":"r2_png",
+            "type":"image",
+            "url":"assets/game/r2.png"
+        },
+        {
+            "name":"r3_png",
+            "type":"image",
+            "url":"assets/game/r3.png"
+        },
+        {
+            "name":"rf1_png",
+            "type":"image",
+            "url":"assets/game/rf1.png"
+        },
+        {
+            "name":"rf2_png",
+            "type":"image",
+            "url":"assets/game/rf2.png"
+        },
+        {
+            "name":"rf3_png",
+            "type":"image",
+            "url":"assets/game/rf3.png"
+        },
+        {
+            "name":"rf4_png",
+            "type":"image",
+            "url":"assets/game/rf4.png"
+        },
+        {
+            "name":"rf5_png",
+            "type":"image",
+            "url":"assets/game/rf5.png"
+        },
+        {
+            "name":"Roshan-Background_png",
+            "type":"image",
+            "url":"assets/game/Roshan-Background.png"
+        },
+        {
+            "name":"config_json",
+            "type":"json",
+            "url":"configs/config.json"
+        },
+        {
+            "name":"arrow_png",
+            "type":"image",
+            "url":"assets/game/arrow.png"
         }
 	]
 }

@@ -25,12 +25,12 @@ class GameView extends ViewBase
         Util.stage.addChild(this._flag);
     }
 
-    public addListener()
+    public addListeners()
     {
         this._bg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchBgHandler, this);
     }
 
-    public removeListener()
+    public removeListeners()
     {
         this._bg.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchBgHandler, this);
     }

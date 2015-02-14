@@ -43,6 +43,8 @@ var egret;
             if (repeatCount === void 0) { repeatCount = 0; }
             _super.call(this);
             this._currentCount = 0;
+            this._running = false;
+            this.lastTime = 0;
             this.delay = delay;
             this.repeatCount = repeatCount;
         }

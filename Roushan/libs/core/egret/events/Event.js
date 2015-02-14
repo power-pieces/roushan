@@ -54,7 +54,13 @@ var egret;
             if (bubbles === void 0) { bubbles = false; }
             if (cancelable === void 0) { cancelable = false; }
             _super.call(this);
+            this.data = null;
+            this._type = "";
+            this._bubbles = false;
+            this._cancelable = false;
             this._eventPhase = 2;
+            this._currentTarget = null;
+            this._target = null;
             this._isDefaultPrevented = false;
             this._isPropagationStopped = false;
             this._isPropagationImmediateStopped = false;
@@ -261,6 +267,11 @@ var egret;
          * @constant {string} egret.Event.COMPLETE
          */
         Event.COMPLETE = "complete";
+        /**
+         * 循环完成
+         * @constant {string} egret.Event.LOOP_COMPLETE
+         */
+        Event.LOOP_COMPLETE = "loopcomplete";
         /**
          * 主循环：进入新的一帧
          * @constant {string} egret.Event.ENTER_FRAME

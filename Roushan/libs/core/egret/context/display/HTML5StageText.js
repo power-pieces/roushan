@@ -41,6 +41,8 @@ var egret;
         __extends(HTML5StageText, _super);
         function HTML5StageText() {
             _super.call(this);
+            this.div = null;
+            this.inputElement = null;
             this._hasListeners = false;
             this._inputType = "";
             this._isShow = false;
@@ -188,6 +190,7 @@ var egret;
             this.setElementStyle("display", "block");
         };
         HTML5StageText.prototype._show = function () {
+            egret.MainContext.instance.stage._changeSizeDispatchFlag = false;
             if (this._maxChars > 0) {
                 this.inputElement.setAttribute("maxlength", this._maxChars);
             }
@@ -214,6 +217,7 @@ var egret;
             }
         };
         HTML5StageText.prototype._hide = function () {
+            egret.MainContext.instance.stage._changeSizeDispatchFlag = true;
             if (this.inputElement == null) {
                 return;
             }

@@ -30,6 +30,16 @@ var RES;
          * @param type {string} 加载项文件类型
          */
         function ResourceItem(name, url, type) {
+            /**
+             * 所属组名
+             * @member {string} RES.ResourceItem#groupName
+             */
+            this.groupName = "";
+            /**
+             * 被引用的原始数据对象
+             * @member {any} RES.ResourceItem#data
+             */
+            this.data = null;
             this._loaded = false;
             this.name = name;
             this.url = url;

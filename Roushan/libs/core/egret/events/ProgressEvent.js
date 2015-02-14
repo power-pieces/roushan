@@ -48,6 +48,8 @@ var egret;
             if (bytesLoaded === void 0) { bytesLoaded = 0; }
             if (bytesTotal === void 0) { bytesTotal = 0; }
             _super.call(this, type, bubbles, cancelable);
+            this.bytesLoaded = 0;
+            this.bytesTotal = 0;
             this.bytesLoaded = bytesLoaded;
             this.bytesTotal = bytesTotal;
         }

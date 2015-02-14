@@ -37,6 +37,7 @@ var egret;
         function InputController() {
             _super.call(this);
             this._isFocus = false;
+            this._text = null;
             this._isFirst = true;
             this._isFirst = true;
         }
@@ -57,6 +58,7 @@ var egret;
             this.stageText.addEventListener("updateText", this.updateTextHandler, this);
             this._text.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onMouseDownHandler, this);
             egret.MainContext.instance.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onStageDownHandler, this);
+            egret.MainContext.instance.stage.addEventListener(egret.Event.RESIZE, this.onResize, this);
         };
         InputController.prototype._removeStageText = function () {
             this.stageText._remove();
@@ -69,6 +71,10 @@ var egret;
             this.stageText.removeEventListener("updateText", this.updateTextHandler, this);
             this._text.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onMouseDownHandler, this);
             egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onStageDownHandler, this);
+            egret.MainContext.instance.stage.removeEventListener(egret.Event.RESIZE, this.onResize, this);
+        };
+        InputController.prototype.onResize = function () {
+            this._isFirst = true;
         };
         InputController.prototype._getText = function () {
             return this.stageText._getText();

@@ -45,9 +45,32 @@ var egret;
         __extends(SpriteSheet, _super);
         function SpriteSheet(texture) {
             _super.call(this);
+            /**
+             * 表示bitmapData.width
+             */
+            this._sourceWidth = 0;
+            /**
+             * 表示bitmapData.height
+             */
+            this._sourceHeight = 0;
+            /**
+             * 表示这个SpriteSheet的位图区域在bitmapData上的起始位置x。
+             */
+            this._bitmapX = 0;
+            /**
+             * 表示这个SpriteSheet的位图区域在bitmapData上的起始位置y。
+             */
+            this._bitmapY = 0;
+            /**
+             * 共享的位图数据
+             */
+            this.bitmapData = 0;
+            /**
+             * 纹理缓存字典
+             */
+            this._textureMap = {};
             var bitmapData = texture.bitmapData;
             this.bitmapData = bitmapData;
-            this._textureMap = {};
             this._sourceWidth = bitmapData.width;
             this._sourceHeight = bitmapData.height;
             this._bitmapX = texture._bitmapX - texture._offsetX;
@@ -86,7 +109,7 @@ var egret;
                 textureHeight = offsetY + bitmapHeight;
             }
             var texture = new egret.Texture();
-            var scale = egret.MainContext.instance.rendererContext.texture_scale_factor;
+            var scale = egret.MainContext.instance.rendererContext._texture_scale_factor;
             texture._bitmapData = this.bitmapData;
             texture._bitmapX = this._bitmapX + bitmapX;
             texture._bitmapY = this._bitmapY + bitmapY;

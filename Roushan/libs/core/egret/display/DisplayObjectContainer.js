@@ -132,9 +132,9 @@ var egret;
                 return child;
             }
             if (host) {
-                var index = host._children.indexOf(child);
-                if (index >= 0) {
-                    host._doRemoveChild(index);
+                var hostIndex = host._children.indexOf(child);
+                if (hostIndex >= 0) {
+                    host._doRemoveChild(hostIndex);
                 }
             }
             this._children.splice(index, 0, child);

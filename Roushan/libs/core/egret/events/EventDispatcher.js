@@ -57,6 +57,20 @@ var egret;
         function EventDispatcher(target) {
             if (target === void 0) { target = null; }
             _super.call(this);
+            /**
+             * 事件抛出对象
+             */
+            this._eventTarget = null;
+            /**
+             * 引擎内部调用
+             * @private
+             */
+            this._eventsMap = null;
+            /**
+             * 引擎内部调用
+             * @private
+             */
+            this._captureEventsMap = null;
             if (target) {
                 this._eventTarget = target;
             }

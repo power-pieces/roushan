@@ -32,6 +32,12 @@ var egret;
      */
     var Sound = (function () {
         function Sound() {
+            this.path = "";
+            /**
+             * audio音频对象
+             * @member {any} egret.Sound#audio
+             */
+            this.audio = null;
             this.type = Sound.EFFECT;
         }
         /**

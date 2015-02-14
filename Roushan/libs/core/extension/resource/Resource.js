@@ -93,6 +93,17 @@ var RES;
     }
     RES.hasRes = hasRes;
     /**
+     * 运行时动态解析一个配置文件,
+     * @method RES.parseConfig
+     * @param data {any} 配置文件数据，请参考resource.json的配置文件格式。传入对应的json对象即可。
+     * @param folder {string} 加载项的路径前缀。
+     */
+    function parseConfig(data, folder) {
+        if (folder === void 0) { folder = ""; }
+        instance.parseConfig(data, folder);
+    }
+    RES.parseConfig = parseConfig;
+    /**
      * 同步方式获取缓存的已经加载成功的资源。<br/>
      * @method RES.getRes
      * @param key {string} 对应配置文件里的name属性或sbuKeys属性的一项。
@@ -348,17 +359,23 @@ var RES;
                 this.configComplete = true;
                 this.loadingConfigList = null;
                 RES.ResourceEvent.dispatchResourceEvent(this, RES.ResourceEvent.CONFIG_COMPLETE);
-                var groupNameList = this.groupNameList;
-                var length = groupNameList.length;
-                for (var i = 0; i < length; i++) {
-                    var item = groupNameList[i];
-                    this.loadGroup(item.name, item.priority);
-                }
-                this.groupNameList = [];
+                this.loadDelayGroups();
             }
             else {
                 this.loadedGroups.push(event.groupName);
                 this.dispatchEvent(event);
+            }
+        };
+        /**
+         * 启动延迟的组加载
+         */
+        Resource.prototype.loadDelayGroups = function () {
+            var groupNameList = this.groupNameList;
+            this.groupNameList = [];
+            var length = groupNameList.length;
+            for (var i = 0; i < length; i++) {
+                var item = groupNameList[i];
+                this.loadGroup(item.name, item.priority);
             }
         };
         /**
@@ -389,6 +406,18 @@ var RES;
                 }
             }
             return true;
+        };
+        /**
+         * 运行时动态解析一个配置文件,
+         * @param data {any} 配置文件数据，请参考resource.json的配置文件格式。传入对应的json对象即可。
+         * @param folder {string} 加载项的路径前缀。
+         */
+        Resource.prototype.parseConfig = function (data, folder) {
+            this.resConfig.parseConfig(data, folder);
+            if (!this.configComplete && !this.loadingConfigList) {
+                this.configComplete = true;
+                this.loadDelayGroups();
+            }
         };
         /**
          * 通过key同步获取资源
@@ -493,6 +522,8 @@ var RES;
                 case "png":
                 case "jpg":
                 case "gif":
+                case "jpeg":
+                case "bmp":
                     type = RES.ResourceItem.TYPE_IMAGE;
                     break;
                 case "fnt":

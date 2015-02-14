@@ -42,6 +42,21 @@ var egret;
             if (width === void 0) { width = 480; }
             if (height === void 0) { height = 800; }
             _super.call(this);
+            /**
+             * 是否会派发 RESIZE 事件
+             */
+            this._changeSizeDispatchFlag = true;
+            /**
+             * 一个 StageScaleMode 类中指定要使用哪种缩放模式的值。以下是有效值：
+             * StageScaleMode.EXACT_FIT -- 整个应用程序在指定区域中可见，但不尝试保持原始高宽比。可能会发生扭曲，应用程序可能会拉伸或压缩显示。
+             * StageScaleMode.SHOW_ALL -- 整个应用程序在指定区域中可见，且不发生扭曲，同时保持应用程序的原始高宽比。应用程序的可能会显示边框。
+             * StageScaleMode.NO_BORDER -- 整个应用程序填满指定区域，不发生扭曲，但有可能进行一些裁切，同时保持应用程序的原始高宽比。
+             * StageScaleMode.NO_SCALE -- 整个应用程序的大小固定，因此，即使播放器窗口的大小更改，它也会保持不变。如果播放器窗口比内容小，则可能进行一些裁切。
+             * @member {number} egret.Stage#scaleMode
+             */
+            this._scaleMode = "";
+            this._stageWidth = NaN;
+            this._stageHeight = NaN;
             this.touchEnabled = true;
             this._stage = this;
             this._stageWidth = width;
@@ -72,6 +87,9 @@ var egret;
          * 当屏幕尺寸改变时调用
          */
         Stage.prototype.changeSize = function () {
+            if (!this._changeSizeDispatchFlag) {
+                return;
+            }
             //重新设置屏幕适配策略
             this.setResolutionPolicy();
             //触发Event.RESIZE事件

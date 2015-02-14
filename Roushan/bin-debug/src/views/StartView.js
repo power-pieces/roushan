@@ -40,7 +40,7 @@ var StartView = (function (_super) {
         this._specialBtn.touchEnabled = true;
         this._tipViewShow = false;
     };
-    StartView.prototype.addListener = function () {
+    StartView.prototype.addListeners = function () {
         this._bg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchBgHandler, this);
         this._start.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchStartHandler, this);
         this._desBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDesBtnHandler, this);
@@ -50,7 +50,7 @@ var StartView = (function (_super) {
             this.closeTipViewHandler();
         }.bind(this));
     };
-    StartView.prototype.removeListener = function () {
+    StartView.prototype.removeListeners = function () {
         this._bg.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchBgHandler, this);
         this._start.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchStartHandler, this);
         this._desBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDesBtnHandler, this);
@@ -64,9 +64,7 @@ var StartView = (function (_super) {
      * 点击屏幕
      */
     StartView.prototype.touchBgHandler = function (e) {
-        console.log("点击屏幕");
         if (this._tipViewShow) {
-            console.log("2");
             this._tipView.showTip();
         }
     };
@@ -74,13 +72,16 @@ var StartView = (function (_super) {
      * 点击开始
      */
     StartView.prototype.touchStartHandler = function (e) {
+        if (this._tipViewShow) {
+            this._tipView.showTip();
+            return;
+        }
         this.touchNormalBtnHandler(null);
     };
     /*
      * 点击说明按钮
      */
     StartView.prototype.touchDesBtnHandler = function (e) {
-        console.log("点击说明按钮");
         if (this._tipViewShow == false) {
             if (this._tipView == null) {
                 this._tipView = new TipsView();
@@ -105,7 +106,6 @@ var StartView = (function (_super) {
      * 点击普通模式按钮
      */
     StartView.prototype.touchNormalBtnHandler = function (e) {
-        console.log("点击普通模式按钮");
         this.closeTipViewHandler();
         DataCenter.isIceMode = false;
         NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_GAME_VIEW));
@@ -114,7 +114,6 @@ var StartView = (function (_super) {
      * 点击特殊模式按钮
      */
     StartView.prototype.touchSpecialBtnHandler = function (e) {
-        console.log("点击特殊模式按钮");
         this.closeTipViewHandler();
         DataCenter.isIceMode = true;
         NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_GAME_VIEW));

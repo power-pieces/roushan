@@ -37,6 +37,7 @@ var egret;
         function HTML5TouchContext() {
             _super.call(this);
             this._isTouchDown = false;
+            this.rootDiv = null;
             this.rootDiv = document.getElementById(egret.StageDelegate.canvas_div_name);
         }
         HTML5TouchContext.prototype.prevent = function (event) {

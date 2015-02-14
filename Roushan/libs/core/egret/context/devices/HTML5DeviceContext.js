@@ -47,6 +47,7 @@ var egret;
             _super.call(this);
             this.frameRate = frameRate;
             this._time = 0;
+            this._requestAnimationId = NaN;
             this._isActivate = true;
             if (frameRate == 60) {
                 HTML5DeviceContext.requestAnimationFrame = window["requestAnimationFrame"] || window["webkitRequestAnimationFrame"] || window["mozRequestAnimationFrame"] || window["oRequestAnimationFrame"] || window["msRequestAnimationFrame"];
@@ -154,6 +155,11 @@ var egret;
                 document.addEventListener(visibilityChange, handleVisibilityChange, false);
             }
         };
+        HTML5DeviceContext.instance = null;
+        HTML5DeviceContext.requestAnimationFrame = null;
+        HTML5DeviceContext.cancelAnimationFrame = null;
+        HTML5DeviceContext._thisObject = null;
+        HTML5DeviceContext._callback = null;
         return HTML5DeviceContext;
     })(egret.DeviceContext);
     egret.HTML5DeviceContext = HTML5DeviceContext;

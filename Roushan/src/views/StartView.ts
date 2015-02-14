@@ -50,7 +50,7 @@ class StartView extends ViewBase
         this._tipViewShow = false;
     }
 
-    public addListener()
+    public addListeners()
     {
         this._bg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchBgHandler, this);
         this._start.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchStartHandler, this);
@@ -63,7 +63,7 @@ class StartView extends ViewBase
             }.bind(this));
     }
 
-    public removeListener()
+    public removeListeners()
     {
         this._bg.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchBgHandler, this);
         this._start.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchStartHandler, this);
@@ -80,10 +80,8 @@ class StartView extends ViewBase
      */
     private touchBgHandler(e: egret.TouchEvent):void
     {
-        console.log("点击屏幕");
         if(this._tipViewShow)
         {
-            console.log("2");
             this._tipView.showTip();
         }
     }
@@ -92,6 +90,11 @@ class StartView extends ViewBase
      */
     private touchStartHandler(e:egret.TouchEvent):void
     {
+        if(this._tipViewShow)
+        {
+            this._tipView.showTip();
+            return;
+        }
         this.touchNormalBtnHandler(null);
     }
     /*
@@ -99,7 +102,6 @@ class StartView extends ViewBase
      */
     private touchDesBtnHandler(e: egret.TouchEvent):void
     {
-        console.log("点击说明按钮");
         if(this._tipViewShow == false)
         {
             if(this._tipView == null)
@@ -129,7 +131,6 @@ class StartView extends ViewBase
      */
     private touchNormalBtnHandler(e: egret.TouchEvent):void
     {
-        console.log("点击普通模式按钮");
         this.closeTipViewHandler();
         DataCenter.isIceMode = false;
         NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_GAME_VIEW));
@@ -139,7 +140,6 @@ class StartView extends ViewBase
      */
     private touchSpecialBtnHandler(e: egret.TouchEvent):void
     {
-        console.log("点击特殊模式按钮");
         this.closeTipViewHandler();
         DataCenter.isIceMode = true;
         NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_GAME_VIEW));

@@ -59,6 +59,8 @@ var egret;
             this._scrollTop = 0;
             this._hCanScroll = false;
             this._vCanScroll = false;
+            this.delayTouchBeginEvent = null;
+            this.touchBeginTimer = null;
             this.touchEnabled = true;
             if (content) {
                 this.setContent(content);
@@ -201,13 +203,13 @@ var egret;
                 var height = this.height;
                 var contentHeight = this._getContentHeight();
                 this._scrollTop = Math.max(this._scrollTop, (0 - height) / 2);
-                this._scrollTop = Math.min(this._scrollTop, contentHeight > height ? (contentHeight - height / 2) : contentHeight / 2);
+                this._scrollTop = Math.min(this._scrollTop, contentHeight > height ? (contentHeight - height / 2) : height / 2);
             }
             if (left) {
                 var width = this.width;
                 var contentWidth = this._getContentWidth();
                 this._scrollLeft = Math.max(this._scrollLeft, (0 - width) / 2);
-                this._scrollLeft = Math.min(this._scrollLeft, contentWidth > width ? (contentWidth - width / 2) : contentWidth / 2);
+                this._scrollLeft = Math.min(this._scrollLeft, contentWidth > width ? (contentWidth - width / 2) : width / 2);
             }
         };
         /**
