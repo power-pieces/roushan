@@ -133,6 +133,7 @@ class StartView extends ViewBase
     {
         this.closeTipViewHandler();
         DataCenter.isIceMode = false;
+        DataCenter.friction = 1;
         NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_GAME_VIEW));
     }
     /*
@@ -142,6 +143,7 @@ class StartView extends ViewBase
     {
         this.closeTipViewHandler();
         DataCenter.isIceMode = true;
+        DataCenter.friction = 0.1;
         NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_GAME_VIEW));
     }
 }
