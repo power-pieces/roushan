@@ -24,7 +24,7 @@ if($conn)
 	$result = $sqlHelper->query($sql);
 	if($result)
 	{
-		$sql = "SELECT (((SELECT COUNT(*) as total FROM `tbl_roushan` WHERE block > %d) / (SELECT COUNT(*) as total FROM `tbl_roushan`) * 100) >> 0) as percent;";
+		$sql = "SELECT ((((SELECT COUNT(*) as total FROM `tbl_roushan` WHERE block > %d) + 1) / (SELECT COUNT(*) as total FROM `tbl_roushan`) * 100) >> 0) as percent;";
 		$sql = sprintf($sql, $block);
 		
 		$result = $sqlHelper->query($sql);
