@@ -390,13 +390,15 @@ declare module p2 {
     }
 
     export class ContactMaterialOptions {
-
+        //摩擦力
         friction: number;
+        //弹性
         restitution: number;
         stiffness: number;
         relaxation: number;
         frictionStiffness: number;
         frictionRelaxation: number;
+        //物体表面速度(就是上面的物体会向某个方向移动)
         surfaceVelocity: number;
 
     }

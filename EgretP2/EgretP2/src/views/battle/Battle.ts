@@ -26,6 +26,11 @@
     public gameState: number = 1;
 
     private _checkDamageTime: number = 0;
+
+    private _leftWingMaterial: p2.Material = null;
+    private _rightWingMaterial: p2.Material = null;
+
+    
     
 
     public constructor() {
@@ -49,13 +54,23 @@
     private createP2World(): void {
         var world: p2.World = new p2.World();        
         //摩擦力
-        world.defaultContactMaterial.friction = 1;
+        world.defaultContactMaterial.friction = DataCenter.friction;
         //弹力
         world.defaultContactMaterial.restitution = 0;
         //柔软度
         //world.defaultContactMaterial.relaxation = Number.MAX_VALUE;
         //睡眠模式
         world.sleepMode = p2.World.NO_SLEEPING;
+
+        this._leftWingMaterial = new p2.Material(null);
+        var op: p2.ContactMaterialOptions = <p2.ContactMaterialOptions>{friction:1, restitution:1,relaxation:4, surfaceVelocity:10};
+        var contactMaterial: p2.ContactMaterial = new p2.ContactMaterial(world.defaultMaterial, this._leftWingMaterial, op);
+        world.addContactMaterial(contactMaterial);
+
+        this._rightWingMaterial = new p2.Material(null);
+        var op: p2.ContactMaterialOptions = <p2.ContactMaterialOptions>{ friction: 1, restitution: 1,relaxation:4, surfaceVelocity: -10 };
+        var contactMaterial: p2.ContactMaterial = new p2.ContactMaterial(world.defaultMaterial, this._rightWingMaterial, op);
+        world.addContactMaterial(contactMaterial);
 
         if (this._isDebug) {
             //开启debug模式，使用图形绘制
@@ -121,47 +136,49 @@
     }
 
     private angle2(angle:number):number{
-        return angle / Math.PI * 180;
+        return angle * Math.PI / 180;
     }
 
     private createBoss(): void {
         var boss: Boss = new Boss();
 
         var positionX: number = (Util.stage.stageWidth >> 1) / Battle.FACTOR;
-        var positionY: number = boss.body.height / Battle.FACTOR;
+        var positionY: number = (boss.body.height >> 1) / Battle.FACTOR;
+
+
 
         var shape: p2.Rectangle = new p2.Rectangle(boss.body.width / Battle.FACTOR, boss.body.height / Battle.FACTOR);
         shape.material = this._p2World.defaultMaterial;
         var body: p2.Body = new p2.Body({ mass: 1, position: [positionX, positionY] });
-        body.type = p2.Body.KINEMATIC;
-        
+        body.type = p2.Body.KINEMATIC;        
         body.addShape(shape);
         this._p2World.addBody(body);
+        
         body.displays = [boss];
         this.addChild(boss);
         
+        var leftWingShape: p2.Rectangle = new p2.Rectangle(boss.leftWing.width * 0.8 / Battle.FACTOR, boss.leftWing.height * 0.8 / Battle.FACTOR);
+        leftWingShape.material = this._leftWingMaterial;
+        var leftWingBody: p2.Body = new p2.Body({ mass: 1, position: [positionX + (boss.leftWing.x / Battle.FACTOR), positionY + (-boss.leftWing.y / Battle.FACTOR)] , angle:this.angle2(15)});
+        
+        leftWingBody.type = p2.Body.KINEMATIC;
+        leftWingBody.addShape(leftWingShape);
+        this._p2World.addBody(leftWingBody);
 
-        boss.p2Bodys = [body];
-        boss.setVelocity(20 / Battle.FACTOR);
+        var rightWingShape: p2.Rectangle = new p2.Rectangle(boss.rightWing.width * 0.8 / Battle.FACTOR, boss.rightWing.height * 0.8 / Battle.FACTOR);
+        rightWingShape.material = this._rightWingMaterial;
+        var rightWingBody: p2.Body = new p2.Body({ mass: 1, position: [positionX + (boss.rightWing.x / Battle.FACTOR), positionY + (-boss.rightWing.y / Battle.FACTOR)], angle: this.angle2(345) });
+        rightWingBody.type = p2.Body.KINEMATIC;
+        rightWingBody.addShape(rightWingShape);
+        this._p2World.addBody(rightWingBody);       
+        
+
+        boss.p2Bodys = [body, leftWingBody, rightWingBody];
+        boss.setVelocity(15 / Battle.FACTOR); //设置BOSS速度
         this._boss = boss;
         
 
-        //var shape: p2.Rectangle = new p2.Rectangle(5, 1);
-        //var body: p2.Body = new p2.Body({ mass: 0, position: [(Util.stage.stageWidth >> 1) / Battle.FACTOR, 2], angle:this.angle2(76)});
-        //shape.material = this._p2World.defaultMaterial;
-        //body.addShape(shape);
 
-        ////// Add the body to the world
-        //this._p2World.addBody(body);
-
-
-        //var shape: p2.Rectangle = new p2.Rectangle(5, 1);
-        //var body: p2.Body = new p2.Body({ mass: 0, position: [(Util.stage.stageWidth >> 1) / Battle.FACTOR, 2], angle: this.angle2(-76) });
-        //shape.material = this._p2World.defaultMaterial;
-        //body.addShape(shape);
-
-        ////// Add the body to the world
-        //this._p2World.addBody(body);
     }
 
     private createBlock(x:number): void {

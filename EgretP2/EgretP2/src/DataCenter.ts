@@ -11,4 +11,7 @@
 
     //方块的层数
     public static blockDeep: number = 0;
+
+    //使用的摩擦力
+    public static friction: number = 1;
 }

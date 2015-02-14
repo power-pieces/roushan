@@ -1,4 +1,4 @@
-var __extends = this.__extends || function (d, b) {
+﻿var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -26,8 +26,12 @@ var Battle = (function (_super) {
         //游戏状态 1正常 2结束
         this.gameState = 1;
         this._checkDamageTime = 0;
+        this._leftWingMaterial = null;
+        this._rightWingMaterial = null;
+
         Battle.FACTOR = DataCenter.cfg.factor;
         this._isDebug = DataCenter.cfg.isDebug;
+
         this.width = Util.stage.stageWidth;
         this.height = Util.stage.stageHeight;
         this.touchEnabled = true;
@@ -41,113 +45,157 @@ var Battle = (function (_super) {
     */
     Battle.prototype.createP2World = function () {
         var world = new p2.World();
+
         //摩擦力
-        world.defaultContactMaterial.friction = 1;
+        world.defaultContactMaterial.friction = DataCenter.friction;
+
         //弹力
         world.defaultContactMaterial.restitution = 0;
+
         //柔软度
         //world.defaultContactMaterial.relaxation = Number.MAX_VALUE;
         //睡眠模式
         world.sleepMode = p2.World.NO_SLEEPING;
+
+        this._leftWingMaterial = new p2.Material(null);
+        var op = { friction: 1, restitution: 1, relaxation: 4, surfaceVelocity: 10 };
+        var contactMaterial = new p2.ContactMaterial(world.defaultMaterial, this._leftWingMaterial, op);
+        world.addContactMaterial(contactMaterial);
+
+        this._rightWingMaterial = new p2.Material(null);
+        var op = { friction: 1, restitution: 1, relaxation: 4, surfaceVelocity: -10 };
+        var contactMaterial = new p2.ContactMaterial(world.defaultMaterial, this._rightWingMaterial, op);
+        world.addContactMaterial(contactMaterial);
+
         if (this._isDebug) {
             //开启debug模式，使用图形绘制
             this.debug(world);
         }
+
         this._p2World = world;
     };
+
     Battle.prototype.createView = function () {
         var bg = Util.createBitmapByName("Roshan-Background_png");
         this.addChild(bg);
+
         this.createBoss();
+
         this._hp = new BossHP(this._boss.getHP(), Util.stage.stageHeight);
         this.addChild(this._hp);
+
         this._arrow = Util.createBitmapByName("arrow_png");
         this._arrow.anchorX = this._arrow.anchorY = 0.5;
         this._arrow.y = Util.stage.stageHeight - Battle.BLOCK_DROP_POS;
     };
+
     Battle.prototype.addListeners = function () {
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegionHandler, this);
         this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.touchMoveHandler, this);
         this.addEventListener(egret.TouchEvent.TOUCH_END, this.touchEndHandler, this);
     };
+
     Battle.prototype.removeListeners = function () {
         this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegionHandler, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.touchMoveHandler, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_END, this.touchEndHandler, this);
     };
+
     Battle.prototype.touchBegionHandler = function (e) {
         if (egret.getTimer() < this._blockCD) {
             return;
         }
+
         this.addChild(this._arrow);
         this._arrow.x = e.stageX;
     };
+
     Battle.prototype.touchMoveHandler = function (e) {
         if (egret.getTimer() < this._blockCD) {
             return;
         }
         this._arrow.x = e.stageX;
     };
+
     Battle.prototype.touchEndHandler = function (e) {
         if (egret.getTimer() < this._blockCD) {
             return;
         }
+
         if (this._arrow.parent) {
             this._arrow.parent.removeChild(this._arrow);
         }
         this.createBlock(e.stageX);
+
         this._blockCD = egret.getTimer() + DataCenter.cfg.blockInterval;
     };
+
     Battle.prototype.angle2 = function (angle) {
-        return angle / Math.PI * 180;
+        return angle * Math.PI / 180;
     };
+
     Battle.prototype.createBoss = function () {
         var boss = new Boss();
+
         var positionX = (Util.stage.stageWidth >> 1) / Battle.FACTOR;
-        var positionY = boss.body.height / Battle.FACTOR;
+        var positionY = (boss.body.height >> 1) / Battle.FACTOR;
+
         var shape = new p2.Rectangle(boss.body.width / Battle.FACTOR, boss.body.height / Battle.FACTOR);
         shape.material = this._p2World.defaultMaterial;
         var body = new p2.Body({ mass: 1, position: [positionX, positionY] });
         body.type = p2.Body.KINEMATIC;
         body.addShape(shape);
         this._p2World.addBody(body);
+
         body.displays = [boss];
         this.addChild(boss);
-        boss.p2Bodys = [body];
-        boss.setVelocity(20 / Battle.FACTOR);
+
+        var leftWingShape = new p2.Rectangle(boss.leftWing.width * 0.8 / Battle.FACTOR, boss.leftWing.height * 0.8 / Battle.FACTOR);
+        leftWingShape.material = this._leftWingMaterial;
+        var leftWingBody = new p2.Body({ mass: 1, position: [positionX + (boss.leftWing.x / Battle.FACTOR), positionY + (-boss.leftWing.y / Battle.FACTOR)], angle: this.angle2(15) });
+
+        leftWingBody.type = p2.Body.KINEMATIC;
+        leftWingBody.addShape(leftWingShape);
+        this._p2World.addBody(leftWingBody);
+
+        var rightWingShape = new p2.Rectangle(boss.rightWing.width * 0.8 / Battle.FACTOR, boss.rightWing.height * 0.8 / Battle.FACTOR);
+        rightWingShape.material = this._rightWingMaterial;
+        var rightWingBody = new p2.Body({ mass: 1, position: [positionX + (boss.rightWing.x / Battle.FACTOR), positionY + (-boss.rightWing.y / Battle.FACTOR)], angle: this.angle2(345) });
+        rightWingBody.type = p2.Body.KINEMATIC;
+        rightWingBody.addShape(rightWingShape);
+        this._p2World.addBody(rightWingBody);
+
+        boss.p2Bodys = [body, leftWingBody, rightWingBody];
+        boss.setVelocity(15 / Battle.FACTOR); //设置BOSS速度
         this._boss = boss;
-        //var shape: p2.Rectangle = new p2.Rectangle(5, 1);
-        //var body: p2.Body = new p2.Body({ mass: 0, position: [(Util.stage.stageWidth >> 1) / Battle.FACTOR, 2], angle:this.angle2(76)});
-        //shape.material = this._p2World.defaultMaterial;
-        //body.addShape(shape);
-        ////// Add the body to the world
-        //this._p2World.addBody(body);
-        //var shape: p2.Rectangle = new p2.Rectangle(5, 1);
-        //var body: p2.Body = new p2.Body({ mass: 0, position: [(Util.stage.stageWidth >> 1) / Battle.FACTOR, 2], angle: this.angle2(-76) });
-        //shape.material = this._p2World.defaultMaterial;
-        //body.addShape(shape);
-        ////// Add the body to the world
-        //this._p2World.addBody(body);
     };
+
     Battle.prototype.createBlock = function (x) {
         var block = new Block();
+
         var positionX = x / Battle.FACTOR;
         var positionY = Battle.BLOCK_DROP_POS / Battle.FACTOR;
+
         var shape = new p2.Rectangle(block.width / Battle.FACTOR, block.height / Battle.FACTOR);
         shape.material = this._p2World.defaultMaterial;
         var body = new p2.Body({ mass: 1, position: [positionX, positionY] });
         body.addShape(shape);
         this._p2World.addBody(body);
+
         body.displays = [block];
         this.addChild(block);
+
         block.setBody(body);
         this._blocks.push(block);
+
         this._useBlockCount++;
     };
+
     Battle.prototype.onTick = function (dt) {
         if (2 == this.gameState) {
             return;
         }
+
         var world = this._p2World;
         if (dt < 10) {
             return;
@@ -155,15 +203,17 @@ var Battle = (function (_super) {
         if (dt > 1000) {
             return;
         }
+
         //检查BOSS移动
         var bossRect = this._boss.getRect();
         if (bossRect.right >= Util.stage.stageWidth) {
             this._boss.changeDirection(-1);
-        }
-        else if (bossRect.x <= 0) {
+        } else if (bossRect.x <= 0) {
             this._boss.changeDirection(1);
         }
+
         world.step(dt / 1000);
+
         if (!this._isDebug) {
             var stageHeight = egret.MainContext.instance.stage.stageHeight;
             var l = world.bodies.length;
@@ -177,15 +227,16 @@ var Battle = (function (_super) {
                         box.rotation = 360 - boxBody.angle * 180 / Math.PI;
                         if (boxBody.sleepState == p2.Body.SLEEPING) {
                             box.alpha = 0.5;
-                        }
-                        else {
+                        } else {
                             box.alpha = 1;
                         }
                     }
                 }
             }
         }
+
         this.updateBlocks();
+
         if (egret.getTimer() > this._checkDamageTime) {
             var damage = this.calculateDamage();
             this._boss.setHP(DataCenter.cfg.bossHP - damage);
@@ -196,6 +247,7 @@ var Battle = (function (_super) {
             this._checkDamageTime = egret.getTimer() + 2000;
         }
     };
+
     //游戏结束
     Battle.prototype.gameOver = function () {
         this.gameState = 2;
@@ -203,22 +255,28 @@ var Battle = (function (_super) {
         this.removeListeners();
         alert("game over " + this._useBlockCount);
     };
+
     //更新方块
     Battle.prototype.updateBlocks = function () {
         //清空分层信息
         this._blockLayers = {};
+
         //开始算层的位置
         var bottom = this._boss.y - (this._boss.height >> 1);
+
         var blockCount = this._blocks.length;
         var block;
         while (--blockCount > -1) {
             block = this._blocks[blockCount];
+
             if (block.y > Util.stage.stageHeight + block.height) {
                 //删除掉出舞台的方块
                 this.removeBlock(block);
                 continue;
             }
+
             block.update();
+
             if (block.isStop()) {
                 //计算所在层
                 var temp = bottom - block.y;
@@ -233,6 +291,7 @@ var Battle = (function (_super) {
             }
         }
     };
+
     //计算伤害
     Battle.prototype.calculateDamage = function () {
         var damage = 0;
@@ -244,32 +303,38 @@ var Battle = (function (_super) {
                 DataCenter.blockDeep = i;
                 break;
             }
+
             var dmgData = dmgDatas[i];
+
             if (this._blockLayers[i].length >= dmgData.length) {
                 damage += dmgData[dmgData.length - 1];
-            }
-            else {
+            } else {
                 damage += dmgData[this._blockLayers[i].length];
             }
         }
+
         return damage;
     };
+
     Battle.prototype.removeBlock = function (block, index) {
-        if (index === void 0) { index = -1; }
+        if (typeof index === "undefined") { index = -1; }
         if (index == -1) {
             index = this._blocks.indexOf(block);
         }
+
         this._blocks.splice(index, 1);
         if (block.parent) {
             block.parent.removeChild(block);
         }
         this._p2World.removeBody(block.getBody());
     };
+
     /**
-     * debug模式，使用图形绘制
-     */
+    * debug模式，使用图形绘制
+    */
     Battle.prototype.debug = function (world) {
         var factor = Battle.FACTOR;
+
         var canvas = document.createElement("canvas");
         var stage = egret.MainContext.instance.stage;
         var stageWidth = stage.stageWidth;
@@ -280,6 +345,7 @@ var Battle = (function (_super) {
         ctx.fillStyle = "rgba(" + 255 + "," + 255 + "," + 0 + "," + 1 + ")";
         ctx.strokeStyle = "rgba(" + 255 + "," + 0 + "," + 0 + "," + 1 + ")";
         ctx.lineWidth = 1;
+
         var rendererContext = egret.MainContext.instance.rendererContext;
         var f = rendererContext.onRenderFinish;
         rendererContext.onRenderFinish = function () {
@@ -289,8 +355,7 @@ var Battle = (function (_super) {
                 var boxBody = world.bodies[i];
                 if (boxBody.sleepState == p2.Body.SLEEPING) {
                     ctx.globalAlpha = 0.5;
-                }
-                else {
+                } else {
                     ctx.globalAlpha = 1;
                 }
                 for (var j = 0; j < boxBody.shapes.length; j++) {
@@ -309,8 +374,7 @@ var Battle = (function (_super) {
                         ctx.fill();
                         ctx.closePath();
                         ctx.restore();
-                    }
-                    else if (boxShape instanceof p2.Plane) {
+                    } else if (boxShape instanceof p2.Plane) {
                         ctx.save();
                         ctx.setTransform(1, 0, 0, 1, 0, stageHeight - (boxBody.position[1] + boxBody.shapeOffsets[j][1]) * factor);
                         ctx.beginPath();
@@ -319,8 +383,7 @@ var Battle = (function (_super) {
                         ctx.stroke();
                         ctx.closePath();
                         ctx.restore();
-                    }
-                    else if (boxShape instanceof p2.Circle) {
+                    } else if (boxShape instanceof p2.Circle) {
                         var x = (boxBody.position[0] + boxBody.shapeOffsets[j][0]) * factor;
                         var y = stageHeight - (boxBody.position[1] + boxBody.shapeOffsets[j][1]) * factor;
                         var matrix = egret.Matrix.identity.identity();
@@ -339,11 +402,9 @@ var Battle = (function (_super) {
             f.call(rendererContext);
         };
     };
-    //方块掉落位置
     Battle.BLOCK_DROP_POS = 750;
-    //比例
+
     Battle.FACTOR = 0;
     return Battle;
 })(egret.Sprite);
-Battle.prototype.__class__ = "Battle";
 //# sourceMappingURL=Battle.js.map
