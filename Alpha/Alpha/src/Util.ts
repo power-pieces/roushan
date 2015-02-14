@@ -81,4 +81,24 @@
         }
         return DataCenter.cfg.resultContents[tempIndex];
     }
+
+    //获取用户ID
+    public static getUserID(): string {
+        if (window["getMyOpenId"]) {
+            var id: string = window["getMyOpenId"]();
+            return id;
+        }
+        else {
+            return "test";
+        }
+        
+    }
+
+    //设置分享信息
+    public static setUserInfo(block: number, per: number): void {
+        if (window["setTimeLine"]) {
+            window["setTimeLine"](block, per);
+            window["setAppMessage"](block, per);
+        }
+    }
 }

@@ -41,7 +41,7 @@
         this.touchEnabled = true;
         this.createP2World();
         this.createView();
-        egret.Ticker.getInstance().register(this.onTick, this);
+        
     }
 
     /**
@@ -94,12 +94,14 @@
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegionHandler, this);
         this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.touchMoveHandler, this);
         this.addEventListener(egret.TouchEvent.TOUCH_END, this.touchEndHandler, this);
+        egret.Ticker.getInstance().register(this.onTick, this);
     }
 
     public removeListeners(): void {
         this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegionHandler, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.touchMoveHandler, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_END, this.touchEndHandler, this);
+        egret.Ticker.getInstance().unregister(this.onTick, this);
     }
 
     private touchBegionHandler(e: egret.TouchEvent): void {

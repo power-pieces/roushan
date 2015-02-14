@@ -17,7 +17,7 @@
     //冰模式
     public static isIceMode:boolean = false;
     //最后得分
-    public static score:number = 56;
+    public static score:number = 0;
     //战胜人数百分比
-    public static percent:number = 34;
+    public static percent:number = 0;
 }

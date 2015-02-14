@@ -112,6 +112,38 @@ class ResultView extends ViewBase
         this._againBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchAgainBtnHandler, this);
         this._shareBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchShareBtnHandler, this);
     }
+
+    public requestRank(): void {
+        this.touchEnabled = false;
+
+        //创建POST请求
+        var url: string = DataCenter.cfg.server;
+        var loader: egret.URLLoader = new egret.URLLoader();
+        loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
+        loader.addEventListener(egret.Event.COMPLETE, this.onRequestData, this);
+        var request: egret.URLRequest = new egret.URLRequest(url);
+        request.method = egret.URLRequestMethod.GET;
+        var values: egret.URLVariables = new egret.URLVariables("id=" + Util.getUserID() + "&block=" + DataCenter.score);
+        request.data = values;
+        loader.load(request);
+    }
+
+    private onRequestData(e: egret.Event): void {
+        this.touchEnabled = true;
+
+        var loader: egret.URLLoader = <egret.URLLoader> e.target;
+        var json: string = loader.data;
+        var data = JSON.parse(json);
+        if (0 == data.code) {
+            DataCenter.percent = data.percent;
+            Util.setUserInfo(DataCenter.score, DataCenter.percent);
+            this.showGameInfo();
+        }
+        else {
+            alert(data.des);
+        }       
+    }
+
     /*
      * 显示游戏信息
      */

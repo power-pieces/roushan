@@ -125,7 +125,7 @@ class Roushan extends egret.DisplayObjectContainer
     {
         this.removeCurrentView();
         var showView:ResultView = new ResultView();
-        showView.showGameInfo();
+        showView.requestRank();
         this._nowView = showView;
         Util.stage.addChild(this._nowView);
         this._nowView.addListeners();
