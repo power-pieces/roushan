@@ -68,8 +68,8 @@
 
     //获得位置（处理过的，主要用来比较)
     private getPos(): number[]{
-        var posX: number = (this._body.position[0] * 100) >> 0;
-        var posY: number = (this._body.position[1] * 100) >> 0;
+        var posX: number = this.x >> 0;
+        var posY: number = this.y >> 0;
         return [posX, posY];
     }
 
@@ -77,8 +77,18 @@
 
         this.getRect();
         var pos: number[] = this.getPos();
-        this._body;
-        if (pos[1] == this._lastPostion[1]) {
+
+        var isMoved: boolean = false;
+        //var dx: number = pos[0] - this._lastPostion[0];
+        var dy: number = pos[1] - this._lastPostion[1];
+        var tolerance: number = DataCenter.cfg.tolerance;
+        if (dy * dy > tolerance * tolerance) {
+            isMoved = true;
+            this._lastPostion[0] = pos[0];
+            this._lastPostion[1] = pos[1];
+        }
+
+        if (false == isMoved) {
             //和上次位置一样
             if (0 == this._posUnchangedTime) {
                 this._posUnchangedTime = egret.getTimer();
@@ -99,8 +109,7 @@
 
             this._posUnchangedTime = 0;
         }
-        this._lastPostion[0] = pos[0];
-        this._lastPostion[1] = pos[1];
+
 
     }
 
