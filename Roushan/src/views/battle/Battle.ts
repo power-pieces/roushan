@@ -240,8 +240,6 @@
         this.updateBlocks();
         var damage:number = this.calculateDamage();
         this._hp.update(damage);
-        console.log("damage:" + damage);
-        console.log("DataCenter.cfg.bossHP:" + DataCenter.cfg.bossHP);
         if (damage >= DataCenter.cfg.bossHP) {
             this.gameOver();
         }

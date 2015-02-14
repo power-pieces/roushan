@@ -81,7 +81,7 @@ class ResultView extends ViewBase
         this._remarkTxt._setTextColor(0x6b238e);
         this._remarkTxt._setFontFamily("黑体");
         this._remarkTxt._setBold(true);
-        this._remarkTxt.text = "你是猴子派来的逗比吗";
+        this._remarkTxt.text = "";
         this._remarkTxt.x = (this._bg.width - this._remarkTxt.width) / 2;
         this._remarkTxt.y = txtY;
         this.addChild(this._remarkTxt);
@@ -148,6 +148,9 @@ class ResultView extends ViewBase
             this.addChild(percent2Bit);
             this._bitmapNums.push(percent2Bit);
         }
+        var str:string = Util.getResultContent(DataCenter.score);
+        this._remarkTxt.text = str;
+        this._remarkTxt.x = (this._bg.width - this._remarkTxt.width) / 2;
     }
     /*
      * 清理游戏信息

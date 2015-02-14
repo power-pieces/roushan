@@ -53,4 +53,32 @@
         var picName:string = "number" + num;
         return Util.createBitmapByName(picName);
     }
+    /*
+     * 通过使用方块数量获取结束内容
+     */
+    public static getResultContent(num:number):string
+    {
+        var tempIndex = 0;
+        if(num <= 10)
+        {
+            tempIndex = 0;
+        }
+        else if(num <= 20)
+        {
+            tempIndex = 1;
+        }
+        else if(num <= 30)
+        {
+            tempIndex = 2;
+        }
+        else if(num <= 40)
+        {
+            tempIndex = 3;
+        }
+        else
+        {
+            tempIndex = 4;
+        }
+        return DataCenter.cfg.resultContents[tempIndex];
+    }
 }
