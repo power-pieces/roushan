@@ -11,7 +11,9 @@ class ResultView extends ViewBase
     private _shareBtn:egret.Bitmap;
 
     private _remarkTxt:egret.TextField;
-    private _bitmapNums = [];
+    //private _bitmapNums = [];
+    private _useBlocksBit:BitmapNumber;
+    private _percentBit:BitmapNumber;
 
     public constructor()
     {
@@ -68,12 +70,22 @@ class ResultView extends ViewBase
         txt.text = " 就打败了肉山大魔王";
         txt.x = (this._bg.width - txt.width) / 2;
         txt.y = txtY;
-        txtY += 60;
+        txtY += 70;
         txt = this.createTxt();
-        txt.text = "超过了      %的玩家";
+        txt.text = "超过了        %的玩家";
         txt.x = (this._bg.width - txt.width) / 2;
         txt.y = txtY;
         txtY += 100;
+
+        this._useBlocksBit = new BitmapNumber();
+        this._useBlocksBit.x = this._bg.width / 2 + 60;
+        this._useBlocksBit.y = this._bg.height / 3 - 30;
+        this.addChild(this._useBlocksBit);
+
+        this._percentBit = new BitmapNumber();
+        this._percentBit.x = this._bg.width / 2 + 10;
+        this._percentBit.y = this._bg.height / 3 + 80;
+        this.addChild(this._percentBit);
 
         this._remarkTxt = new egret.TextField();
         this._remarkTxt.size = 35;
@@ -153,55 +165,14 @@ class ResultView extends ViewBase
      */
     public showGameInfo():void
     {
-        this.clearGameInfo();
-        var score1:number = Util.getNumberByLevel(DataCenter.score, 1);
-        var score2:number = Util.getNumberByLevel(DataCenter.score, 2);
-        var percent1:number = Util.getNumberByLevel(DataCenter.percent, 1);
-        var percent2:number = Util.getNumberByLevel(DataCenter.percent, 2);
-        var score1Bit:egret.Bitmap = Util.getNumPicByNum(score1);
-        score1Bit.x = this._bg.width / 2 + 13;
-        score1Bit.y = this._bg.height / 3 - 30;
-        this.addChild(score1Bit);
-        this._bitmapNums.push(score1Bit);
-        if(score2 != 0)
-        {
-            var score2Bit:egret.Bitmap = Util.getNumPicByNum(score2);
-            score2Bit.x = score1Bit.x - 40;
-            score2Bit.y = score1Bit.y;
-            this.addChild(score2Bit);
-            this._bitmapNums.push(score2Bit);
-        }
-        var percent1Bit:egret.Bitmap = Util.getNumPicByNum(percent1);
-        percent1Bit.x = score1Bit.x - 23;
-        percent1Bit.y = score1Bit.y + 100;
-        this.addChild(percent1Bit);
-        this._bitmapNums.push(percent1Bit);
-        if(percent2 != 0)
-        {
-            var percent2Bit:egret.Bitmap = Util.getNumPicByNum(percent2);
-            percent2Bit.x = percent1Bit.x - 40;
-            percent2Bit.y = percent1Bit.y;
-            this.addChild(percent2Bit);
-            this._bitmapNums.push(percent2Bit);
-        }
+        this._useBlocksBit.setShowNumber(DataCenter.score);
+        this._percentBit.setShowNumber(DataCenter.percent);
+        this._useBlocksBit.x = (this._bg.width - this._useBlocksBit.width) / 2 + 15;
+        this._percentBit.x = (this._bg.width - this._percentBit.width) / 2 - 14;
+
         var str:string = Util.getResultContent(DataCenter.score);
         this._remarkTxt.text = str;
         this._remarkTxt.x = (this._bg.width - this._remarkTxt.width) / 2;
-    }
-    /*
-     * 清理游戏信息
-     */
-    private clearGameInfo():void
-    {
-        var len:number = this._bitmapNums.length;
-        var tempBit:egret.Bitmap;
-        while (len > 0)
-        {
-            len --;
-            tempBit = this._bitmapNums.pop();
-            tempBit.parent.removeChild(tempBit);
-        }
-
     }
     /*
      * 点击游戏屏幕

@@ -43,7 +43,7 @@
             levelNum *= 10;
         }
         tempNum = Math.floor(total * 10 / levelNum);
-        return tempNum % levelNum;
+        return tempNum % 10;
     }
     /*
      * 通过数值获取图片

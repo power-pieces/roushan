@@ -14,6 +14,8 @@ class TipsView extends egret.Sprite
     private _tipIndex = 0;
     //总数量
     private _totalNum = 11;
+    //关闭
+    private _closeBtn:egret.Sprite;
 
     public constructor()
     {
@@ -28,6 +30,14 @@ class TipsView extends egret.Sprite
         this._tipTxt = new egret.TextField();
         this._tipTxt.size = 19;
         this._tipTxt.y = this._bg.height / 8 * 7;
+        this._closeBtn = new egret.Sprite();
+        var txt:egret.TextField = new egret.TextField();
+        txt.text = "x";
+        this._closeBtn.addChild(txt);
+        this._closeBtn.touchEnabled = true;
+        this._closeBtn.x = this._bg.width - this._closeBtn.width - 15;
+        this._closeBtn.y = 5;
+        this.addChild(this._closeBtn);
     }
     /*
      * 显示tip
@@ -37,13 +47,7 @@ class TipsView extends egret.Sprite
         this._tipIndex ++;
         if(this._totalNum < this._tipIndex)
         {
-            NoticeManager.sendNotice(new Notice(NoticeCode.CLOSE_TIP_VIEW));
-            this._tipIndex = 0;
-            if(this._tipTxt.parent != null)
-            {
-                this.removeChild(this._tipTxt);
-            }
-            this.clearTip();
+            this.touchCloseHandler(null);
             return;
         }
         if(this._currentTip != null)
@@ -82,10 +86,26 @@ class TipsView extends egret.Sprite
     {
         this._currentTip = Util.createBitmapByName("tip_" + this._tipIndex);
         this.addChild(this._currentTip);
+        this.addChild(this._closeBtn);
+        this._closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchCloseHandler, this);
         this._currentTip.alpha = 0;
         var tw = egret.Tween.get(this._currentTip);
         tw.to({alpha:1},200);
         tw.call(this.showTipTxt, this);
+    }
+    /*
+     * 点击关闭按钮
+     */
+    private touchCloseHandler(e:egret.TouchEvent):void
+    {
+        NoticeManager.sendNotice(new Notice(NoticeCode.CLOSE_TIP_VIEW));
+        this._closeBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchCloseHandler, this);
+        this._tipIndex = 0;
+        if(this._tipTxt.parent != null)
+        {
+            this.removeChild(this._tipTxt);
+        }
+        this.clearTip();
     }
     /*
      * 显示tiptxt
