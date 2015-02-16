@@ -26,6 +26,13 @@
     private _lastPostion: number[] = [0, 0];
     //压在上面的方块数
     private _upBlock: number = 0;
+
+    /**
+    *获得上方方块数
+    */
+    public getUpBlock(): number {
+        return this._upBlock;
+    }
     
 
     public constructor() {
@@ -78,24 +85,34 @@
         this.getRect();
         var pos: number[] = this.getPos();
 
-        var isMoved: boolean = false;
+        //移动状态 0静止 1掉落 2弹飞
+        var moveState: number = 0;
         //var dx: number = pos[0] - this._lastPostion[0];
         var dy: number = pos[1] - this._lastPostion[1];
         var tolerance: number = DataCenter.cfg.tolerance;
-        if (dy * dy > tolerance * tolerance) {
-            isMoved = true;
+        if (dy < -tolerance) {
+            moveState = 2;
+            this._lastPostion[0] = pos[0];
+            this._lastPostion[1] = pos[1];
+        }
+        else if (dy > tolerance) {
+            moveState = 1;
             this._lastPostion[0] = pos[0];
             this._lastPostion[1] = pos[1];
         }
 
-        if (false == isMoved) {
+        if (0 == moveState) {
             //和上次位置一样
             if (0 == this._posUnchangedTime) {
                 this._posUnchangedTime = egret.getTimer();
             }
-            else if (this._state != Block.STATE_STOP && egret.getTimer() - this._posUnchangedTime >= 1000) {
+            else if (this._state != Block.STATE_STOP && egret.getTimer() - this._posUnchangedTime >= DataCenter.cfg.stopCheckInterval) {
                 this.setState(Block.STATE_STOP);
             }
+        }
+        else if (2 == moveState)
+        {
+            this.setState(Block.STATE_CAROM);
         }
         else {            
             //和上次位置不一样

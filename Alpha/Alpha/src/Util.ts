@@ -101,4 +101,16 @@
             window["setAppMessage"](block, per);
         }
     }
+
+    //检查两个方块是否在一个压力列
+    public static checkBlockPress(a:Block, b:Block): boolean {
+        var ra: egret.Rectangle = a.getRect();
+        var rb: egret.Rectangle = b.getRect();
+
+        if (ra.x <= rb.right && ra.right >= rb.x) {
+            return true;
+        }
+
+        return false;
+    }
 }

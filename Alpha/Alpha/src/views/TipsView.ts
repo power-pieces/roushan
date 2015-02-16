@@ -15,7 +15,7 @@ class TipsView extends egret.Sprite
     //总数量
     private _totalNum = 11;
     //关闭
-    private _closeBtn:egret.Sprite;
+    private _closeBtn:egret.Bitmap;
 
     public constructor()
     {
@@ -30,13 +30,10 @@ class TipsView extends egret.Sprite
         this._tipTxt = new egret.TextField();
         this._tipTxt.size = 19;
         this._tipTxt.y = this._bg.height / 8 * 7;
-        this._closeBtn = new egret.Sprite();
-        var txt:egret.TextField = new egret.TextField();
-        txt.text = "x";
-        this._closeBtn.addChild(txt);
+        this._closeBtn = Util.createBitmapByName("close_btn");
         this._closeBtn.touchEnabled = true;
-        this._closeBtn.x = this._bg.width - this._closeBtn.width - 15;
-        this._closeBtn.y = 5;
+        this._closeBtn.x = this._bg.width - (this._closeBtn.width / 2) - 8;
+        this._closeBtn.y = 0 - this._closeBtn.height / 2 + 8;
         this.addChild(this._closeBtn);
     }
     /*

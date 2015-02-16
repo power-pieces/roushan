@@ -1,7 +1,7 @@
 {
 	"groups":[
 	{
-		"keys":"start_bg, start_tip, des_btn, normal_mode_btn, special_mode_btn, tip_bg, tip_1, tip_2, tip_3, tip_4, tip_5, tip_6, tip_7, tip_8, tip_9, tip_10, tip_11, drop_flag, game_bg, result_bg, share_btn, again_btn, number0, number1, number2, number3, number4, number5, number6, number7, number8, number9, r1, r2, r3, r4, b0_png,b1_png,b2_png,b3_png,b4_png,b5_png,b6_png,b7_png,b8_png,r1_png,r2_png,r3_png,rf1_png,rf2_png,rf3_png,rf4_png,rf5_png,Roshan-Background_png,config_json,arrow_png, share",
+		"keys":"start_bg, start_tip, des_btn, normal_mode_btn, special_mode_btn, tip_bg, tip_1, tip_2, tip_3, tip_4, tip_5, tip_6, tip_7, tip_8, tip_9, tip_10, tip_11, drop_flag, game_bg, result_bg, share_btn, again_btn, number0, number1, number2, number3, number4, number5, number6, number7, number8, number9, r1, r2, r3, r4, b0_png,b1_png,b2_png,b3_png,b4_png,b5_png,b6_png,b7_png,b8_png,r1_png,r2_png,r3_png,rf1_png,rf2_png,rf3_png,rf4_png,rf5_png,Roshan-Background_png,config_json,arrow_png, share, close_btn",
 		"name":"preload"
 	}],
 	"resources":[
@@ -289,6 +289,11 @@
             "name":"share",
             "type":"image",
             "url":"assets/share.png"
+        },
+        {
+            "name":"close_btn",
+            "type":"image",
+            "url":"assets/close_btn.png"
         }
 	]
 }

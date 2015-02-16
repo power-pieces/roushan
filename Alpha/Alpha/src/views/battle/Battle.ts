@@ -87,46 +87,23 @@
 
         this._arrow = Util.createBitmapByName("arrow_png");
         this._arrow.anchorX = this._arrow.anchorY = 0.5;
+        this._arrow.x = Util.stage.stageWidth >> 1;
         this._arrow.y = Util.stage.stageHeight - Battle.BLOCK_DROP_POS;
+        this.addChild(this._arrow);
     }
 
     public addListeners(): void {
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegionHandler, this);
-        this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.touchMoveHandler, this);
-        this.addEventListener(egret.TouchEvent.TOUCH_END, this.touchEndHandler, this);
         egret.Ticker.getInstance().register(this.onTick, this);
     }
 
     public removeListeners(): void {
         this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegionHandler, this);
-        this.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.touchMoveHandler, this);
-        this.removeEventListener(egret.TouchEvent.TOUCH_END, this.touchEndHandler, this);
         egret.Ticker.getInstance().unregister(this.onTick, this);
     }
 
     private touchBegionHandler(e: egret.TouchEvent): void {
         if (egret.getTimer() < this._blockCD) {
-            return;
-        }
-
-        this.addChild(this._arrow);
-        this._arrow.x = e.stageX;
-    }
-
-    private touchMoveHandler(e: egret.TouchEvent): void {
-
-        if (egret.getTimer() < this._blockCD) {
-
-            return;
-        }
-
-        this._arrow.x = e.stageX;
-    }
-
-    private touchEndHandler(e: egret.TouchEvent): void {
-
-        if (egret.getTimer() < this._blockCD) {
-
             return;
         }
 
@@ -187,7 +164,7 @@
     private createBlock(x:number): void {
         var block: Block = new Block();
 
-        var positionX: number = x / Battle.FACTOR;
+        var positionX: number = this._arrow.x / Battle.FACTOR;
         var positionY: number = Battle.BLOCK_DROP_POS / Battle.FACTOR;
 
         var shape: p2.Rectangle = new p2.Rectangle(block.width / Battle.FACTOR, block.height / Battle.FACTOR);
@@ -217,6 +194,10 @@
         }
         if (dt > 1000) {
             return;
+        }
+
+        if (egret.getTimer() >= this._blockCD) {
+            this.addChild(this._arrow);
         }
 
         //检查BOSS移动
@@ -263,7 +244,7 @@
             if (damage >= DataCenter.cfg.bossHP) {
                 this.gameOver();
             }
-            this._checkDamageTime = egret.getTimer() + 2000;
+            this._checkDamageTime = egret.getTimer() + DataCenter.cfg.damageCheckCD;
         }
         
         
@@ -313,6 +294,43 @@
                 this._blockLayers[layer].push(block);
             }
         }
+
+        //分层信息算好了，计算一下方块的压力(方块上压住它的方块数量)
+        this.updateUpBlocks();
+    }
+
+    private updateUpBlocks(): void {
+        var deep: number = 0;
+        for (var i = 0; i < 8; i++) {
+            if (null == this._blockLayers[i] || 0 == this._blockLayers[i].length) {
+                //断层了 结束计算
+                deep = i;
+                break;
+            }
+        }
+
+        while (--deep > 0) {
+            //取出上层的方块
+            var upBlocks: Block[] = this._blockLayers[deep];
+            //取出下层的方块
+            var bottomBlocks: Block[] = this._blockLayers[deep - 1];
+
+            for (var i: number = 0; i < bottomBlocks.length; i++) {
+                //遍历下方的方块，如果有上方任意方块压住他，则加上上方的方块数
+
+                var block: Block = bottomBlocks[i];
+                block.setUpBlock(0);
+                for (var j: number = 0; j < upBlocks.length; j++) {
+                    var upBlock: Block = upBlocks[j];
+
+                    if (Util.checkBlockPress(upBlock, block)) {
+                        //压着的
+                        block.setUpBlock(upBlock.getUpBlock() + 1);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     //计算伤害
@@ -321,7 +339,7 @@
         var dmgDatas: number[][] = DataCenter.cfg.damage;
         var deep: number = dmgDatas.length;
         for (var i = 0; i < deep; i++) {
-            if (null == this._blockLayers[i] || 0 == this._blockLayers[i]) {
+            if (null == this._blockLayers[i] || 0 == this._blockLayers[i].length) {
                 //断层了 结束计算
                 DataCenter.blockDeep = i;
                 break;
