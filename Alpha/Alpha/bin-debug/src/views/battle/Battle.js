@@ -72,34 +72,19 @@ var Battle = (function (_super) {
         this.addChild(this._hp);
         this._arrow = Util.createBitmapByName("arrow_png");
         this._arrow.anchorX = this._arrow.anchorY = 0.5;
+        this._arrow.x = Util.stage.stageWidth >> 1;
         this._arrow.y = Util.stage.stageHeight - Battle.BLOCK_DROP_POS;
+        this.addChild(this._arrow);
     };
     Battle.prototype.addListeners = function () {
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegionHandler, this);
-        this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.touchMoveHandler, this);
-        this.addEventListener(egret.TouchEvent.TOUCH_END, this.touchEndHandler, this);
         egret.Ticker.getInstance().register(this.onTick, this);
     };
     Battle.prototype.removeListeners = function () {
         this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegionHandler, this);
-        this.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.touchMoveHandler, this);
-        this.removeEventListener(egret.TouchEvent.TOUCH_END, this.touchEndHandler, this);
         egret.Ticker.getInstance().unregister(this.onTick, this);
     };
     Battle.prototype.touchBegionHandler = function (e) {
-        if (egret.getTimer() < this._blockCD) {
-            return;
-        }
-        this.addChild(this._arrow);
-        this._arrow.x = e.stageX;
-    };
-    Battle.prototype.touchMoveHandler = function (e) {
-        if (egret.getTimer() < this._blockCD) {
-            return;
-        }
-        this._arrow.x = e.stageX;
-    };
-    Battle.prototype.touchEndHandler = function (e) {
         if (egret.getTimer() < this._blockCD) {
             return;
         }
@@ -142,7 +127,7 @@ var Battle = (function (_super) {
     };
     Battle.prototype.createBlock = function (x) {
         var block = new Block();
-        var positionX = x / Battle.FACTOR;
+        var positionX = this._arrow.x / Battle.FACTOR;
         var positionY = Battle.BLOCK_DROP_POS / Battle.FACTOR;
         var shape = new p2.Rectangle(block.width / Battle.FACTOR, block.height / Battle.FACTOR);
         shape.material = this._p2World.defaultMaterial;
@@ -165,6 +150,9 @@ var Battle = (function (_super) {
         }
         if (dt > 1000) {
             return;
+        }
+        if (egret.getTimer() >= this._blockCD) {
+            this.addChild(this._arrow);
         }
         //检查BOSS移动
         var bossRect = this._boss.getRect();
@@ -204,7 +192,7 @@ var Battle = (function (_super) {
             if (damage >= DataCenter.cfg.bossHP) {
                 this.gameOver();
             }
-            this._checkDamageTime = egret.getTimer() + 2000;
+            this._checkDamageTime = egret.getTimer() + DataCenter.cfg.damageCheckCD;
         }
     };
     //游戏结束
@@ -245,6 +233,37 @@ var Battle = (function (_super) {
                 this._blockLayers[layer].push(block);
             }
         }
+        //分层信息算好了，计算一下方块的压力(方块上压住它的方块数量)
+        this.updateUpBlocks();
+    };
+    Battle.prototype.updateUpBlocks = function () {
+        var deep = 0;
+        for (var i = 0; i < 8; i++) {
+            if (null == this._blockLayers[i] || 0 == this._blockLayers[i].length) {
+                //断层了 结束计算
+                deep = i;
+                break;
+            }
+        }
+        while (--deep > 0) {
+            //取出上层的方块
+            var upBlocks = this._blockLayers[deep];
+            //取出下层的方块
+            var bottomBlocks = this._blockLayers[deep - 1];
+            for (var i = 0; i < bottomBlocks.length; i++) {
+                //遍历下方的方块，如果有上方任意方块压住他，则加上上方的方块数
+                var block = bottomBlocks[i];
+                block.setUpBlock(0);
+                for (var j = 0; j < upBlocks.length; j++) {
+                    var upBlock = upBlocks[j];
+                    if (Util.checkBlockPress(upBlock, block)) {
+                        //压着的
+                        block.setUpBlock(upBlock.getUpBlock() + 1);
+                        break;
+                    }
+                }
+            }
+        }
     };
     //计算伤害
     Battle.prototype.calculateDamage = function () {
@@ -252,7 +271,7 @@ var Battle = (function (_super) {
         var dmgDatas = DataCenter.cfg.damage;
         var deep = dmgDatas.length;
         for (var i = 0; i < deep; i++) {
-            if (null == this._blockLayers[i] || 0 == this._blockLayers[i]) {
+            if (null == this._blockLayers[i] || 0 == this._blockLayers[i].length) {
                 //断层了 结束计算
                 DataCenter.blockDeep = i;
                 break;

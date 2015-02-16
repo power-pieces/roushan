@@ -25,6 +25,12 @@ var Block = (function (_super) {
         this._upBlock = 0;
         this.createView();
     }
+    /**
+    *获得上方方块数
+    */
+    Block.prototype.getUpBlock = function () {
+        return this._upBlock;
+    };
     Block.prototype.isStop = function () {
         return this._state == Block.STATE_STOP ? true : false;
     };
@@ -59,23 +65,32 @@ var Block = (function (_super) {
     Block.prototype.update = function () {
         this.getRect();
         var pos = this.getPos();
-        var isMoved = false;
+        //移动状态 0静止 1掉落 2弹飞
+        var moveState = 0;
         //var dx: number = pos[0] - this._lastPostion[0];
         var dy = pos[1] - this._lastPostion[1];
         var tolerance = DataCenter.cfg.tolerance;
-        if (dy * dy > tolerance * tolerance) {
-            isMoved = true;
+        if (dy < -tolerance) {
+            moveState = 2;
             this._lastPostion[0] = pos[0];
             this._lastPostion[1] = pos[1];
         }
-        if (false == isMoved) {
+        else if (dy > tolerance) {
+            moveState = 1;
+            this._lastPostion[0] = pos[0];
+            this._lastPostion[1] = pos[1];
+        }
+        if (0 == moveState) {
             //和上次位置一样
             if (0 == this._posUnchangedTime) {
                 this._posUnchangedTime = egret.getTimer();
             }
-            else if (this._state != Block.STATE_STOP && egret.getTimer() - this._posUnchangedTime >= 1000) {
+            else if (this._state != Block.STATE_STOP && egret.getTimer() - this._posUnchangedTime >= DataCenter.cfg.stopCheckInterval) {
                 this.setState(Block.STATE_STOP);
             }
+        }
+        else if (2 == moveState) {
+            this.setState(Block.STATE_CAROM);
         }
         else {
             //和上次位置不一样

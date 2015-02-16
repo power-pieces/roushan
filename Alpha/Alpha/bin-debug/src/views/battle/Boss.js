@@ -66,7 +66,7 @@ var Boss = (function (_super) {
         this.body.anchorX = this.body.anchorY = 0.5;
         this.leftWing.anchorX = this.leftWing.anchorY = 0.5;
         this.rightWing.anchorX = this.rightWing.anchorY = 0.5;
-        this.rightWing.x = 188;
+        this.rightWing.x = DataCenter.cfg.wingOffX;
         this.leftWing.x = -this.rightWing.x;
         this.leftWing.y = this.rightWing.y = -27;
         this.setState(1);

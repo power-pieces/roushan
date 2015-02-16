@@ -66,7 +66,9 @@ var StartView = (function (_super) {
     StartView.prototype.touchBgHandler = function (e) {
         if (this._tipViewShow) {
             this._tipView.showTip();
+            return;
         }
+        this.touchNormalBtnHandler(null);
     };
     /*
      * 点击开始

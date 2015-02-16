@@ -33,7 +33,7 @@ var Util = (function () {
             levelNum *= 10;
         }
         tempNum = Math.floor(total * 10 / levelNum);
-        return tempNum % levelNum;
+        return tempNum % 10;
     };
     /*
      * 通过数值获取图片
@@ -80,6 +80,15 @@ var Util = (function () {
             window["setTimeLine"](block, per);
             window["setAppMessage"](block, per);
         }
+    };
+    //检查两个方块是否在一个压力列
+    Util.checkBlockPress = function (a, b) {
+        var ra = a.getRect();
+        var rb = b.getRect();
+        if (ra.x <= rb.right && ra.right >= rb.x) {
+            return true;
+        }
+        return false;
     };
     Util.stage = null;
     return Util;

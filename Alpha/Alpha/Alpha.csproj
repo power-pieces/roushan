@@ -260,6 +260,7 @@
     <TypeScriptCompile Include="src\Roushan.ts" />
     <TypeScriptCompile Include="src\Util.ts" />
     <TypeScriptCompile Include="src\views\ShareView.ts" />
+    <TypeScriptCompile Include="src\views\BitmapNumber.ts" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

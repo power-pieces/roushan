@@ -11,7 +11,6 @@ var ResultView = (function (_super) {
     __extends(ResultView, _super);
     function ResultView() {
         _super.call(this);
-        this._bitmapNums = [];
         this.createUI();
     }
     ResultView.prototype.createUI = function () {
@@ -56,12 +55,20 @@ var ResultView = (function (_super) {
         txt.text = " 就打败了肉山大魔王";
         txt.x = (this._bg.width - txt.width) / 2;
         txt.y = txtY;
-        txtY += 60;
+        txtY += 70;
         txt = this.createTxt();
-        txt.text = "超过了      %的玩家";
+        txt.text = "超过了        %的玩家";
         txt.x = (this._bg.width - txt.width) / 2;
         txt.y = txtY;
         txtY += 100;
+        this._useBlocksBit = new BitmapNumber();
+        this._useBlocksBit.x = this._bg.width / 2 + 60;
+        this._useBlocksBit.y = this._bg.height / 3 - 30;
+        this.addChild(this._useBlocksBit);
+        this._percentBit = new BitmapNumber();
+        this._percentBit.x = this._bg.width / 2 + 10;
+        this._percentBit.y = this._bg.height / 3 + 80;
+        this.addChild(this._percentBit);
         this._remarkTxt = new egret.TextField();
         this._remarkTxt.size = 35;
         this._remarkTxt._setLineSpacing(10);
@@ -113,9 +120,9 @@ var ResultView = (function (_super) {
         var data = JSON.parse(json);
         if (0 == data.code) {
             DataCenter.percent = data.percent;
-            if (DataCenter.percent >= 100) {
-                DataCenter.percent = 99;
-            }
+            //if (DataCenter.percent >= 100) {
+            //    DataCenter.percent = 99;
+            //}
             Util.setUserInfo(DataCenter.score, DataCenter.percent);
             this.showGameInfo();
         }
@@ -127,50 +134,13 @@ var ResultView = (function (_super) {
      * 显示游戏信息
      */
     ResultView.prototype.showGameInfo = function () {
-        this.clearGameInfo();
-        var score1 = Util.getNumberByLevel(DataCenter.score, 1);
-        var score2 = Util.getNumberByLevel(DataCenter.score, 2);
-        var percent1 = Util.getNumberByLevel(DataCenter.percent, 1);
-        var percent2 = Util.getNumberByLevel(DataCenter.percent, 2);
-        var score1Bit = Util.getNumPicByNum(score1);
-        score1Bit.x = this._bg.width / 2 + 13;
-        score1Bit.y = this._bg.height / 3 - 30;
-        this.addChild(score1Bit);
-        this._bitmapNums.push(score1Bit);
-        if (score2 != 0) {
-            var score2Bit = Util.getNumPicByNum(score2);
-            score2Bit.x = score1Bit.x - 40;
-            score2Bit.y = score1Bit.y;
-            this.addChild(score2Bit);
-            this._bitmapNums.push(score2Bit);
-        }
-        var percent1Bit = Util.getNumPicByNum(percent1);
-        percent1Bit.x = score1Bit.x - 23;
-        percent1Bit.y = score1Bit.y + 100;
-        this.addChild(percent1Bit);
-        this._bitmapNums.push(percent1Bit);
-        if (percent2 != 0) {
-            var percent2Bit = Util.getNumPicByNum(percent2);
-            percent2Bit.x = percent1Bit.x - 40;
-            percent2Bit.y = percent1Bit.y;
-            this.addChild(percent2Bit);
-            this._bitmapNums.push(percent2Bit);
-        }
+        this._useBlocksBit.setShowNumber(DataCenter.score);
+        this._percentBit.setShowNumber(DataCenter.percent);
+        this._useBlocksBit.x = (this._bg.width - this._useBlocksBit.width) / 2 + 15;
+        this._percentBit.x = (this._bg.width - this._percentBit.width) / 2 - 14;
         var str = Util.getResultContent(DataCenter.score);
         this._remarkTxt.text = str;
         this._remarkTxt.x = (this._bg.width - this._remarkTxt.width) / 2;
-    };
-    /*
-     * 清理游戏信息
-     */
-    ResultView.prototype.clearGameInfo = function () {
-        var len = this._bitmapNums.length;
-        var tempBit;
-        while (len > 0) {
-            len--;
-            tempBit = this._bitmapNums.pop();
-            tempBit.parent.removeChild(tempBit);
-        }
     };
     /*
      * 点击游戏屏幕

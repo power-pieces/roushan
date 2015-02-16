@@ -25,6 +25,11 @@ var TipsView = (function (_super) {
         this._tipTxt = new egret.TextField();
         this._tipTxt.size = 19;
         this._tipTxt.y = this._bg.height / 8 * 7;
+        this._closeBtn = Util.createBitmapByName("close_btn");
+        this._closeBtn.touchEnabled = true;
+        this._closeBtn.x = this._bg.width - (this._closeBtn.width / 2) - 8;
+        this._closeBtn.y = 0 - this._closeBtn.height / 2 + 8;
+        this.addChild(this._closeBtn);
     };
     /*
      * 显示tip
@@ -32,12 +37,7 @@ var TipsView = (function (_super) {
     TipsView.prototype.showTip = function () {
         this._tipIndex++;
         if (this._totalNum < this._tipIndex) {
-            NoticeManager.sendNotice(new Notice(NoticeCode.CLOSE_TIP_VIEW));
-            this._tipIndex = 0;
-            if (this._tipTxt.parent != null) {
-                this.removeChild(this._tipTxt);
-            }
-            this.clearTip();
+            this.touchCloseHandler(null);
             return;
         }
         if (this._currentTip != null) {
@@ -70,10 +70,24 @@ var TipsView = (function (_super) {
     TipsView.prototype.showNewTip = function () {
         this._currentTip = Util.createBitmapByName("tip_" + this._tipIndex);
         this.addChild(this._currentTip);
+        this.addChild(this._closeBtn);
+        this._closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchCloseHandler, this);
         this._currentTip.alpha = 0;
         var tw = egret.Tween.get(this._currentTip);
         tw.to({ alpha: 1 }, 200);
         tw.call(this.showTipTxt, this);
+    };
+    /*
+     * 点击关闭按钮
+     */
+    TipsView.prototype.touchCloseHandler = function (e) {
+        NoticeManager.sendNotice(new Notice(NoticeCode.CLOSE_TIP_VIEW));
+        this._closeBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchCloseHandler, this);
+        this._tipIndex = 0;
+        if (this._tipTxt.parent != null) {
+            this.removeChild(this._tipTxt);
+        }
+        this.clearTip();
     };
     /*
      * 显示tiptxt
