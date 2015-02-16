@@ -28,6 +28,8 @@
 
     private _leftWingMaterial: p2.Material = null;
     private _rightWingMaterial: p2.Material = null;
+
+    private _btnRestart: egret.Bitmap = null;
     
 
     public constructor() {
@@ -82,24 +84,42 @@
 
         this.createBoss();
 
-        this._hp = new BossHP(this._boss.getHP(),Util.stage.stageHeight);
+        this._hp = new BossHP();
         this.addChild(this._hp);
+        this._hp.y = (Util.stage.stageHeight - this._hp.height) >> 1;
 
         this._arrow = Util.createBitmapByName("arrow_png");
         this._arrow.anchorX = this._arrow.anchorY = 0.5;
         this._arrow.x = Util.stage.stageWidth >> 1;
         this._arrow.y = Util.stage.stageHeight - Battle.BLOCK_DROP_POS;
         this.addChild(this._arrow);
+
+        this._btnRestart = Util.createBitmapByName("restart");
+        this.addChild(this._btnRestart);
+        this._btnRestart.anchorY = 0.5;
+        this._btnRestart.x = Util.stage.stageWidth - this._btnRestart.width - 10;
+        this._btnRestart.y = this._arrow.y;
+        this._btnRestart.touchEnabled = true;
+
+        var hpLabel: egret.Bitmap = Util.createBitmapByName("hp_label");
+        this.addChild(hpLabel);
+        hpLabel.y = this._hp.y - hpLabel.height;
     }
 
     public addListeners(): void {
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegionHandler, this);
+        this._btnRestart.addEventListener(egret.TouchEvent.TOUCH_TAP, this._btnRestart_tapHandler, this);
         egret.Ticker.getInstance().register(this.onTick, this);
     }
 
     public removeListeners(): void {
         this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegionHandler, this);
+        this._btnRestart.removeEventListener(egret.TouchEvent.TOUCH_TAP, this._btnRestart_tapHandler, this);
         egret.Ticker.getInstance().unregister(this.onTick, this);
+    }
+
+    private _btnRestart_tapHandler(e: egret.TouchEvent): void {
+        NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_GAME_VIEW))
     }
 
     private touchBegionHandler(e: egret.TouchEvent): void {
@@ -154,7 +174,7 @@
         
 
         boss.p2Bodys = [body, leftWingBody, rightWingBody];
-        boss.setVelocity(15 / Battle.FACTOR); //设置BOSS速度
+        boss.setVelocity(DataCenter.cfg.bossSpeed / Battle.FACTOR); //设置BOSS速度
         this._boss = boss;
         
 
@@ -351,7 +371,7 @@
                 damage += dmgData[dmgData.length - 1];
             }
             else {
-                damage += dmgData[this._blockLayers[i].length];
+                damage += dmgData[this._blockLayers[i].length - 1];
             }
         }
 

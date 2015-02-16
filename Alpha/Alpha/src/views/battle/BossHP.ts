@@ -3,43 +3,32 @@
 * BOSS的血条
 */
 class BossHP extends egret.Sprite {
-
-    private _shp:egret.Shape;
-    private _currentDamage:number = -1;
-    private _maskRec:egret.Rectangle;
-
-    public constructor(w:number, h:number) {
+    private _bg: egret.Bitmap;
+    private _life: egret.Bitmap;
+    public constructor() {
         super();
 
-        this.width = w;
-        this.height = h;
         this.createView();
     }
 
     
     private createView(): void
     {
-        this._shp = new egret.Shape();
-        this._shp.graphics.beginFill(0xFF0000, 1);
-        this._shp.graphics.drawRect(0, 0, 10, Util.stage.stageHeight);
-        this._shp.graphics.endFill();
-        this.addChild(this._shp);
+        this._bg = Util.createBitmapByName("life_bg");
+        this._life = Util.createBitmapByName("life");
 
-        this._maskRec = new egret.Rectangle(0, 0, 10, Util.stage.stageHeight);
-        this._shp.mask = this._maskRec;
+        this.addChild(this._bg);
+        this.addChild(this._life);
+
+        var mask:egret.Rectangle = new egret.Rectangle(0, 0, this._life.width, this._life.height);
+        this._life.mask = mask;
     }
 
-    public update(damage: number): void
+    public update(damage:number): void
     {
-        console.log("damage:" + damage);
-        if(this._currentDamage == -1 || this._currentDamage != damage)
-        {
-            this._currentDamage = damage;
-            var posY: number = this.height * damage / DataCenter.cfg.bossHP;
-            //this._maskRec.y = Util.stage.stageHeight - posY;
-            //this._maskRec.y = posY;
-            var tw = egret.Tween.get(this._maskRec);
-            tw.to({y:posY},100);
-        }
+        var per: number = damage / DataCenter.cfg.bossHP;
+        var mask: egret.Rectangle = this._life.mask;
+        mask.y = mask.height * per;
+        this._life.mask = mask;
     }
 }

@@ -75,7 +75,7 @@ class Roushan extends egret.DisplayObjectContainer
             }.bind(this));
 
         var verTxt: egret.TextField = new egret.TextField();
-        verTxt.text = "Version:0.1";
+        verTxt.text = "Version:0.2";
         verTxt._setTextColor(0xffffff);
         verTxt.x = 200;
         this.addChild(verTxt);
