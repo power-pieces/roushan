@@ -257,15 +257,15 @@
 
 
         this.updateBlocks();
-        if (egret.getTimer() > this._checkDamageTime) {
+        //if (egret.getTimer() > this._checkDamageTime) {
             var damage: number = this.calculateDamage();
-            this._boss.setHP(DataCenter.cfg.bossHP - damage);
-            this._hp.update(damage);
-            if (damage >= DataCenter.cfg.bossHP) {
+            this._boss.setHP(this._boss.getHP() - damage);
+            this._hp.update(this._boss.getHP());
+            if (this._boss.getHP() <= 0) {
                 this.gameOver();
             }
             this._checkDamageTime = egret.getTimer() + DataCenter.cfg.damageCheckCD;
-        }
+        //}
         
         
     }
@@ -366,12 +366,20 @@
             }
 
             var dmgData: number[] = dmgDatas[i];
+            var blocks: Block[] = this._blockLayers[i];
 
-            if (this._blockLayers[i].length >= dmgData.length) {
-                damage += dmgData[dmgData.length - 1];
-            }
-            else {
-                damage += dmgData[this._blockLayers[i].length - 1];
+            for (var j = 0; j < blocks.length; j++) {
+                var block: Block = blocks[j];
+                if (block.isDamaged) {
+                    continue;
+                }
+                block.isDamaged = true;
+                if (this._blockLayers[i].length >= dmgData.length) {
+                    damage += dmgData[dmgData.length - 1];
+                }
+                else {
+                    damage += dmgData[this._blockLayers[i].length - 1];
+                }
             }
         }
 

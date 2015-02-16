@@ -33,6 +33,9 @@
     public getUpBlock(): number {
         return this._upBlock;
     }
+
+    //是否造成了伤害
+    public isDamaged: boolean = false;
     
 
     public constructor() {

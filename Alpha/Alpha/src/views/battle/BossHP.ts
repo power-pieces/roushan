@@ -24,9 +24,9 @@ class BossHP extends egret.Sprite {
         this._life.mask = mask;
     }
 
-    public update(damage:number): void
+    public update(hp:number): void
     {
-        var per: number = damage / DataCenter.cfg.bossHP;
+        var per: number = 1 - (hp / DataCenter.cfg.bossHP);
         var mask: egret.Rectangle = this._life.mask;
         mask.y = mask.height * per;
         this._life.mask = mask;
