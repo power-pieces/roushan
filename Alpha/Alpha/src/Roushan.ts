@@ -60,7 +60,7 @@ class Roushan extends egret.DisplayObjectContainer
     {
         DataCenter.cfg = RES.getRes("config_json");
 
-        egret.Profiler.getInstance().run();
+        //egret.Profiler.getInstance().run();
         Util.stage = this.stage;
 
         NoticeManager.addNoticeAction(NoticeCode.SHOW_START_VIEW,
@@ -77,10 +77,10 @@ class Roushan extends egret.DisplayObjectContainer
             }.bind(this));
 
         var verTxt: egret.TextField = new egret.TextField();
-        verTxt.text = "Version:0.2";
+        verTxt.text = "Version:0.3";
         verTxt._setTextColor(0xffffff);
         verTxt.x = 200;
-        this.addChild(verTxt);
+        //this.addChild(verTxt);
         //var changeViewEvent:ChangeViewEvent = new ChangeViewEvent(ChangeViewEvent.CHANGE_VIEW);
         //changeViewEvent.viewName = "StartView";
         //this.dispatchEvent(changeViewEvent);

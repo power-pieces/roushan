@@ -53,7 +53,7 @@ var Roushan = (function (_super) {
     //创建游戏场景
     Roushan.prototype.createGameScene = function () {
         DataCenter.cfg = RES.getRes("config_json");
-        egret.Profiler.getInstance().run();
+        //egret.Profiler.getInstance().run();
         Util.stage = this.stage;
         NoticeManager.addNoticeAction(NoticeCode.SHOW_START_VIEW, function (n) {
             this.showStartView();
@@ -65,10 +65,10 @@ var Roushan = (function (_super) {
             this.showResultView();
         }.bind(this));
         var verTxt = new egret.TextField();
-        verTxt.text = "Version:0.2";
+        verTxt.text = "Version:0.3";
         verTxt._setTextColor(0xffffff);
         verTxt.x = 200;
-        this.addChild(verTxt);
+        //this.addChild(verTxt);
         //var changeViewEvent:ChangeViewEvent = new ChangeViewEvent(ChangeViewEvent.CHANGE_VIEW);
         //changeViewEvent.viewName = "StartView";
         //this.dispatchEvent(changeViewEvent);
