@@ -9,32 +9,23 @@ var __extends = this.__extends || function (d, b) {
 */
 var BossHP = (function (_super) {
     __extends(BossHP, _super);
-    function BossHP(w, h) {
+    function BossHP() {
         _super.call(this);
-        this._currentDamage = -1;
-        this.width = w;
-        this.height = h;
         this.createView();
     }
     BossHP.prototype.createView = function () {
-        this._shp = new egret.Shape();
-        this._shp.graphics.beginFill(0xFF0000, 1);
-        this._shp.graphics.drawRect(0, 0, 10, Util.stage.stageHeight);
-        this._shp.graphics.endFill();
-        this.addChild(this._shp);
-        this._maskRec = new egret.Rectangle(0, 0, 10, Util.stage.stageHeight);
-        this._shp.mask = this._maskRec;
+        this._bg = Util.createBitmapByName("life_bg");
+        this._life = Util.createBitmapByName("life");
+        this.addChild(this._bg);
+        this.addChild(this._life);
+        var mask = new egret.Rectangle(0, 0, this._life.width, this._life.height);
+        this._life.mask = mask;
     };
-    BossHP.prototype.update = function (damage) {
-        console.log("damage:" + damage);
-        if (this._currentDamage == -1 || this._currentDamage != damage) {
-            this._currentDamage = damage;
-            var posY = this.height * damage / DataCenter.cfg.bossHP;
-            //this._maskRec.y = Util.stage.stageHeight - posY;
-            //this._maskRec.y = posY;
-            var tw = egret.Tween.get(this._maskRec);
-            tw.to({ y: posY }, 100);
-        }
+    BossHP.prototype.update = function (hp) {
+        var per = 1 - (hp / DataCenter.cfg.bossHP);
+        var mask = this._life.mask;
+        mask.y = mask.height * per;
+        this._life.mask = mask;
     };
     return BossHP;
 })(egret.Sprite);

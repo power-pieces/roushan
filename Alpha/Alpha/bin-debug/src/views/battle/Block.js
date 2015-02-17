@@ -23,6 +23,8 @@ var Block = (function (_super) {
         this._lastPostion = [0, 0];
         //压在上面的方块数
         this._upBlock = 0;
+        //是否造成了伤害
+        this.isDamaged = false;
         this.createView();
     }
     /**

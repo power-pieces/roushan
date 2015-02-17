@@ -63,7 +63,7 @@ var Roushan = (function (_super) {
             this.showResultView();
         }.bind(this));
         var verTxt = new egret.TextField();
-        verTxt.text = "Version:0.1";
+        verTxt.text = "Version:0.2";
         verTxt._setTextColor(0xffffff);
         verTxt.x = 200;
         this.addChild(verTxt);

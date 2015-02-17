@@ -45,22 +45,22 @@ var ResultView = (function (_super) {
         r4.x = (this._bg.width - r4.width) / 2;
         r4.y = this._bg.height - r4.height;
         this.addChild(r4);
-        var txtY = this._bg.height / 3;
-        var txt = this.createTxt();
-        txt.text = "您只用了      个方块";
-        txt.x = (this._bg.width - txt.width) / 2;
-        txt.y = txtY;
-        txtY += 40;
-        txt = this.createTxt();
-        txt.text = " 就打败了肉山大魔王";
-        txt.x = (this._bg.width - txt.width) / 2;
-        txt.y = txtY;
-        txtY += 70;
-        txt = this.createTxt();
-        txt.text = "超过了        %的玩家";
-        txt.x = (this._bg.width - txt.width) / 2;
-        txt.y = txtY;
-        txtY += 100;
+        //var txtY = this._bg.height / 3;
+        //var txt = this.createTxt();
+        //txt.text = "您只用了      个方块";
+        //txt.x = (this._bg.width - txt.width) / 2;
+        //txt.y = txtY;
+        //txtY += 40;
+        //txt = this.createTxt();
+        //txt.text = " 就打败了肉山大魔王";
+        //txt.x = (this._bg.width - txt.width) / 2;
+        //txt.y = txtY;
+        //txtY += 70;
+        //txt = this.createTxt();
+        //txt.text = "超过了        %的玩家";
+        //txt.x = (this._bg.width - txt.width) / 2;
+        //txt.y = txtY;
+        //txtY += 100;
         this._useBlocksBit = new BitmapNumber();
         this._useBlocksBit.x = this._bg.width / 2 + 60;
         this._useBlocksBit.y = this._bg.height / 3 - 30;
@@ -77,16 +77,20 @@ var ResultView = (function (_super) {
         this._remarkTxt._setBold(true);
         this._remarkTxt.text = "";
         this._remarkTxt.x = (this._bg.width - this._remarkTxt.width) / 2;
-        this._remarkTxt.y = txtY;
+        this._remarkTxt.y = this._percentBit.y + 100;
         this.addChild(this._remarkTxt);
     };
-    ResultView.prototype.createTxt = function () {
+    ResultView.prototype.createTxt = function (content, align) {
+        if (content === void 0) { content = ""; }
+        if (align === void 0) { align = egret.HorizontalAlign.LEFT; }
         var txt = new egret.TextField();
         txt.size = 30;
         txt._setLineSpacing(10);
         txt._setTextColor(0x000000);
         txt._setFontFamily("黑体");
         txt._setBold(true);
+        txt.textAlign = align;
+        txt.text = content;
         this.addChild(txt);
         return txt;
     };
@@ -141,6 +145,19 @@ var ResultView = (function (_super) {
         var str = Util.getResultContent(DataCenter.score);
         this._remarkTxt.text = str;
         this._remarkTxt.x = (this._bg.width - this._remarkTxt.width) / 2;
+        var txt = null;
+        txt = this.createTxt("您只用了", egret.HorizontalAlign.LEFT);
+        txt.x = this._useBlocksBit.x - txt.width;
+        txt.y = this._useBlocksBit.y + this._useBlocksBit.height - txt.height;
+        txt = this.createTxt("个方块", egret.HorizontalAlign.LEFT);
+        txt.x = this._useBlocksBit.x + this._useBlocksBit.width;
+        txt.y = this._useBlocksBit.y + this._useBlocksBit.height - txt.height;
+        txt = this.createTxt("超过了", egret.HorizontalAlign.RIGHT);
+        txt.x = this._percentBit.x - txt.width;
+        txt.y = this._percentBit.y + this._percentBit.height - txt.height;
+        txt = this.createTxt("%的玩家", egret.HorizontalAlign.LEFT);
+        txt.x = this._percentBit.x + this._percentBit.width;
+        txt.y = this._percentBit.y + this._percentBit.height - txt.height;
     };
     /*
      * 点击游戏屏幕

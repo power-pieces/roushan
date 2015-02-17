@@ -28,6 +28,7 @@ var Battle = (function (_super) {
         this._checkDamageTime = 0;
         this._leftWingMaterial = null;
         this._rightWingMaterial = null;
+        this._btnRestart = null;
         egret.Profiler.getInstance().run();
         Battle.FACTOR = DataCenter.cfg.factor;
         this._isDebug = DataCenter.cfg.isDebug;
@@ -68,21 +69,36 @@ var Battle = (function (_super) {
         var bg = Util.createBitmapByName("Roshan-Background_png");
         this.addChild(bg);
         this.createBoss();
-        this._hp = new BossHP(this._boss.getHP(), Util.stage.stageHeight);
+        this._hp = new BossHP();
         this.addChild(this._hp);
+        this._hp.y = (Util.stage.stageHeight - this._hp.height) >> 1;
         this._arrow = Util.createBitmapByName("arrow_png");
         this._arrow.anchorX = this._arrow.anchorY = 0.5;
         this._arrow.x = Util.stage.stageWidth >> 1;
         this._arrow.y = Util.stage.stageHeight - Battle.BLOCK_DROP_POS;
         this.addChild(this._arrow);
+        this._btnRestart = Util.createBitmapByName("restart");
+        this.addChild(this._btnRestart);
+        this._btnRestart.anchorY = 0.5;
+        this._btnRestart.x = Util.stage.stageWidth - this._btnRestart.width - 10;
+        this._btnRestart.y = this._arrow.y;
+        this._btnRestart.touchEnabled = true;
+        var hpLabel = Util.createBitmapByName("hp_label");
+        this.addChild(hpLabel);
+        hpLabel.y = this._hp.y - hpLabel.height;
     };
     Battle.prototype.addListeners = function () {
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegionHandler, this);
+        this._btnRestart.addEventListener(egret.TouchEvent.TOUCH_TAP, this._btnRestart_tapHandler, this);
         egret.Ticker.getInstance().register(this.onTick, this);
     };
     Battle.prototype.removeListeners = function () {
         this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegionHandler, this);
+        this._btnRestart.removeEventListener(egret.TouchEvent.TOUCH_TAP, this._btnRestart_tapHandler, this);
         egret.Ticker.getInstance().unregister(this.onTick, this);
+    };
+    Battle.prototype._btnRestart_tapHandler = function (e) {
+        NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_GAME_VIEW));
     };
     Battle.prototype.touchBegionHandler = function (e) {
         if (egret.getTimer() < this._blockCD) {
@@ -122,7 +138,7 @@ var Battle = (function (_super) {
         rightWingBody.addShape(rightWingShape);
         this._p2World.addBody(rightWingBody);
         boss.p2Bodys = [body, leftWingBody, rightWingBody];
-        boss.setVelocity(15 / Battle.FACTOR); //设置BOSS速度
+        boss.setVelocity(DataCenter.cfg.bossSpeed / Battle.FACTOR); //设置BOSS速度
         this._boss = boss;
     };
     Battle.prototype.createBlock = function (x) {
@@ -185,15 +201,15 @@ var Battle = (function (_super) {
             }
         }
         this.updateBlocks();
-        if (egret.getTimer() > this._checkDamageTime) {
-            var damage = this.calculateDamage();
-            this._boss.setHP(DataCenter.cfg.bossHP - damage);
-            this._hp.update(damage);
-            if (damage >= DataCenter.cfg.bossHP) {
-                this.gameOver();
-            }
-            this._checkDamageTime = egret.getTimer() + DataCenter.cfg.damageCheckCD;
+        //if (egret.getTimer() > this._checkDamageTime) {
+        var damage = this.calculateDamage();
+        this._boss.setHP(this._boss.getHP() - damage);
+        this._hp.update(this._boss.getHP());
+        if (this._boss.getHP() <= 0) {
+            this.gameOver();
         }
+        this._checkDamageTime = egret.getTimer() + DataCenter.cfg.damageCheckCD;
+        //}
     };
     //游戏结束
     Battle.prototype.gameOver = function () {
@@ -277,11 +293,19 @@ var Battle = (function (_super) {
                 break;
             }
             var dmgData = dmgDatas[i];
-            if (this._blockLayers[i].length >= dmgData.length) {
-                damage += dmgData[dmgData.length - 1];
-            }
-            else {
-                damage += dmgData[this._blockLayers[i].length];
+            var blocks = this._blockLayers[i];
+            for (var j = 0; j < blocks.length; j++) {
+                var block = blocks[j];
+                if (block.isDamaged) {
+                    continue;
+                }
+                block.isDamaged = true;
+                if (this._blockLayers[i].length >= dmgData.length) {
+                    damage += dmgData[dmgData.length - 1];
+                }
+                else {
+                    damage += dmgData[this._blockLayers[i].length - 1];
+                }
             }
         }
         return damage;
