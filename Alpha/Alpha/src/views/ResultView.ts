@@ -23,10 +23,10 @@ class ResultView extends ViewBase
 
     private createUI():void
     {
-        this._bg = Util.createBitmapByName("game_bg");
+        this._bg = DataCenter.isFail ? Util.createBitmapByName("game_fail_bg"): Util.createBitmapByName("game_bg");
         this.addChild(this._bg);
 
-        this._result = Util.createBitmapByName("result_bg");
+        this._result = DataCenter.isIceMode? Util.createBitmapByName("ice_result"):Util.createBitmapByName("result_bg");
         this._result.x = (this._bg.width - this._result.width ) / 2;
         this.addChild(this._result);
 
@@ -54,7 +54,7 @@ class ResultView extends ViewBase
         r1.x = (this._bg.width - r1.width) / 2;
         r1.y = this._bg.height - r1.height;
         this.addChild(r1);
-        var r4:egret.Bitmap = Util.createBitmapByName("r4");
+        var r4: egret.Bitmap = DataCenter.isFail ? Util.createBitmapByName("rf1_png"):Util.createBitmapByName("r4");
         r4.x = (this._bg.width - r4.width) / 2;
         r4.y = this._bg.height - r4.height;
         this.addChild(r4);
@@ -66,11 +66,7 @@ class ResultView extends ViewBase
         //txt.x = (this._bg.width - txt.width) / 2;
         //txt.y = txtY;
         //txtY += 40;
-        //txt = this.createTxt();
-        //txt.text = " 就打败了肉山大魔王";
-        //txt.x = (this._bg.width - txt.width) / 2;
-        //txt.y = txtY;
-        //txtY += 70;
+
         //txt = this.createTxt();
         //txt.text = "超过了        %的玩家";
         //txt.x = (this._bg.width - txt.width) / 2;
@@ -168,12 +164,21 @@ class ResultView extends ViewBase
      */
     public showGameInfo():void
     {
+        if (DataCenter.isFail) {
+            this.showFail();
+        }
+        else {
+            this.showWin();
+        }        
+    }
+
+    private showWin(): void {
         this._useBlocksBit.setShowNumber(DataCenter.score);
         this._percentBit.setShowNumber(DataCenter.percent);
         this._useBlocksBit.x = (this._bg.width - this._useBlocksBit.width) / 2 + 15;
         this._percentBit.x = (this._bg.width - this._percentBit.width) / 2 - 14;
 
-        var str:string = Util.getResultContent(DataCenter.score);
+        var str: string = Util.getResultContent(DataCenter.score);
         this._remarkTxt.text = str;
         this._remarkTxt.x = (this._bg.width - this._remarkTxt.width) / 2;
 
@@ -184,16 +189,34 @@ class ResultView extends ViewBase
         txt = this.createTxt("个方块", egret.HorizontalAlign.LEFT);
         txt.x = this._useBlocksBit.x + this._useBlocksBit.width;
         txt.y = this._useBlocksBit.y + this._useBlocksBit.height - txt.height;
-        
+
+        txt = this.createTxt();
+        txt.text = " 就打败了肉山大魔王";
+        txt.x = (this._bg.width - txt.width) / 2;
+        txt.y = this._useBlocksBit.y + this._useBlocksBit.height + 10;
+
         txt = this.createTxt("超过了", egret.HorizontalAlign.RIGHT);
         txt.x = this._percentBit.x - txt.width;
         txt.y = this._percentBit.y + this._percentBit.height - txt.height;
         txt = this.createTxt("%的玩家", egret.HorizontalAlign.LEFT);
         txt.x = this._percentBit.x + this._percentBit.width;
         txt.y = this._percentBit.y + this._percentBit.height - txt.height;
-
-        
     }
+
+    private showFail(): void {
+        var txt: egret.TextField = null;
+
+        txt = this.createTxt(DataCenter.cfg.failContents[0]);
+        txt.x = (this._bg.width - txt.width) / 2;
+        txt.y = this._useBlocksBit.y + this._useBlocksBit.height;
+
+        txt = this.createTxt(DataCenter.cfg.failContents[1]);
+        txt.x = (this._bg.width - txt.width) / 2;
+        txt.y = this._percentBit.y + this._percentBit.height;
+
+        this._shareBtn.visible = false;
+    }
+
     /*
      * 点击游戏屏幕
      */

@@ -30,6 +30,10 @@
     private _rightWingMaterial: p2.Material = null;
 
     private _btnRestart: egret.Bitmap = null;
+
+    private _bg: egret.Bitmap;
+
+    private _scrollTime: number = Number.MAX_VALUE;
     
 
     public constructor() {
@@ -79,7 +83,9 @@
     }
 
     private createView(): void {
-        var bg: egret.Bitmap = Util.createBitmapByName("Roshan-Background_png");
+        var bg: egret.Bitmap = Util.createBitmapByName("battle_bg");
+        bg.scrollRect = new egret.Rectangle(0, 0, Util.stage.stageWidth, Util.stage.stageHeight);
+        this._bg = bg;
         this.addChild(bg);
 
         this.createBoss();
@@ -210,7 +216,27 @@
         this._blocks.push(block);
 
         this._useBlockCount++;
+
+        if (3 == this._useBlockCount) {
+            //开始滚动
+            this._scrollTime = egret.getTimer() + DataCenter.cfg.scrollInterval;
+        }
     }   
+
+    private scrollMap(): void {
+        if (this._bg.scrollRect.y + this._bg.scrollRect.height >= this._bg.height) {
+            //游戏失败
+            this.gameOver();
+            return;
+        }
+
+
+        if (egret.getTimer() >= this._scrollTime) {
+            this._scrollTime = egret.getTimer() + DataCenter.cfg.scrollInterval;
+
+            egret.Tween.get(this._bg.scrollRect).to({ y: this._bg.scrollRect.y + DataCenter.cfg.scrollHeight }, DataCenter.cfg.scrollDuration);
+        }
+    }
 
     private onTick(dt): void {
 
@@ -273,11 +299,12 @@
             this._hp.update(this._boss.getHP());
             if (this._boss.getHP() <= 0) {
                 this.gameOver();
+                return;
             }
             this._checkDamageTime = egret.getTimer() + DataCenter.cfg.damageCheckCD;
         //}
-        
-        
+
+        this.scrollMap();
     }
 
     //游戏结束
@@ -287,6 +314,7 @@
         //alert("game over " + this._useBlockCount);
         DataCenter.score = this._useBlockCount;
         DataCenter.percent = this._useBlockCount;
+        DataCenter.isFail = this._boss.getHP() > 0?true:false;
         NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_RESULT_VIEW));
     }
 

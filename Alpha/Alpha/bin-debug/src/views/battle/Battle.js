@@ -29,6 +29,7 @@ var Battle = (function (_super) {
         this._leftWingMaterial = null;
         this._rightWingMaterial = null;
         this._btnRestart = null;
+        this._scrollTime = Number.MAX_VALUE;
         egret.Profiler.getInstance().run();
         Battle.FACTOR = DataCenter.cfg.factor;
         this._isDebug = DataCenter.cfg.isDebug;
@@ -66,7 +67,9 @@ var Battle = (function (_super) {
         this._p2World = world;
     };
     Battle.prototype.createView = function () {
-        var bg = Util.createBitmapByName("Roshan-Background_png");
+        var bg = Util.createBitmapByName("battle_bg");
+        bg.scrollRect = new egret.Rectangle(0, 0, Util.stage.stageWidth, Util.stage.stageHeight);
+        this._bg = bg;
         this.addChild(bg);
         this.createBoss();
         this._hp = new BossHP();
@@ -162,6 +165,21 @@ var Battle = (function (_super) {
         block.setBody(body);
         this._blocks.push(block);
         this._useBlockCount++;
+        if (3 == this._useBlockCount) {
+            //开始滚动
+            this._scrollTime = egret.getTimer() + DataCenter.cfg.scrollInterval;
+        }
+    };
+    Battle.prototype.scrollMap = function () {
+        if (this._bg.scrollRect.y + this._bg.scrollRect.height >= this._bg.height) {
+            //游戏失败
+            this.gameOver();
+            return;
+        }
+        if (egret.getTimer() >= this._scrollTime) {
+            this._scrollTime = egret.getTimer() + DataCenter.cfg.scrollInterval;
+            egret.Tween.get(this._bg.scrollRect).to({ y: this._bg.scrollRect.y + DataCenter.cfg.scrollHeight }, DataCenter.cfg.scrollDuration);
+        }
     };
     Battle.prototype.onTick = function (dt) {
         if (2 == this.gameState) {
@@ -213,9 +231,11 @@ var Battle = (function (_super) {
         this._hp.update(this._boss.getHP());
         if (this._boss.getHP() <= 0) {
             this.gameOver();
+            return;
         }
         this._checkDamageTime = egret.getTimer() + DataCenter.cfg.damageCheckCD;
         //}
+        this.scrollMap();
     };
     //游戏结束
     Battle.prototype.gameOver = function () {
@@ -224,6 +244,7 @@ var Battle = (function (_super) {
         //alert("game over " + this._useBlockCount);
         DataCenter.score = this._useBlockCount;
         DataCenter.percent = this._useBlockCount;
+        DataCenter.isFail = this._boss.getHP() > 0 ? true : false;
         NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_RESULT_VIEW));
     };
     //更新方块

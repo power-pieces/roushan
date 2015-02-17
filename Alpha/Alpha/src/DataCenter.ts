@@ -19,5 +19,8 @@
     //最后得分
     public static score:number = 0;
     //战胜人数百分比
-    public static percent:number = 0;
+    public static percent: number = 0;
+
+    //是否是失败了
+    public static isFail: boolean = false;
 }

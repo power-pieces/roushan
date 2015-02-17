@@ -20,6 +20,8 @@ var DataCenter = (function () {
     DataCenter.score = 0;
     //战胜人数百分比
     DataCenter.percent = 0;
+    //是否是失败了
+    DataCenter.isFail = false;
     return DataCenter;
 })();
 DataCenter.prototype.__class__ = "DataCenter";
