@@ -149,9 +149,15 @@
 
         var shape: p2.Rectangle = new p2.Rectangle(boss.body.width / Battle.FACTOR, boss.body.height / Battle.FACTOR);
         shape.material = this._p2World.defaultMaterial;
+        var boneShape: p2.Rectangle = new p2.Rectangle(46 / Battle.FACTOR, (boss.leftWing.height) / Battle.FACTOR);
+        boneShape.material = this._p2World.defaultMaterial;
+
+
         var body: p2.Body = new p2.Body({ mass: 1, position: [positionX, positionY] });
         body.type = p2.Body.KINEMATIC;        
         body.addShape(shape);
+        body.addShape(boneShape, [(boss.leftWing.x + 60) / Battle.FACTOR, -(boss.leftWing.y + 10) / Battle.FACTOR], this.angle2(15)); 
+        body.addShape(boneShape, [(boss.rightWing.x - 60) / Battle.FACTOR, -(boss.rightWing.y + 10) / Battle.FACTOR], this.angle2(345)); 
         this._p2World.addBody(body);
         
         body.displays = [boss];
@@ -159,7 +165,7 @@
         
         var leftWingShape: p2.Rectangle = new p2.Rectangle(boss.leftWing.width * 0.8 / Battle.FACTOR, boss.leftWing.height * 0.8 / Battle.FACTOR);
         leftWingShape.material = this._leftWingMaterial;
-        var leftWingBody: p2.Body = new p2.Body({ mass: 1, position: [positionX + (boss.leftWing.x / Battle.FACTOR), positionY + (-boss.leftWing.y / Battle.FACTOR)] , angle:this.angle2(15)});
+        var leftWingBody: p2.Body = new p2.Body({ mass: 1, position: [positionX + ((boss.leftWing.x - 10) / Battle.FACTOR), positionY + (-(boss.leftWing.y + 10) / Battle.FACTOR)] , angle:this.angle2(15)});
         
         leftWingBody.type = p2.Body.KINEMATIC;
         leftWingBody.addShape(leftWingShape);
@@ -167,7 +173,7 @@
 
         var rightWingShape: p2.Rectangle = new p2.Rectangle(boss.rightWing.width * 0.8 / Battle.FACTOR, boss.rightWing.height * 0.8 / Battle.FACTOR);
         rightWingShape.material = this._rightWingMaterial;
-        var rightWingBody: p2.Body = new p2.Body({ mass: 1, position: [positionX + (boss.rightWing.x / Battle.FACTOR), positionY + (-boss.rightWing.y / Battle.FACTOR)], angle: this.angle2(345) });
+        var rightWingBody: p2.Body = new p2.Body({ mass: 1, position: [positionX + ((boss.rightWing.x + 10) / Battle.FACTOR), positionY + (-(boss.rightWing.y + 10) / Battle.FACTOR)], angle: this.angle2(345) });
         rightWingBody.type = p2.Body.KINEMATIC;
         rightWingBody.addShape(rightWingShape);
         this._p2World.addBody(rightWingBody);       
@@ -184,7 +190,11 @@
     private createBlock(x:number): void {
         var block: Block = new Block();
 
-        var positionX: number = this._arrow.x / Battle.FACTOR;
+        if (false == DataCenter.cfg.isDebug) {
+            x = this._arrow.x;
+        }
+
+        var positionX: number = x / Battle.FACTOR;
         var positionY: number = Battle.BLOCK_DROP_POS / Battle.FACTOR;
 
         var shape: p2.Rectangle = new p2.Rectangle(block.width / Battle.FACTOR, block.height / Battle.FACTOR);
@@ -232,7 +242,7 @@
 
         world.step(dt / 1000);
 
-        if (!this._isDebug) {
+        //if (!this._isDebug) {
             var stageHeight: number = egret.MainContext.instance.stage.stageHeight;
             var l = world.bodies.length;
             for (var i: number = 0; i < l; i++) {
@@ -252,7 +262,7 @@
                     }
                 }
 
-            }
+           // }
         }
 
 

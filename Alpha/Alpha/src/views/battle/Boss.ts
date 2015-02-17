@@ -96,6 +96,10 @@
         this.leftWing.y = this.rightWing.y = -27;     
 
         this.setState(1);    
+
+        
+        //var tween: egret.Tween = egret.Tween.get(this.leftWing, {loop:true});
+        //tween.to({ y: this.leftWing.y + 10 },1000).to({y:this.leftWing.y - 10},1000);
     }
 
     private setState(state:number): void {

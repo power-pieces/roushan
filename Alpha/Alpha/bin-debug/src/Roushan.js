@@ -20,6 +20,8 @@ var Roushan = (function (_super) {
     Roushan.prototype.onAddToStage = function (event) {
         this.loadingView = new LoadingUI();
         this.stage.addChild(this.loadingView);
+        this.loadingView.x = (this.stage.stageWidth - this.loadingView.width) / 2;
+        this.loadingView.y = (this.stage.stageHeight - this.loadingView.height) / 2;
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.loadConfig("resource/resource.json", "resource/");
     };

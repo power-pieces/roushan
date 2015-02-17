@@ -119,21 +119,25 @@ var Battle = (function (_super) {
         var positionY = (boss.body.height >> 1) / Battle.FACTOR;
         var shape = new p2.Rectangle(boss.body.width / Battle.FACTOR, boss.body.height / Battle.FACTOR);
         shape.material = this._p2World.defaultMaterial;
+        var boneShape = new p2.Rectangle(46 / Battle.FACTOR, (boss.leftWing.height) / Battle.FACTOR);
+        boneShape.material = this._p2World.defaultMaterial;
         var body = new p2.Body({ mass: 1, position: [positionX, positionY] });
         body.type = p2.Body.KINEMATIC;
         body.addShape(shape);
+        body.addShape(boneShape, [(boss.leftWing.x + 60) / Battle.FACTOR, -(boss.leftWing.y + 10) / Battle.FACTOR], this.angle2(15));
+        body.addShape(boneShape, [(boss.rightWing.x - 60) / Battle.FACTOR, -(boss.rightWing.y + 10) / Battle.FACTOR], this.angle2(345));
         this._p2World.addBody(body);
         body.displays = [boss];
         this.addChild(boss);
         var leftWingShape = new p2.Rectangle(boss.leftWing.width * 0.8 / Battle.FACTOR, boss.leftWing.height * 0.8 / Battle.FACTOR);
         leftWingShape.material = this._leftWingMaterial;
-        var leftWingBody = new p2.Body({ mass: 1, position: [positionX + (boss.leftWing.x / Battle.FACTOR), positionY + (-boss.leftWing.y / Battle.FACTOR)], angle: this.angle2(15) });
+        var leftWingBody = new p2.Body({ mass: 1, position: [positionX + ((boss.leftWing.x - 10) / Battle.FACTOR), positionY + (-(boss.leftWing.y + 10) / Battle.FACTOR)], angle: this.angle2(15) });
         leftWingBody.type = p2.Body.KINEMATIC;
         leftWingBody.addShape(leftWingShape);
         this._p2World.addBody(leftWingBody);
         var rightWingShape = new p2.Rectangle(boss.rightWing.width * 0.8 / Battle.FACTOR, boss.rightWing.height * 0.8 / Battle.FACTOR);
         rightWingShape.material = this._rightWingMaterial;
-        var rightWingBody = new p2.Body({ mass: 1, position: [positionX + (boss.rightWing.x / Battle.FACTOR), positionY + (-boss.rightWing.y / Battle.FACTOR)], angle: this.angle2(345) });
+        var rightWingBody = new p2.Body({ mass: 1, position: [positionX + ((boss.rightWing.x + 10) / Battle.FACTOR), positionY + (-(boss.rightWing.y + 10) / Battle.FACTOR)], angle: this.angle2(345) });
         rightWingBody.type = p2.Body.KINEMATIC;
         rightWingBody.addShape(rightWingShape);
         this._p2World.addBody(rightWingBody);
@@ -143,7 +147,10 @@ var Battle = (function (_super) {
     };
     Battle.prototype.createBlock = function (x) {
         var block = new Block();
-        var positionX = this._arrow.x / Battle.FACTOR;
+        if (false == DataCenter.cfg.isDebug) {
+            x = this._arrow.x;
+        }
+        var positionX = x / Battle.FACTOR;
         var positionY = Battle.BLOCK_DROP_POS / Battle.FACTOR;
         var shape = new p2.Rectangle(block.width / Battle.FACTOR, block.height / Battle.FACTOR);
         shape.material = this._p2World.defaultMaterial;
@@ -179,23 +186,22 @@ var Battle = (function (_super) {
             this._boss.changeDirection(1);
         }
         world.step(dt / 1000);
-        if (!this._isDebug) {
-            var stageHeight = egret.MainContext.instance.stage.stageHeight;
-            var l = world.bodies.length;
-            for (var i = 0; i < l; i++) {
-                var boxBody = world.bodies[i];
-                if (boxBody.displays) {
-                    var box = boxBody.displays[0];
-                    if (box) {
-                        box.x = boxBody.position[0] * Battle.FACTOR;
-                        box.y = stageHeight - boxBody.position[1] * Battle.FACTOR;
-                        box.rotation = 360 - boxBody.angle * 180 / Math.PI;
-                        if (boxBody.sleepState == p2.Body.SLEEPING) {
-                            box.alpha = 0.5;
-                        }
-                        else {
-                            box.alpha = 1;
-                        }
+        //if (!this._isDebug) {
+        var stageHeight = egret.MainContext.instance.stage.stageHeight;
+        var l = world.bodies.length;
+        for (var i = 0; i < l; i++) {
+            var boxBody = world.bodies[i];
+            if (boxBody.displays) {
+                var box = boxBody.displays[0];
+                if (box) {
+                    box.x = boxBody.position[0] * Battle.FACTOR;
+                    box.y = stageHeight - boxBody.position[1] * Battle.FACTOR;
+                    box.rotation = 360 - boxBody.angle * 180 / Math.PI;
+                    if (boxBody.sleepState == p2.Body.SLEEPING) {
+                        box.alpha = 0.5;
+                    }
+                    else {
+                        box.alpha = 1;
                     }
                 }
             }
