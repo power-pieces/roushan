@@ -10,8 +10,8 @@ class StartView extends ViewBase
     private _normalBtn:egret.Bitmap;
     private _specialBtn:egret.Bitmap;
 
-    private _tipView:TipsView;
-    private _tipViewShow:boolean;
+    //private _tipView:TipsView;
+    //private _tipViewShow:boolean;
 
     public constructor()
     {
@@ -47,7 +47,7 @@ class StartView extends ViewBase
         this._normalBtn.touchEnabled = true;
         this._specialBtn.touchEnabled = true;
 
-        this._tipViewShow = false;
+        //this._tipViewShow = false;
     }
 
     public addListeners()
@@ -57,10 +57,10 @@ class StartView extends ViewBase
         this._desBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDesBtnHandler, this);
         this._normalBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchNormalBtnHandler, this);
         this._specialBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchSpecialBtnHandler, this);
-        NoticeManager.addNoticeAction("close_tip_view",
-            function (n: Notice): void {
-                this.closeTipViewHandler();
-            }.bind(this));
+        //NoticeManager.addNoticeAction("close_tip_view",
+        //    function (n: Notice): void {
+        //        this.closeTipViewHandler();
+        //    }.bind(this));
     }
 
     public removeListeners()
@@ -70,21 +70,21 @@ class StartView extends ViewBase
         this._desBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDesBtnHandler, this);
         this._normalBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchNormalBtnHandler, this);
         this._specialBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchSpecialBtnHandler, this);
-        NoticeManager.removeNoticeAction(NoticeCode.CLOSE_TIP_VIEW,
-            function (n: Notice): void {
-                this.closeTipViewHandler();
-            }.bind(this));
+        //NoticeManager.removeNoticeAction(NoticeCode.CLOSE_TIP_VIEW,
+        //    function (n: Notice): void {
+        //        this.closeTipViewHandler();
+        //    }.bind(this));
     }
     /*
      * 点击屏幕
      */
     private touchBgHandler(e: egret.TouchEvent):void
     {
-        if(this._tipViewShow)
-        {
-            this._tipView.showTip();
-            return;
-        }
+        //if(this._tipViewShow)
+        //{
+        //    this._tipView.showTip();
+        //    return;
+        //}
         this.touchNormalBtnHandler(null);
     }
     /*
@@ -92,11 +92,11 @@ class StartView extends ViewBase
      */
     private touchStartHandler(e:egret.TouchEvent):void
     {
-        if(this._tipViewShow)
-        {
-            this._tipView.showTip();
-            return;
-        }
+        //if(this._tipViewShow)
+        //{
+        //    this._tipView.showTip();
+        //    return;
+        //}
         this.touchNormalBtnHandler(null);
     }
     /*
@@ -104,36 +104,43 @@ class StartView extends ViewBase
      */
     private touchDesBtnHandler(e: egret.TouchEvent):void
     {
-        if(this._tipViewShow == false)
-        {
-            if(this._tipView == null)
-            {
-                this._tipView = new TipsView();
-                this._tipView.x = (this._bg.width - this._tipView.getBgWidth()) / 2;
-                this._tipView.y = 160;
-            }
-            this.addChild(this._tipView);
-            this._tipViewShow = true;
-        }
-        this._tipView.showTip();
+        //if(this._tipViewShow == false)
+        //{
+        //    if(this._tipView == null)
+        //    {
+        //        this._tipView = new TipsView();
+        //        this._tipView.x = (this._bg.width - this._tipView.getBgWidth()) / 2;
+        //        this._tipView.y = 160;
+        //    }
+        //    this.addChild(this._tipView);
+        //    this._tipViewShow = true;
+        //}
+        //this._tipView.showTip();
+
+        var tipView = new TipsView();
+        tipView.x = (this._bg.width - tipView.getBgWidth()) / 2;
+        tipView.y = 160;
+        tipView.addListeners();
+        Util.stage.addChild(tipView);
+        tipView.showTip();
     }
     /*
      * 关闭tip界面
      */
-    private closeTipViewHandler():void
-    {
-        if(this._tipViewShow)
-        {
-            this.removeChild(this._tipView);
-            this._tipViewShow = false;
-        }
-    }
+    //private closeTipViewHandler():void
+    //{
+    //    if(this._tipViewShow)
+    //    {
+    //        this.removeChild(this._tipView);
+    //        this._tipViewShow = false;
+    //    }
+    //}
     /*
      * 点击普通模式按钮
      */
     private touchNormalBtnHandler(e: egret.TouchEvent):void
     {
-        this.closeTipViewHandler();
+        //this.closeTipViewHandler();
         DataCenter.isIceMode = false;
         DataCenter.friction = 1;
         NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_GAME_VIEW));
@@ -143,7 +150,7 @@ class StartView extends ViewBase
      */
     private touchSpecialBtnHandler(e: egret.TouchEvent):void
     {
-        this.closeTipViewHandler();
+        //this.closeTipViewHandler();
         DataCenter.isIceMode = true;
         DataCenter.friction = 0.1;
         NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_GAME_VIEW));

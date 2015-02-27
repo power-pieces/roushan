@@ -126,7 +126,18 @@ class ResultView extends ViewBase
 
     public requestRank(): void {
         this.touchEnabled = false;
+        if (DataCenter.score <= DataCenter.cfg.bestScore) {
+            DataCenter.percent = 100;
+        }
+        else if (DataCenter.score >= DataCenter.cfg.lowestScore) {
+            DataCenter.percent = 88;
+        }
+        else {
+            DataCenter.percent = 100 - (DataCenter.score - DataCenter.cfg.bestScore);
+        }
 
+
+        /*
         //创建POST请求
         var url: string = DataCenter.cfg.server;
         var loader: egret.URLLoader = new egret.URLLoader();
@@ -137,6 +148,11 @@ class ResultView extends ViewBase
         var values: egret.URLVariables = new egret.URLVariables("id=" + Util.getUserID() + "&block=" + DataCenter.score);
         request.data = values;
         loader.load(request);
+        */
+
+        Util.setUserInfo(DataCenter.score, DataCenter.percent);
+
+        this.showGameInfo();
     }
 
     private onRequestData(e: egret.Event): void {

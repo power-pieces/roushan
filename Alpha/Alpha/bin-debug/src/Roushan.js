@@ -102,6 +102,15 @@ var Roushan = (function (_super) {
         this._nowView = showView;
         Util.stage.addChild(this._nowView);
         this._nowView.addListeners();
+        if (DataCenter.isNew) {
+            DataCenter.isNew = false;
+            var tipView = new TipsView([5, 6, 8]);
+            tipView.addListeners();
+            tipView.x = (Util.getStageWidth() - tipView.getBgWidth()) / 2;
+            tipView.y = 160;
+            Util.stage.addChild(tipView);
+            tipView.showTip();
+        }
     };
     /*
      * 显示结算界面

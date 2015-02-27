@@ -22,6 +22,8 @@ var DataCenter = (function () {
     DataCenter.percent = 0;
     //是否是失败了
     DataCenter.isFail = false;
+    //是否是全新的
+    DataCenter.isNew = true;
     return DataCenter;
 })();
 DataCenter.prototype.__class__ = "DataCenter";

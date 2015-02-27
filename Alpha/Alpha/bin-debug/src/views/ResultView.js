@@ -101,16 +101,29 @@ var ResultView = (function (_super) {
     };
     ResultView.prototype.requestRank = function () {
         this.touchEnabled = false;
+        if (DataCenter.score <= DataCenter.cfg.bestScore) {
+            DataCenter.percent = 100;
+        }
+        else if (DataCenter.score >= DataCenter.cfg.lowestScore) {
+            DataCenter.percent = 88;
+        }
+        else {
+            DataCenter.percent = 100 - (DataCenter.score - DataCenter.cfg.bestScore);
+        }
+        /*
         //创建POST请求
-        var url = DataCenter.cfg.server;
-        var loader = new egret.URLLoader();
+        var url: string = DataCenter.cfg.server;
+        var loader: egret.URLLoader = new egret.URLLoader();
         loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
         loader.addEventListener(egret.Event.COMPLETE, this.onRequestData, this);
-        var request = new egret.URLRequest(url);
+        var request: egret.URLRequest = new egret.URLRequest(url);
         request.method = egret.URLRequestMethod.GET;
-        var values = new egret.URLVariables("id=" + Util.getUserID() + "&block=" + DataCenter.score);
+        var values: egret.URLVariables = new egret.URLVariables("id=" + Util.getUserID() + "&block=" + DataCenter.score);
         request.data = values;
         loader.load(request);
+        */
+        Util.setUserInfo(DataCenter.score, DataCenter.percent);
+        this.showGameInfo();
     };
     ResultView.prototype.onRequestData = function (e) {
         this.touchEnabled = true;

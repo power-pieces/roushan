@@ -3,3 +3,8 @@ E:\wwwroot\roushan\trunk\Alpha\Alpha\bin\Alpha.pdb
 E:\wwwroot\roushan\trunk\Alpha\Alpha\obj\Debug\Alpha.csprojResolveAssemblyReference.cache
 E:\wwwroot\roushan\trunk\Alpha\Alpha\obj\Debug\Alpha.dll
 E:\wwwroot\roushan\trunk\Alpha\Alpha\obj\Debug\Alpha.pdb
+C:\inetpub\wwwroot\roushan\trunk\Alpha\Alpha\bin\Alpha.dll
+C:\inetpub\wwwroot\roushan\trunk\Alpha\Alpha\bin\Alpha.pdb
+C:\inetpub\wwwroot\roushan\trunk\Alpha\Alpha\obj\Debug\Alpha.dll
+C:\inetpub\wwwroot\roushan\trunk\Alpha\Alpha\obj\Debug\Alpha.pdb
+C:\inetpub\wwwroot\roushan\trunk\Alpha\Alpha\obj\Debug\Alpha.csprojResolveAssemblyReference.cache

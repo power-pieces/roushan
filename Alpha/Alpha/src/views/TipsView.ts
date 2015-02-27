@@ -13,18 +13,37 @@ class TipsView extends egret.Sprite
     //当前tip索引
     private _tipIndex = 0;
     //总数量
-    private _totalNum = 11;
+    //private _totalNum = 11;
     //关闭
-    private _closeBtn:egret.Bitmap;
+    private _closeBtn: egret.Bitmap;
 
-    public constructor()
+    //指向的内容的索引
+    private _contentIndex: number = -1;
+    //内容
+    private _contents: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+    //
+    private _mask: egret.Sprite = new egret.Sprite();
+
+    public constructor(contents:number[] = null)
     {
         super();
+        if (null != contents) {
+            this._contents = contents;
+        }
         this.createUI();
     }
 
     private createUI():void
     {
+        this._mask.graphics.beginFill(0, 0.5);
+        this._mask.graphics.drawRect(0, 0, Util.getStageWidth(), Util.getStageHeight());
+        this._mask.graphics.endFill();
+        this._mask.width = Util.getStageWidth();
+        this._mask.height = Util.getStageHeight();
+        this._mask.touchEnabled = true;
+        Util.stage.addChild(this._mask);
+
         this._bg = Util.createBitmapByName("tip_bg");
         this.addChild(this._bg);
         this._tipTxt = new egret.TextField();
@@ -36,17 +55,34 @@ class TipsView extends egret.Sprite
         this._closeBtn.y = 0 - this._closeBtn.height / 2 + 8;
         this.addChild(this._closeBtn);
     }
+
+    public addListeners(): void {
+        this.touchEnabled = true;
+        Util.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.stage_touchBeginHandler, this);
+    }
+
+    public removeListeners(): void {
+        this.touchEnabled = false;
+        Util.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.stage_touchBeginHandler, this);
+    }
+
+    private stage_touchBeginHandler(e: egret.TouchEvent): void {
+        this.showTip();
+    }
+
     /*
      * 显示tip
      */
     public showTip():void
     {
-        this._tipIndex ++;
-        if(this._totalNum < this._tipIndex)
+        this._contentIndex++;
+        if (this._contents.length <= this._contentIndex)
         {
             this.touchCloseHandler(null);
             return;
         }
+        this._tipIndex = this._contents[this._contentIndex];
+
         if(this._currentTip != null)
         {
             if(this._tipTxt.parent != null)
@@ -103,6 +139,12 @@ class TipsView extends egret.Sprite
             this.removeChild(this._tipTxt);
         }
         this.clearTip();
+
+        this.removeListeners();
+
+        this.parent.removeChild(this);
+
+        this._mask.parent.removeChild(this._mask);
     }
     /*
      * 显示tiptxt

@@ -23,4 +23,7 @@
 
     //是否是失败了
     public static isFail: boolean = false;
+
+    //是否是全新的
+    public static isNew: boolean = true;
 }

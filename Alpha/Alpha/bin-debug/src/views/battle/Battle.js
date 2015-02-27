@@ -68,7 +68,7 @@ var Battle = (function (_super) {
     };
     Battle.prototype.createView = function () {
         var bg = Util.createBitmapByName("battle_bg");
-        bg.scrollRect = new egret.Rectangle(0, 0, Util.stage.stageWidth, Util.stage.stageHeight);
+        bg.scrollRect = new egret.Rectangle(0, bg.height - Util.stage.stageHeight, Util.stage.stageWidth, Util.stage.stageHeight);
         this._bg = bg;
         this.addChild(bg);
         this.createBoss();
@@ -157,7 +157,7 @@ var Battle = (function (_super) {
         var positionY = Battle.BLOCK_DROP_POS / Battle.FACTOR;
         var shape = new p2.Rectangle(block.width / Battle.FACTOR, block.height / Battle.FACTOR);
         shape.material = this._p2World.defaultMaterial;
-        var body = new p2.Body({ mass: 1, position: [positionX, positionY] });
+        var body = new p2.Body({ mass: 2, position: [positionX, positionY] });
         body.addShape(shape);
         this._p2World.addBody(body);
         body.displays = [block];
@@ -171,14 +171,14 @@ var Battle = (function (_super) {
         }
     };
     Battle.prototype.scrollMap = function () {
-        if (this._bg.scrollRect.y + this._bg.scrollRect.height >= this._bg.height) {
+        if (this._bg.scrollRect.y <= 0) {
             //游戏失败
             this.gameOver();
             return;
         }
         if (egret.getTimer() >= this._scrollTime) {
             this._scrollTime = egret.getTimer() + DataCenter.cfg.scrollInterval;
-            egret.Tween.get(this._bg.scrollRect).to({ y: this._bg.scrollRect.y + DataCenter.cfg.scrollHeight }, DataCenter.cfg.scrollDuration);
+            egret.Tween.get(this._bg.scrollRect).to({ y: this._bg.scrollRect.y - DataCenter.cfg.scrollHeight }, DataCenter.cfg.scrollDuration);
         }
     };
     Battle.prototype.onTick = function (dt) {

@@ -9,17 +9,32 @@ var __extends = this.__extends || function (d, b) {
 };
 var TipsView = (function (_super) {
     __extends(TipsView, _super);
-    function TipsView() {
+    function TipsView(contents) {
+        if (contents === void 0) { contents = null; }
         _super.call(this);
         //当前显示
         this._currentTip = null;
         //当前tip索引
         this._tipIndex = 0;
-        //总数量
-        this._totalNum = 11;
+        //指向的内容的索引
+        this._contentIndex = -1;
+        //内容
+        this._contents = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+        //
+        this._mask = new egret.Sprite();
+        if (null != contents) {
+            this._contents = contents;
+        }
         this.createUI();
     }
     TipsView.prototype.createUI = function () {
+        this._mask.graphics.beginFill(0, 0.5);
+        this._mask.graphics.drawRect(0, 0, Util.getStageWidth(), Util.getStageHeight());
+        this._mask.graphics.endFill();
+        this._mask.width = Util.getStageWidth();
+        this._mask.height = Util.getStageHeight();
+        this._mask.touchEnabled = true;
+        Util.stage.addChild(this._mask);
         this._bg = Util.createBitmapByName("tip_bg");
         this.addChild(this._bg);
         this._tipTxt = new egret.TextField();
@@ -31,15 +46,27 @@ var TipsView = (function (_super) {
         this._closeBtn.y = 0 - this._closeBtn.height / 2 + 8;
         this.addChild(this._closeBtn);
     };
+    TipsView.prototype.addListeners = function () {
+        this.touchEnabled = true;
+        Util.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.stage_touchBeginHandler, this);
+    };
+    TipsView.prototype.removeListeners = function () {
+        this.touchEnabled = false;
+        Util.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.stage_touchBeginHandler, this);
+    };
+    TipsView.prototype.stage_touchBeginHandler = function (e) {
+        this.showTip();
+    };
     /*
      * 显示tip
      */
     TipsView.prototype.showTip = function () {
-        this._tipIndex++;
-        if (this._totalNum < this._tipIndex) {
+        this._contentIndex++;
+        if (this._contents.length <= this._contentIndex) {
             this.touchCloseHandler(null);
             return;
         }
+        this._tipIndex = this._contents[this._contentIndex];
         if (this._currentTip != null) {
             if (this._tipTxt.parent != null) {
                 this.removeChild(this._tipTxt);
@@ -88,6 +115,9 @@ var TipsView = (function (_super) {
             this.removeChild(this._tipTxt);
         }
         this.clearTip();
+        this.removeListeners();
+        this.parent.removeChild(this);
+        this._mask.parent.removeChild(this._mask);
     };
     /*
      * 显示tiptxt
