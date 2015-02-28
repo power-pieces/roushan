@@ -1,6 +1,8 @@
 {
 "isDebug":false,
 "factor":50,
+"normalFriction":1,
+"iceFriction":0.2,
 "bossHP":255,
 "blockInterval":500,
 "carom":["b0_png"],

@@ -126,7 +126,7 @@ var StartView = (function (_super) {
     StartView.prototype.touchNormalBtnHandler = function (e) {
         //this.closeTipViewHandler();
         DataCenter.isIceMode = false;
-        DataCenter.friction = 1;
+        DataCenter.friction = DataCenter.cfg.normalFriction;
         NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_GAME_VIEW));
     };
     /*
@@ -135,7 +135,7 @@ var StartView = (function (_super) {
     StartView.prototype.touchSpecialBtnHandler = function (e) {
         //this.closeTipViewHandler();
         DataCenter.isIceMode = true;
-        DataCenter.friction = 0.1;
+        DataCenter.friction = DataCenter.cfg.iceFriction;
         NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_GAME_VIEW));
     };
     return StartView;
