@@ -36,7 +36,7 @@ class ResultView extends ViewBase
         this.addChild(this._againBtn);
         this._againBtn.touchEnabled = true;
 
-        this._shareBtn = Util.createBitmapByName("share_btn");
+        this._shareBtn = Util.createBitmapByName(DataCenter.isFail?"invite_btn":"share_btn");
         this._shareBtn.x = (this._bg.width - this._shareBtn.width) / 5 * 4;
         this._shareBtn.y = (this._bg.height - this._shareBtn.height) / 3 * 2;
         this.addChild(this._shareBtn);
@@ -230,7 +230,7 @@ class ResultView extends ViewBase
         txt.x = (this._bg.width - txt.width) / 2;
         txt.y = this._percentBit.y + this._percentBit.height;
 
-        this._shareBtn.visible = false;
+        //this._shareBtn.visible = false;
     }
 
     /*
