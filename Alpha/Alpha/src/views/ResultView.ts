@@ -223,10 +223,12 @@ class ResultView extends ViewBase
         var txt: egret.TextField = null;
 
         txt = this.createTxt(DataCenter.cfg.failContents[0]);
-        txt.x = (this._bg.width - txt.width) / 2;
+        txt.textAlign = egret.HorizontalAlign.CENTER;
+        txt.x = (this._bg.width - txt.width) / 2 - 20;
         txt.y = this._useBlocksBit.y + this._useBlocksBit.height;
 
         txt = this.createTxt(DataCenter.cfg.failContents[1]);
+        txt.textAlign = egret.HorizontalAlign.CENTER;
         txt.x = (this._bg.width - txt.width) / 2;
         txt.y = this._percentBit.y + this._percentBit.height;
 

@@ -232,7 +232,8 @@
 
 
         if (egret.getTimer() >= this._scrollTime) {
-            this._scrollTime = egret.getTimer() + DataCenter.cfg.scrollInterval;
+            var interval = DataCenter.isIceMode ? DataCenter.cfg.iceScrollInterval : DataCenter.cfg.scrollInterval;
+            this._scrollTime = egret.getTimer() + interval;
 
             egret.Tween.get(this._bg.scrollRect).to({ y: this._bg.scrollRect.y - DataCenter.cfg.scrollHeight }, DataCenter.cfg.scrollDuration);
         }
