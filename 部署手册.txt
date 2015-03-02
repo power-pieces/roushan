@@ -1,0 +1,7 @@
+要求：
+.该项目需要任意支持php的web服务器即可
+
+
+游戏发布目录为release目录
+游戏的主文件为html5/index.php
+配置文件地址为html5/resource/configs/config.json
