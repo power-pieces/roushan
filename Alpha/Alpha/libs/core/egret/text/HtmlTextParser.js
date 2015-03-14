@@ -28,13 +28,19 @@ var egret;
 (function (egret) {
     /**
      * @class egret.HtmlTextParser
-     * @classdesc
-     *
+     * @classdesc 将html格式文本转换为可赋值给 egret.TextField#textFlow 属性的对象
+     * @link http://docs.egret-labs.org/jkdoc/manual-text-multiformat.html 多种样式文本混合
      */
     var HtmlTextParser = (function () {
         function HtmlTextParser() {
             this.resutlArr = [];
         }
+        /**
+         * 将html格式文本转换为可赋值给 egret.TextField#textFlow 属性的对象
+         * @param htmltext {string} html文本
+         * @method egret.HtmlTextParser#parser
+         * @returns {Array<egret.ITextElement>} 可赋值给 egret.TextField#textFlow 属性的对象
+         */
         HtmlTextParser.prototype.parser = function (htmltext) {
             this.stackArray = [];
             this.resutlArr = [];
@@ -101,6 +107,12 @@ var egret;
                 case "color":
                     info.textColor = parseInt(valueArr[1]);
                     break;
+                case "strokecolor":
+                    info.strokeColor = parseInt(valueArr[1]);
+                    break;
+                case "stroke":
+                    info.stroke = parseInt(valueArr[1]);
+                    break;
                 case "b":
                     info.bold = (valueArr[1] || "true") == "true";
                     break;
@@ -112,6 +124,9 @@ var egret;
                     break;
                 case "fontFamily":
                     info.fontFamily = valueArr[1];
+                    break;
+                case "href":
+                    info.href = valueArr[1];
                     break;
             }
         };

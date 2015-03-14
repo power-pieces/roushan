@@ -1,18 +1,19 @@
 {
-    "document_class": "Roushan",
-    "modules": [
-        {
-            "name": "core"
-        },
+	"document_class": "Roushan",
+	"modules": [
 		{
-			"name":"p2",
-			"path":"."
+			"name": "core"
+		},
+		{
+			"name": "RES"
+		},
+		{
+			"name": "p2",
+			"path": "."
 		}
-    ],
-    "native": {
-        "path_ignore": [
-
-        ]
-    },
-    "egret_version":"1.5.3"
+	],
+	"native": {
+		"path_ignore": []
+	},
+	"egret_version": "1.6.0"
 }

@@ -26,6 +26,8 @@
  */
 var egret;
 (function (egret) {
+    /**
+     */
     var ExternalInterface = (function () {
         function ExternalInterface() {
         }

@@ -20,6 +20,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="bin-debug\lib\egret_file_list.js" />
+    <Content Include="bin-debug\lib\egret_file_list_native.js" />
     <Content Include="bin-debug\src\game_file_list.js" />
     <Content Include="bin-debug\src\Main.js" />
     <Content Include="launcher\egret_loader.js" />
@@ -34,21 +35,31 @@
     <Content Include="libs\core\egret\context\Browser.js" />
     <Content Include="libs\core\egret\context\devices\DeviceContext.js" />
     <Content Include="libs\core\egret\context\devices\HTML5DeviceContext.js" />
+    <Content Include="libs\core\egret\context\devices\NativeDeviceContext.js" />
     <Content Include="libs\core\egret\context\display\HTML5StageText.js" />
+    <Content Include="libs\core\egret\context\display\NativeStageText.js" />
     <Content Include="libs\core\egret\context\display\StageText.js" />
     <Content Include="libs\core\egret\context\external\ExternalInterface.js" />
     <Content Include="libs\core\egret\context\interactive\HTML5TouchContext.js" />
     <Content Include="libs\core\egret\context\interactive\InteractionMode.js" />
+    <Content Include="libs\core\egret\context\interactive\NativeTouchContext.js" />
     <Content Include="libs\core\egret\context\interactive\TouchContext.js" />
     <Content Include="libs\core\egret\context\localStorage\localStorage.js" />
     <Content Include="libs\core\egret\context\MainContext.js" />
+    <TypeScriptCompile Include="libs\core\egret\context\native.d.ts" />
     <Content Include="libs\core\egret\context\net\HTML5NetContext.js" />
+    <Content Include="libs\core\egret\context\net\NativeNetContext.js" />
+    <Content Include="libs\core\egret\context\net\NativeResourceLoader.js" />
     <Content Include="libs\core\egret\context\net\NetContext.js" />
+    <Content Include="libs\core\egret\context\net\VersionController.js" />
+    <Content Include="libs\core\egret\context\PromiseObject.js" />
     <Content Include="libs\core\egret\context\renderer\dom\DOMTrans.js" />
     <Content Include="libs\core\egret\context\renderer\HTML5CanvasRenderer.js" />
+    <Content Include="libs\core\egret\context\renderer\NativeRendererContext.js" />
     <Content Include="libs\core\egret\context\renderer\RendererContext.js" />
     <Content Include="libs\core\egret\context\renderer\RenderFilter.js" />
     <Content Include="libs\core\egret\context\renderer\WebGLRenderer.js" />
+    <Content Include="libs\core\egret\context\renderer\webgl\shaders\BlurShader.js" />
     <Content Include="libs\core\egret\context\renderer\webgl\shaders\ColorTransformShader.js" />
     <Content Include="libs\core\egret\context\renderer\webgl\shaders\EgretShader.js" />
     <Content Include="libs\core\egret\context\renderer\webgl\shaders\PrimitiveShader.js" />
@@ -81,11 +92,15 @@
     <Content Include="libs\core\egret\events\IEventDispatcher.js" />
     <Content Include="libs\core\egret\events\IOErrorEvent.js" />
     <Content Include="libs\core\egret\events\ProgressEvent.js" />
+    <Content Include="libs\core\egret\events\TextEvent.js" />
     <Content Include="libs\core\egret\events\TimerEvent.js" />
     <Content Include="libs\core\egret\events\TouchEvent.js" />
+    <Content Include="libs\core\egret\filters\BlurFilter.js" />
+    <Content Include="libs\core\egret\filters\Filter.js" />
     <Content Include="libs\core\egret\geom\Matrix.js" />
     <Content Include="libs\core\egret\geom\Point.js" />
     <Content Include="libs\core\egret\geom\Rectangle.js" />
+    <Content Include="libs\core\egret\i18n\cn.js" />
     <Content Include="libs\core\egret\layout\HorizontalAlign.js" />
     <Content Include="libs\core\egret\layout\VerticalAlign.js" />
     <Content Include="libs\core\egret\media\Sound.js" />
@@ -117,6 +132,7 @@
     <Content Include="libs\core\egret\utils\Logger.js" />
     <Content Include="libs\core\egret\utils\Profiler.js" />
     <Content Include="libs\core\egret\utils\Recycler.js" />
+    <Content Include="libs\core\egret\utils\RenderCommand.js" />
     <Content Include="libs\core\egret\utils\SAXParser.js" />
     <Content Include="libs\core\egret\utils\setTimeout.js" />
     <Content Include="libs\core\egret\utils\Timer.js" />
@@ -135,9 +151,11 @@
     <Content Include="libs\core\extension\resource\core\ResourceItem.js" />
     <Content Include="libs\core\extension\resource\core\ResourceLoader.js" />
     <Content Include="libs\core\extension\resource\events\ResourceEvent.js" />
+    <TypeScriptCompile Include="libs\core\extension\resource\res.d.ts" />
     <Content Include="libs\core\extension\resource\Resource.js" />
     <TypeScriptCompile Include="libs\_references.ts" />
     <Content Include="libs\core\jslib\NumberUtils.js" />
+    <Content Include="libs\p2\p2.min.js" />
     <Content Include="resource\assets\again_btn.png" />
     <Content Include="resource\assets\des_btn.png" />
     <Content Include="resource\assets\drop_flag.png" />
@@ -271,6 +289,13 @@
     <Content Include="run.bat" />
     <Content Include="resource\configs\config.json" />
     <Content Include="resource\resource.json" />
+    <Content Include="bin-debug\src\manifest.json" />
+    <Content Include="libs\core\core.d.json" />
+    <Content Include="libs\core\egret\context\html5.d.json" />
+    <Content Include="libs\core\egret\context\native.d.json" />
+    <Content Include="libs\core\extension\resource\res.d.json" />
+    <Content Include="p2.json" />
+    <Content Include="libs\p2\p2.d.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
