@@ -3,7 +3,7 @@
 	"dependence": ["core"],
 	"source":"src/p2",
 	"file_list": [
-	 "p2.min.js",
+	 "p2.js",
 	 "p2.d.ts"
 	]
 }
