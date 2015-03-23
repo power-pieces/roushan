@@ -1,0 +1,8 @@
+[
+	"jing\\cores\\AView.ts",
+	"jing\\cores\\ViewManager.ts",
+	"jing\\utils\\Texture.ts",
+	"LoadingUI.ts",
+	"views\\A.ts",
+	"Main.ts"
+]
