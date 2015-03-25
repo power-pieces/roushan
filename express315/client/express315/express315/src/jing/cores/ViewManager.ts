@@ -40,16 +40,15 @@ class ViewManager {
         return view;
     }
 
-    private _mask: egret.Shape = new egret.Shape();
+    private _mask: Mask = new Mask();
+
+    private _panel: AView = null;
 
     //显示指定面板
-    public showPanel(panel:AView, isMask:boolean = true, maskColor:number = 0, maskAlpha:number = 0.5): void {
-        var mask: egret.Shape = this._mask;
+    public showPanel(panel:AView, isMask:boolean = true, lockMask:boolean = false, maskColor:number = 0, maskAlpha:number = 0.7): AView {
+        var mask: Mask = this._mask;
         if (mask) {
-            mask.graphics.clear();
-            if (mask.parent) {
-                mask.parent.removeChild(mask);
-            }
+            mask.init();
         }
         if (isMask) {
             mask.graphics.beginFill(maskColor, maskAlpha);
@@ -58,9 +57,23 @@ class ViewManager {
 
             ViewManager.stage.addChild(mask);            
             mask.touchEnabled = true;
+            mask.isLock = lockMask;
         }
 
         ViewManager.stage.addChild(panel);
+        this._panel = panel;
+        return panel;
+    }
+
+    public closePanel(): void {
+        if (this._panel) {
+            this._panel.dispose();
+            this._panel = null;
+
+            if (this._mask) {
+                this._mask.init();
+            }
+        }
     }
 
     public putToCenter(view: egret.Sprite): void {

@@ -213,6 +213,8 @@
     <Content Include="resource\fonts\pink.png" />
     <Content Include="resource\fonts\red.png" />
     <Content Include="resource\resource.json" />
+    <TypeScriptCompile Include="src\views\panels\RequestingPanel.ts" />
+    <TypeScriptCompile Include="src\views\components\Mask.ts" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

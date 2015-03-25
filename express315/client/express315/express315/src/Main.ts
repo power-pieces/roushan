@@ -113,6 +113,8 @@ class Main extends egret.DisplayObjectContainer {
      * Create a game scene
      */
     private createGameScene(): void {
+        egret.Profiler.getInstance().run();
+
         DataCenter.cfg = RES.getRes("config_json");
 
         NoticeManager.addNoticeAction(Notice.CHANGE_VIEW, this.changeViewNotice);

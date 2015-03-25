@@ -94,18 +94,23 @@
     }
 
     private createRole(type: number): void {
+
+        
+        
+
+
         var role: Role = new Role(type);
         var useTime: number = 0;
         if (1 == type) {
             role.x = DataCenter.cfg.real_point[0];
             role.y = DataCenter.cfg.real_point[1];
-            useTime = 3000 + Math.floor(Math.random() * 2000);
+            useTime = DataCenter.cfg.real_use_min_time + Math.floor(Math.random() * (DataCenter.cfg.real_use_max_time - DataCenter.cfg.real_use_min_time));
         }
         else {
             var random: number = Math.floor(Math.random() * 3);
             role.x = DataCenter.cfg.fake_point[2 * random];
             role.y = DataCenter.cfg.fake_point[2 * random + 1];
-            useTime = 500 + Math.floor(Math.random() * 2500);
+            useTime = DataCenter.cfg.fake_use_min_time + Math.floor(Math.random() * (DataCenter.cfg.fake_use_max_time - DataCenter.cfg.fake_use_min_time));
         }
 
 
@@ -133,6 +138,6 @@
 
     private gameOver(): void {
         egret.Tween.removeAllTweens();
-        //NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.RESULT_VIEW));
+        NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.RESULT_VIEW));
     }
 }

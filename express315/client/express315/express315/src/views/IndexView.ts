@@ -47,7 +47,8 @@
     }
 
     private loadData(): void {
-    
+
+        //ViewManager.instance.showPanel(new RequestingPanel(),true,false);
         this.onLoadData();
     }
 
