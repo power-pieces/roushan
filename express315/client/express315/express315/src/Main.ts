@@ -35,7 +35,12 @@ class Main extends egret.DisplayObjectContainer {
 
     public constructor() {
         super();
+        this.init();
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
+    }
+
+    private init(): void {
+        ViewManager.instance.registView(ViewName.LOADING, LoadingUI);
     }
 
     private onAddToStage(event: egret.Event) {
@@ -43,7 +48,7 @@ class Main extends egret.DisplayObjectContainer {
         //设置加载进度界面
         //Config to load process interface
         this.loadingView = new LoadingUI();
-        ViewManager.instance.show(this.loadingView);
+        ViewManager.instance.changeView(ViewName.LOADING);
         // .show(new LoadingUI());
         //this.stage.addChild(this.loadingView);
 
@@ -152,8 +157,7 @@ class Main extends egret.DisplayObjectContainer {
         //RES.getResAsync("description", this.startAnimation, this);
 
 
-        var a: AView = new A();
-        ViewManager.instance.show(a);
+ 
         //a.dispose();
     }
     /**
