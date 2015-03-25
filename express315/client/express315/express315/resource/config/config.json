@@ -1,0 +1,14 @@
+{
+"server":"http://192.168.0.110/roushan/trunk/bin/server/rank.php",
+"real_use_min_time":3000,
+"real_use_max_time":5000,
+"fake_use_min_time":500,
+"fake_use_max_time":3000,
+"real_die_score":-1,
+"fake_die_score":1,
+"fake_fre":[3000,1500,800],
+"roleFPS":200,
+"real_point":[595,1104],
+"fake_point":[259,1104,427,1094,716,953],
+"gate_point":[147,449]
+}

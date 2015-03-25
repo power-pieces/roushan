@@ -153,14 +153,66 @@
     <Content Include="libs\core\extension\resource\Resource.js" />
     <TypeScriptCompile Include="libs\_references.ts" />
     <Content Include="libs\core\jslib\NumberUtils.js" />
-    <Content Include="resource\assets\bg.jpg" />
-    <Content Include="resource\assets\egret_icon.png" />
     <TypeScriptCompile Include="src\LoadingUI.ts" />
     <TypeScriptCompile Include="src\Main.ts" />
     <TypeScriptCompile Include="src\jing\cores\ViewManager.ts" />
     <TypeScriptCompile Include="src\jing\cores\AView.ts" />
-    <TypeScriptCompile Include="src\views\A.ts" />
     <TypeScriptCompile Include="src\jing\utils\Texture.ts" />
+    <TypeScriptCompile Include="src\consts\ViewName.ts" />
+    <TypeScriptCompile Include="src\jing\notice\Notice.ts" />
+    <TypeScriptCompile Include="src\jing\notice\NoticeManager.ts" />
+    <TypeScriptCompile Include="src\views\ExchangeView.ts" />
+    <TypeScriptCompile Include="src\views\GameView.ts" />
+    <TypeScriptCompile Include="src\views\IndexView.ts" />
+    <TypeScriptCompile Include="src\views\IntroView.ts" />
+    <TypeScriptCompile Include="src\views\ReceiveShareView.ts" />
+    <TypeScriptCompile Include="src\views\ResultView.ts" />
+    <TypeScriptCompile Include="src\views\ShareView.ts" />
+    <TypeScriptCompile Include="src\views\panels\ExchangeResultPanel.ts" />
+    <TypeScriptCompile Include="src\views\panels\ResultMenuPanel.ts" />
+    <TypeScriptCompile Include="src\views\panels\RewardPanel.ts" />
+    <TypeScriptCompile Include="src\views\panels\ShareResultPanel.ts" />
+    <TypeScriptCompile Include="src\views\roles\Role.ts" />
+    <TypeScriptCompile Include="src\DataCenter.ts" />
+    <Content Include="resource\assets\exchange.jpg" />
+    <Content Include="resource\assets\fake\fake_1.png" />
+    <Content Include="resource\assets\fake\fake_2.png" />
+    <Content Include="resource\assets\fake\fake_3.png" />
+    <Content Include="resource\assets\fake\fake_die.png" />
+    <Content Include="resource\assets\game.jpg" />
+    <Content Include="resource\assets\index.jpg" />
+    <Content Include="resource\assets\intro.jpg" />
+    <Content Include="resource\assets\panels\bun_panel.png" />
+    <Content Include="resource\assets\panels\exchange_fail.png" />
+    <Content Include="resource\assets\panels\exchange_success.png" />
+    <Content Include="resource\assets\real\real_1.png" />
+    <Content Include="resource\assets\real\real_2.png" />
+    <Content Include="resource\assets\real\real_3.png" />
+    <Content Include="resource\assets\real\real_die.png" />
+    <Content Include="resource\assets\receive_share.jpg" />
+    <Content Include="resource\assets\results\ass.png" />
+    <Content Include="resource\assets\results\ass_hit.png" />
+    <Content Include="resource\assets\results\boss_says.png" />
+    <Content Include="resource\assets\results\face_1.png" />
+    <Content Include="resource\assets\results\face_2.png" />
+    <Content Include="resource\assets\results\face_3.png" />
+    <Content Include="resource\assets\results\jaji_body.png" />
+    <Content Include="resource\assets\results\jaji_hand2.png" />
+    <Content Include="resource\assets\results\jaji_hand_1.png" />
+    <Content Include="resource\assets\results\jaji_head_1.png" />
+    <Content Include="resource\assets\results\jaji_head_2.png" />
+    <Content Include="resource\assets\results\jaji_head_3.png" />
+    <Content Include="resource\assets\results\power.png" />
+    <Content Include="resource\assets\results\result_bg.png" />
+    <Content Include="resource\assets\results\reward.png" />
+    <Content Include="resource\assets\results\try_again.png" />
+    <Content Include="resource\assets\share.jpg" />
+    <Content Include="resource\assets\share.png" />
+    <Content Include="resource\config\config.json" />
+    <Content Include="resource\fonts\green.png" />
+    <Content Include="resource\fonts\pink.png" />
+    <Content Include="resource\fonts\red.png" />
+    <Content Include="resource\resource.json" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -171,10 +223,11 @@
     <Content Include="libs\core\core.d.json" />
     <Content Include="libs\core\egret\context\html5.d.json" />
     <Content Include="libs\core\egret\context\native.d.json" />
-    <Content Include="resource\config\description.json" />
-    <Content Include="resource\resource.json" />
     <Content Include="run.bat" />
     <Content Include="libs\core\extension\resource\res.d.json" />
+    <Content Include="resource\fonts\green.fnt" />
+    <Content Include="resource\fonts\pink.fnt" />
+    <Content Include="resource\fonts\red.fnt" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -182,7 +235,9 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="src\jing\net\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>

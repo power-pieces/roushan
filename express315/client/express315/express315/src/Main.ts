@@ -41,16 +41,20 @@ class Main extends egret.DisplayObjectContainer {
 
     private init(): void {
         ViewManager.instance.registView(ViewName.LOADING, LoadingUI);
+        ViewManager.instance.registView(ViewName.INDEX_VIEW, IndexView);
+        ViewManager.instance.registView(ViewName.INTRO_VIEW, IntroView);
+        ViewManager.instance.registView(ViewName.EXCHANGE_VIEW, ExchangeView);
+        ViewManager.instance.registView(ViewName.GAME_VIEW, GameView);
+        ViewManager.instance.registView(ViewName.RECEIVE_SHARE_VIEW, ReceiveShareView);
+        ViewManager.instance.registView(ViewName.RESULT_VIEW, ResultView);
+        ViewManager.instance.registView(ViewName.SHARE_VIEW,ShareView);
     }
 
     private onAddToStage(event: egret.Event) {
         ViewManager.stage = this.stage;
         //设置加载进度界面
-        //Config to load process interface
-        this.loadingView = new LoadingUI();
-        ViewManager.instance.changeView(ViewName.LOADING);
-        // .show(new LoadingUI());
-        //this.stage.addChild(this.loadingView);
+        this.loadingView = <LoadingUI>ViewManager.instance.changeView(ViewName.LOADING);
+
 
         //初始化Resource资源加载库
         //initiate Resource loading library
@@ -109,56 +113,16 @@ class Main extends egret.DisplayObjectContainer {
      * Create a game scene
      */
     private createGameScene(): void {
+        DataCenter.cfg = RES.getRes("config_json");
 
-        //var sky: egret.Bitmap = this.createBitmapByName("bgImage");
-        //this.addChild(sky);
-        //var stageW: number = this.stage.stageWidth;
-        //var stageH: number = this.stage.stageHeight;
-        //sky.width = stageW;
-        //sky.height = stageH;
+        NoticeManager.addNoticeAction(Notice.CHANGE_VIEW, this.changeViewNotice);
 
-        //var topMask: egret.Shape = new egret.Shape();
-        //topMask.graphics.beginFill(0x000000, 0.5);
-        //topMask.graphics.drawRect(0, 0, stageW, stageH);
-        //topMask.graphics.endFill();
-        //topMask.width = stageW;
-        //topMask.height = stageH;
-        //this.addChild(topMask);
+        NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.INDEX_VIEW));
+    }
 
-        //var icon: egret.Bitmap = this.createBitmapByName("egretIcon");
-        //icon.anchorX = icon.anchorY = 0.5;
-        //this.addChild(icon);
-        //icon.x = stageW / 2;
-        //icon.y = stageH / 2 - 60;
-        //icon.scaleX = 0.55;
-        //icon.scaleY = 0.55;
-
-        //var colorLabel: egret.TextField = new egret.TextField();
-        //colorLabel.x = stageW / 2;
-        //colorLabel.y = stageH / 2 + 50;
-        //colorLabel.anchorX = colorLabel.anchorY = 0.5;
-        //colorLabel.textColor = 0xffffff;
-        //colorLabel.textAlign = "center";
-        //colorLabel.text = "Hello Egret";
-        //colorLabel.size = 20;
-        //this.addChild(colorLabel);
-
-        //var textContainer: egret.Sprite = new egret.Sprite();
-        //textContainer.anchorX = textContainer.anchorY = 0.5;
-        //this.addChild(textContainer);
-        //textContainer.x = stageW / 2;
-        //textContainer.y = stageH / 2 + 100;
-        //textContainer.alpha = 0;
-
-        //this.textContainer = textContainer;
-
-        //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
-        // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
-        //RES.getResAsync("description", this.startAnimation, this);
-
-
- 
-        //a.dispose();
+    private changeViewNotice(n: Notice): void {
+        var viewName:string = n.data;
+        ViewManager.instance.changeView(viewName);
     }
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
