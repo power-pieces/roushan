@@ -36,6 +36,7 @@ class ViewManager {
         }
         view.addListeners();
         ViewManager.stage.addChild(view);
+        view.onAddedToStage();
         this._nowView = view;
         return view;
     }
@@ -65,6 +66,7 @@ class ViewManager {
         }
 
         ViewManager.stage.addChild(panel);
+        panel.onAddedToStage();
         this._panel = panel;
         return panel;
     }

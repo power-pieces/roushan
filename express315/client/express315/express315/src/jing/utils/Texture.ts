@@ -15,4 +15,25 @@ class Texture {
         var texture: egret.Texture = RES.getRes(name);
         return texture;
     }
+
+    /*
+    *   根据文件名和动画名称来生成MovieClip对象
+    */
+    public static createMC(fileName: string, mcName:string): egret.MovieClip {
+        var data = RES.getRes(fileName + "_json");
+        var texture = RES.getRes(fileName + "_png");
+        var factory: egret.MovieClipDataFactory = new egret.MovieClipDataFactory(data, texture);
+        var mc: egret.MovieClip = new egret.MovieClip(factory.generateMovieClipData(mcName));
+        return mc;
+    }
+
+    /**
+    * 创建一个位图文本框
+    */
+    public static createBitmapTF(fntName: string): egret.BitmapText {
+        var tf = new egret.BitmapText();
+        var font: any = RES.getRes(fntName);
+        tf.font = font;
+        return tf;
+    }
 }

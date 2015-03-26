@@ -5,6 +5,10 @@ class AView extends egret.Sprite {
 
     public constructor() {
         super();
+    }
+
+    public onAddedToStage(): void {
+
     }    
 
     public addListeners(): void {

@@ -1,7 +1,7 @@
 {
 	"groups":[
 	{
-		"keys":"fake_1_png,fake_2_png,fake_3_png,fake_die_png,bun_panel_png,exchange_fail_png,exchange_success_png,real_1_png,real_2_png,real_3_png,real_die_png,ass_png,ass_hit_png,boss_says_png,face_1_png,face_2_png,face_3_png,jaji_body_png,jaji_hand2_png,jaji_hand_1_png,jaji_head_1_png,jaji_head_2_png,jaji_head_3_png,power_png,result_bg_png,reward_png,try_again_png,exchange_jpg,game_jpg,index_jpg,intro_jpg,receive_share_jpg,share_jpg,config_json,share_png,green_fnt,pink_fnt,red_fnt,white_fnt",
+		"keys":"fake_1_png,fake_2_png,fake_3_png,fake_die_png,bun_panel_png,exchange_fail_png,exchange_success_png,real_1_png,real_2_png,real_3_png,real_die_png,ass_png,ass_hit_png,boss_says_png,face_1_png,face_2_png,face_3_png,jaji_body_png,jaji_hand2_png,jaji_hand_1_png,jaji_head_1_png,jaji_head_2_png,jaji_head_3_png,power_png,result_bg_png,reward_png,try_again_png,exchange_jpg,game_jpg,index_jpg,intro_jpg,receive_share_jpg,share_jpg,config_json,share_png,green_fnt,pink_fnt,red_fnt,white_fnt,boos_face_mc_json,boos_face_mc_png",
 		"name":"preload"
 	}],
 	"resources":[
@@ -199,5 +199,15 @@
 		"name":"white_fnt",
 		"type":"font",
 		"url":"fonts/white.fnt"
+	},
+	{
+		"name":"boos_face_mc_json",
+		"type":"json",
+		"url":"mc/boos_face_mc.json"
+	},
+	{
+		"name":"boos_face_mc_png",
+		"type":"image",
+		"url":"mc/boos_face_mc.png"
 	}]
 }
