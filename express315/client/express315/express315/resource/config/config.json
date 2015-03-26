@@ -1,5 +1,5 @@
 {
-"server":"http://192.168.0.110/roushan/trunk/bin/server/rank.php",
+"server":"http://localhost/roushan/trunk/express315/server/interface.php",
 "real_use_min_time":3000,
 "real_use_max_time":5000,
 "fake_use_min_time":500,

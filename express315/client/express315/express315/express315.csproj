@@ -215,6 +215,10 @@
     <Content Include="resource\resource.json" />
     <TypeScriptCompile Include="src\views\panels\RequestingPanel.ts" />
     <TypeScriptCompile Include="src\views\components\Mask.ts" />
+    <TypeScriptCompile Include="src\jing\net\NetProxy.ts" />
+    <TypeScriptCompile Include="src\utils\NetManager.ts" />
+    <TypeScriptCompile Include="src\views\panels\MessagePanel.ts" />
+    <TypeScriptCompile Include="src\jing\utils\Extend.ts" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -237,9 +241,7 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\jing\net\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>

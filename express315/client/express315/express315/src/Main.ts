@@ -35,6 +35,12 @@ class Main extends egret.DisplayObjectContainer {
 
     public constructor() {
         super();
+        //获取接口数据
+        DataCenter.inviter = Extend.callWindow("getInviterId");
+        DataCenter.id = Extend.callWindow("getOpenId");
+        DataCenter.sign = Extend.callWindow("getSign");
+
+
         this.init();
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
@@ -54,7 +60,6 @@ class Main extends egret.DisplayObjectContainer {
         ViewManager.stage = this.stage;
         //设置加载进度界面
         this.loadingView = <LoadingUI>ViewManager.instance.changeView(ViewName.LOADING);
-
 
         //初始化Resource资源加载库
         //initiate Resource loading library
@@ -113,6 +118,7 @@ class Main extends egret.DisplayObjectContainer {
      * Create a game scene
      */
     private createGameScene(): void {
+
         egret.Profiler.getInstance().run();
 
         DataCenter.cfg = RES.getRes("config_json");

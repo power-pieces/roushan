@@ -45,7 +45,11 @@ class ViewManager {
     private _panel: AView = null;
 
     //显示指定面板
-    public showPanel(panel:AView, isMask:boolean = true, lockMask:boolean = false, maskColor:number = 0, maskAlpha:number = 0.7): AView {
+    public showPanel(panel: AView, isMask: boolean = true, lockMask: boolean = false, maskColor: number = 0, maskAlpha: number = 0.7): AView {
+        if (this._panel) {
+            this.closePanel();
+        }
+
         var mask: Mask = this._mask;
         if (mask) {
             mask.init();
