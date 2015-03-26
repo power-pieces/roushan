@@ -1,5 +1,5 @@
 <?php
-
+header("Access-Control-Allow-Origin:*");
 //依赖的PHP
 $dependents = array('configs/define','utils/sqltool','utils/sign');
 
