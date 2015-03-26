@@ -1,7 +1,7 @@
 {
 	"groups":[
 	{
-		"keys":"fake_1_png,fake_2_png,fake_3_png,fake_die_png,bun_panel_png,exchange_fail_png,exchange_success_png,real_1_png,real_2_png,real_3_png,real_die_png,ass_png,ass_hit_png,boss_says_png,face_1_png,face_2_png,face_3_png,jaji_body_png,jaji_hand2_png,jaji_hand_1_png,jaji_head_1_png,jaji_head_2_png,jaji_head_3_png,result_bg_png,reward_png,exchange_jpg,game_jpg,index_jpg,intro_jpg,receive_share_jpg,share_jpg,config_json,share_png,green_fnt,pink_fnt,red_fnt,white_fnt,boos_face_mc_json,boos_face_mc_png,result_menu_png",
+		"keys":"fake_1_png,fake_2_png,fake_3_png,fake_die_png,bun_panel_png,exchange_fail_png,exchange_success_png,real_1_png,real_2_png,real_3_png,real_die_png,boss_says_png,result_bg_png,reward_png,exchange_jpg,game_jpg,index_jpg,intro_jpg,receive_share_jpg,share_jpg,config_json,share_png,green_fnt,pink_fnt,red_fnt,white_fnt,boos_face_mc_json,boos_face_mc_png,result_menu_png,punish_mc_json,punish_mc_png",
 		"name":"preload"
 	}],
 	"resources":[
@@ -61,64 +61,9 @@
 		"url":"assets/real/real_die.png"
 	},
 	{
-		"name":"ass_png",
-		"type":"image",
-		"url":"assets/results/ass.png"
-	},
-	{
-		"name":"ass_hit_png",
-		"type":"image",
-		"url":"assets/results/ass_hit.png"
-	},
-	{
 		"name":"boss_says_png",
 		"type":"image",
 		"url":"assets/results/boss_says.png"
-	},
-	{
-		"name":"face_1_png",
-		"type":"image",
-		"url":"assets/results/face_1.png"
-	},
-	{
-		"name":"face_2_png",
-		"type":"image",
-		"url":"assets/results/face_2.png"
-	},
-	{
-		"name":"face_3_png",
-		"type":"image",
-		"url":"assets/results/face_3.png"
-	},
-	{
-		"name":"jaji_body_png",
-		"type":"image",
-		"url":"assets/results/jaji_body.png"
-	},
-	{
-		"name":"jaji_hand2_png",
-		"type":"image",
-		"url":"assets/results/jaji_hand2.png"
-	},
-	{
-		"name":"jaji_hand_1_png",
-		"type":"image",
-		"url":"assets/results/jaji_hand_1.png"
-	},
-	{
-		"name":"jaji_head_1_png",
-		"type":"image",
-		"url":"assets/results/jaji_head_1.png"
-	},
-	{
-		"name":"jaji_head_2_png",
-		"type":"image",
-		"url":"assets/results/jaji_head_2.png"
-	},
-	{
-		"name":"jaji_head_3_png",
-		"type":"image",
-		"url":"assets/results/jaji_head_3.png"
 	},
 	{
 		"name":"result_bg_png",
@@ -204,5 +149,15 @@
 		"name":"result_menu_png",
 		"type":"image",
 		"url":"assets/results/result_menu.png"
+	},
+	{
+		"name":"punish_mc_json",
+		"type":"json",
+		"url":"mc/punish_mc.json"
+	},
+	{
+		"name":"punish_mc_png",
+		"type":"image",
+		"url":"mc/punish_mc.png"
 	}]
 }

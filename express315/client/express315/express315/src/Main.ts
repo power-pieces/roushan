@@ -125,7 +125,13 @@ class Main extends egret.DisplayObjectContainer {
 
         NoticeManager.addNoticeAction(Notice.CHANGE_VIEW, this.changeViewNotice);
 
-        NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.RESULT_VIEW));
+
+        if (DataCenter.inviter) {
+            NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.RECEIVE_SHARE_VIEW));
+        }
+        else {
+            NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.INDEX_VIEW));
+        }
     }
 
     private changeViewNotice(n: Notice): void {

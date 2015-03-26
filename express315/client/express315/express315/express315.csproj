@@ -257,6 +257,7 @@
     <Content Include="resource\fonts\pink.png" />
     <Content Include="resource\fonts\red.png" />
     <Content Include="resource\mc\boos_face_mc.png" />
+    <Content Include="resource\mc\punish_mc.png" />
     <Content Include="resource\resource.json" />
     <TypeScriptCompile Include="src\views\panels\RequestingPanel.ts" />
     <TypeScriptCompile Include="src\views\components\Mask.ts" />
@@ -264,6 +265,7 @@
     <TypeScriptCompile Include="src\utils\NetManager.ts" />
     <TypeScriptCompile Include="src\views\panels\MessagePanel.ts" />
     <TypeScriptCompile Include="src\jing\utils\Extend.ts" />
+    <TypeScriptCompile Include="src\views\panels\ShareTipPanel.ts" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -281,6 +283,7 @@
     <Content Include="resource\fonts\red.fnt" />
     <Content Include="resource\mc\boos_face_mc.json" />
     <Content Include="libs\core\extension\dragonbones\dragonbones.d.json" />
+    <Content Include="resource\mc\punish_mc.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

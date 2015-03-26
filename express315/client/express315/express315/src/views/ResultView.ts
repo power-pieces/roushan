@@ -56,6 +56,10 @@
         this.addChild(bossFace);
         bossFace.play(-1);
 
+        var mc: egret.MovieClip = Texture.createMC("punish_mc", "punish");
+        this.addChild(mc);
+        mc.play(-1);
+
         var tf: egret.BitmapText;
         tf = Texture.createBitmapTF("pink_fnt");
         tf.text = "x" + DataCenter.reward;
@@ -75,7 +79,7 @@
     }
 
     public onAddedToStage(): void {        
-        this._timeoutKey = egret.setTimeout(function () { ViewManager.instance.showPanel(new RewardPanel()); }, this, 2000);
+        this._timeoutKey = egret.setTimeout(function () { ViewManager.instance.showPanel(new RewardPanel(),true,true); }, this, 2000);
     }   
 
     public dispose(): void {

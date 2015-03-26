@@ -29,8 +29,8 @@
         font = RES.getRes("white_fnt");
         remainTF.font = font;
         remainTF.text = "x" + DataCenter.reward;
-        remainTF.x = 377;
-        remainTF.y = 733;
+        remainTF.x = 380;
+        remainTF.y = 750;
         this.addChild(remainTF);
     }
 
@@ -64,6 +64,7 @@
                 break;
             case 2:
                 console.log("分享");
+                ViewManager.instance.showPanel(new ShareTipPanel(), true,false);
                 break;
         }
     }

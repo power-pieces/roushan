@@ -64,7 +64,7 @@ class ViewManager {
             mask.touchEnabled = true;
             mask.isLock = lockMask;
         }
-
+        panel.addListeners();
         ViewManager.stage.addChild(panel);
         panel.onAddedToStage();
         this._panel = panel;
