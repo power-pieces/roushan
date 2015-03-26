@@ -1,21 +1,13 @@
-﻿
-/**
-* 网络通信类
-* 示例：NetManager.call("login", { id: 1 }, this.onNetBack, this);      
-*/
-class NetManager {
-
-    private static _proxy: NetProxy;
-    private static _callBack: Function;
-    private static _params: any;
-
-    public static implicitCall(action: string, params: any): void {
+﻿var NetManager = (function () {
+    function NetManager() {
+    }
+    NetManager.implicitCall = function (action, params) {
         this._params = params;
 
-        var np: NetProxy = new NetProxy();
-        var url: string = DataCenter.cfg.server;
+        var np = new NetProxy();
+        var url = DataCenter.cfg.server;
 
-        var args: any = {};
+        var args = {};
         args.mod = "user";
         args.action = action;
         params.id = DataCenter.id;
@@ -23,22 +15,21 @@ class NetManager {
         args.params = JSON.stringify(params);
 
         np.request(url, null, null, args);
-    }
+    };
 
-    public static call(action: string, params: any, callBack: Function, thisObject: any): void {
+    NetManager.call = function (action, params, callBack, thisObject) {
         ViewManager.instance.showPanel(new MessagePanel("网络通信中..."), true, true);
         if (null != this._proxy) {
-            ViewManager.instance.showPanel(new MessagePanel("网络冲突，请稍后重试!"), true);
             return;
         }
 
         this._callBack = callBack.bind(thisObject);
         this._params = params;
 
-        var np: NetProxy = new NetProxy();
-        var url: string = DataCenter.cfg.server;
+        var np = new NetProxy();
+        var url = DataCenter.cfg.server;
 
-        var args: any = {};
+        var args = {};
         args.mod = "user";
         args.action = action;
         params.id = DataCenter.id;
@@ -47,25 +38,21 @@ class NetManager {
 
         np.request(url, this.onCallBack, this, args, egret.URLRequestMethod.POST, egret.URLLoaderDataFormat.TEXT);
         this._proxy = np;
-    }
+    };
 
-    private static onCallBack(jsonStr: string): void {
+    NetManager.onCallBack = function (jsonStr) {
         console.log(jsonStr);
         ViewManager.instance.closePanel();
 
-        try {
-            var data: any = JSON.parse(jsonStr);
+        try  {
+            var data = JSON.parse(jsonStr);
             if (data.error > 0) {
                 ViewManager.instance.showPanel(new MessagePanel("错误：" + data.msg), true, true);
             }
-            else {
-                this._callBack(data.data, this._params);
-            }
-        }        
-        catch (e) {
+            this._callBack(data.data, this._params);
+        } catch (e) {
             ViewManager.instance.showPanel(new MessagePanel("程序崩溃：" + jsonStr), true, true);
         }
-
-        this._proxy = null;
-    }
-}
+    };
+    return NetManager;
+})();

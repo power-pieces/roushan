@@ -9,6 +9,12 @@
     //玩家ID
     public static id: string = "";
 
+    //玩家名字
+    public static name: string = "";
+
+    //玩家头像地址
+    public static headUrl: string = "";
+
     //验证签名
     public static sign: string = "";
 

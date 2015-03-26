@@ -7,8 +7,11 @@ class NetProxy {
     private _request: egret.URLRequest = null;
     private _callBack: Function = null;
 
-    public request(url: string, callBack: Function = null, thisObject: any = null, params:any = null, method: string = egret.URLRequestMethod.GET, dataFormat: string = egret.URLLoaderDataFormat.TEXT): void {
-        this._callBack = callBack.bind(thisObject);
+    public request(url: string, callBack: Function = null, thisObject: any = null, params: any = null, method: string = egret.URLRequestMethod.GET, dataFormat: string = egret.URLLoaderDataFormat.TEXT): void {
+
+        if (callBack) {
+            this._callBack = callBack.bind(thisObject);
+        }
         
 
         this._loader = new egret.URLLoader();

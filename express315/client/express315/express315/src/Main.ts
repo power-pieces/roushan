@@ -38,7 +38,9 @@ class Main extends egret.DisplayObjectContainer {
         //获取接口数据
         DataCenter.inviter = Extend.callWindow("getInviterId");
         DataCenter.id = Extend.callWindow("getOpenId");
+        DataCenter.name = Extend.callWindow("getName");
         DataCenter.sign = Extend.callWindow("getSign");
+        DataCenter.headUrl = Extend.callWindow("getHeadUrl");
 
 
         this.init();
@@ -135,7 +137,14 @@ class Main extends egret.DisplayObjectContainer {
     }
 
     private changeViewNotice(n: Notice): void {
-        var viewName:string = n.data;
+        var viewName: string = n.data;
+        if (viewName == ViewName.GAME_VIEW) {
+            //要进游戏，先检查体力够不够
+            if (DataCenter.remain <= 0) {
+                ViewManager.instance.showPanel(new MessagePanel("体力不足"), true);
+                return;
+            }
+        }
         ViewManager.instance.changeView(viewName);
     }
 }

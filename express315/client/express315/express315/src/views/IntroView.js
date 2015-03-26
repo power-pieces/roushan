@@ -1,29 +1,32 @@
-﻿class IntroView extends AView {
-
-    private _hotZones: egret.Rectangle[] = [
-        new egret.Rectangle(400, 0, 233, 100),
-        new egret.Rectangle(94, 700, 453, 113),
-        new egret.Rectangle(94, 827, 449, 113),
-    ];
-
-    public constructor() {
-        super();
+﻿var __extends = this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var IntroView = (function (_super) {
+    __extends(IntroView, _super);
+    function IntroView() {
+        _super.call(this);
+        this._hotZones = [
+            new egret.Rectangle(400, 0, 233, 100),
+            new egret.Rectangle(94, 700, 453, 113),
+            new egret.Rectangle(94, 827, 449, 113)
+        ];
         this.createView();
     }
-
-    private createView(): void {
+    IntroView.prototype.createView = function () {
         this.addChild(Texture.create("intro_jpg"));
         this.touchEnabled = true;
         this.touchChildren = false;
 
         var rewardTF = new egret.BitmapText();
-        var font: any = RES.getRes("pink_fnt");
+        var font = RES.getRes("pink_fnt");
         rewardTF.font = font;
         rewardTF.text = "x" + DataCenter.reward;
         rewardTF.x = 230;
         rewardTF.y = 40;
         this.addChild(rewardTF);
-
 
         var remainTF = new egret.BitmapText();
         font = RES.getRes("white_fnt");
@@ -32,31 +35,30 @@
         remainTF.x = 380;
         remainTF.y = 750;
         this.addChild(remainTF);
-    }
+    };
 
-    public addListeners(): void {
+    IntroView.prototype.addListeners = function () {
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBeginHandler, this);
-    }
+    };
 
-    public removeListeners(): void {
+    IntroView.prototype.removeListeners = function () {
         this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBeginHandler, this);
-    }
+    };
 
-    private touchBeginHandler(e: egret.TouchEvent): void {
-        for (var i: number = 0; i < this._hotZones.length; i++) {
+    IntroView.prototype.touchBeginHandler = function (e) {
+        for (var i = 0; i < this._hotZones.length; i++) {
             if (this._hotZones[i].contains(e.localX, e.localY)) {
                 this.hotZoneActive(i);
                 break;
             }
         }
-    }
+    };
 
-    private hotZoneActive(index: number): void {
-
+    IntroView.prototype.hotZoneActive = function (index) {
         switch (index) {
             case 0:
-                console.log("兑换奖品");   
-                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.EXCHANGE_VIEW));             
+                console.log("兑换奖品");
+                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.EXCHANGE_VIEW));
                 break;
             case 1:
                 console.log("开始游戏");
@@ -64,8 +66,9 @@
                 break;
             case 2:
                 console.log("分享");
-                ViewManager.instance.showPanel(new ShareTipPanel(), true,false);
+                ViewManager.instance.showPanel(new ShareTipPanel(), true, false);
                 break;
         }
-    }
-}
+    };
+    return IntroView;
+})(AView);

@@ -9,11 +9,12 @@
     }
 
     private createView(): void {
+
         var tf: egret.TextField = this._tf;
         this.addChild(tf);
 
-        tf.width = 480;
-        tf.height = 100;
+        tf.width = 640;
+        tf.height = 200;
         tf.size = 40;
         tf.textAlign = "center";
         tf.stroke = 1;
