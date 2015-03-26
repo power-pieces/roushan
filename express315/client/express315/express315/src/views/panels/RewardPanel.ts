@@ -42,6 +42,7 @@ class RewardPanel extends AView
 
     private onHidden(): void {
         this.dispose();
-        ViewManager.instance.showPanel(new ResultMenuPanel(),false);
+        ViewManager.instance.showPanel(new ResultMenuPanel(), false);
+        
     }
 }

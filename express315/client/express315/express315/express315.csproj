@@ -212,6 +212,7 @@
     <Content Include="resource\fonts\green.png" />
     <Content Include="resource\fonts\pink.png" />
     <Content Include="resource\fonts\red.png" />
+    <Content Include="resource\mc\boos_face_mc.png" />
     <Content Include="resource\resource.json" />
     <TypeScriptCompile Include="src\views\panels\RequestingPanel.ts" />
     <TypeScriptCompile Include="src\views\components\Mask.ts" />
@@ -234,6 +235,7 @@
     <Content Include="resource\fonts\green.fnt" />
     <Content Include="resource\fonts\pink.fnt" />
     <Content Include="resource\fonts\red.fnt" />
+    <Content Include="resource\mc\boos_face_mc.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

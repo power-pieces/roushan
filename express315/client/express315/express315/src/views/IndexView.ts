@@ -42,6 +42,7 @@
                 break;
             case 1:
                 console.log("下载");
+                window.open(DataCenter.cfg.app_link);
                 break;
         }
     }

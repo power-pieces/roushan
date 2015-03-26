@@ -132,62 +132,6 @@ class Main extends egret.DisplayObjectContainer {
         var viewName:string = n.data;
         ViewManager.instance.changeView(viewName);
     }
-    /**
-     * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
-     * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.
-     */
-    private createBitmapByName(name: string): egret.Bitmap {
-        var result: egret.Bitmap = new egret.Bitmap();
-        var texture: egret.Texture = RES.getRes(name);
-        result.texture = texture;
-        return result;
-    }
-    /**
-     * 描述文件加载成功，开始播放动画
-     * Description file loading is successful, start to play the animation
-     */
-    private startAnimation(result: Array<any>): void {
-        var textContainer: egret.Sprite = this.textContainer;
-        var count: number = -1;
-        var self: any = this;
-        var change: Function = function () {
-            count++;
-            if (count >= result.length) {
-                count = 0;
-            }
-            var lineArr = result[count];
-
-            self.changeDescription(textContainer, lineArr);
-
-            var tw = egret.Tween.get(textContainer);
-            tw.to({ "alpha": 1 }, 200);
-            tw.wait(2000);
-            tw.to({ "alpha": 0 }, 200);
-            tw.call(change, this);
-        }
-
-        change();
-    }
-    /**
-     * 切换描述内容
-     * Switch to described content
-     */
-    private changeDescription(textContainer: egret.Sprite, lineArr: Array<any>): void {
-        textContainer.removeChildren();
-        var w: number = 0;
-        for (var i: number = 0; i < lineArr.length; i++) {
-            var info: any = lineArr[i];
-            var colorLabel: egret.TextField = new egret.TextField();
-            colorLabel.x = w;
-            colorLabel.anchorX = colorLabel.anchorY = 0;
-            colorLabel.textColor = parseInt(info["textColor"]);
-            colorLabel.text = info["text"];
-            colorLabel.size = 30;
-            textContainer.addChild(colorLabel);
-
-            w += colorLabel.width;
-        }
-    }
 }
 
 
