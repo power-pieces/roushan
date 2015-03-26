@@ -7,6 +7,7 @@ class User
 	public function login(&$params, &$res)
 	{
 		$params = json_decode($params);
+		//安全验证代码
 		if(false == $this->checkSigh($params->id, $params->sign))
 		{
 			$res['error'] = 1;
