@@ -6,6 +6,15 @@
     //邀请人ID
     public static inviter: string = null;
 
+    //邀请人的名字
+    public static inviterName: string = null;
+
+    //邀请人的图像地址
+    public static inviterHeadUrl: string = null;
+
+    //邀请人杀人数
+    public static inviterKill: number = 999;
+
     //玩家ID
     public static id: string = "";
 

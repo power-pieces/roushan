@@ -29,8 +29,8 @@ var ExchangeView = (function (_super) {
         var font = RES.getRes("pink_fnt");
         rewardTF.font = font;
         rewardTF.text = "x" + DataCenter.reward;
-        rewardTF.x = 246;
-        rewardTF.y = 48;
+        rewardTF.x = 240;
+        rewardTF.y = 40;
         this.addChild(rewardTF);
         this._rewardTF = rewardTF;
         this.touchEnabled = true;

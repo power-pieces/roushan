@@ -5,6 +5,12 @@ var DataCenter = (function () {
     DataCenter.cfg = null;
     //邀请人ID
     DataCenter.inviter = null;
+    //邀请人的名字
+    DataCenter.inviterName = null;
+    //邀请人的图像地址
+    DataCenter.inviterHeadUrl = null;
+    //邀请人杀人数
+    DataCenter.inviterKill = 999;
     //玩家ID
     DataCenter.id = "";
     //玩家名字

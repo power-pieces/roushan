@@ -38,7 +38,7 @@
         switch (index) {
             case 0:
                 console.log("进入游戏");
-                this.loadData();
+                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.INTRO_VIEW));
                 break;
             case 1:
                 console.log("下载");
@@ -47,18 +47,5 @@
         }
     }
 
-    private loadData(): void {
 
-        var params: any = {};
-        params.name = DataCenter.name;
-        params.headUrl = DataCenter.headUrl;
-
-        NetManager.call("login", params, this.onLoadData, this);       
-    }
-
-    private onLoadData(data: any, params: any): void {
-        DataCenter.reward = +data.reward;
-        DataCenter.remain = +data.remain;
-        NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.INTRO_VIEW));
-    }
 }

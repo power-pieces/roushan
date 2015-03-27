@@ -13,10 +13,13 @@ var MessagePanel = (function (_super) {
         this.setContent(content);
     }
     MessagePanel.prototype.createView = function () {
+        this.addChild(Texture.create("bun_panel_png"));
         var tf = this._tf;
         this.addChild(tf);
-        tf.width = 640;
-        tf.height = 200;
+        tf.x = 40;
+        tf.y = 120;
+        tf.width = 330;
+        tf.height = 100;
         tf.size = 40;
         tf.textAlign = "center";
         tf.stroke = 1;

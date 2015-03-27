@@ -19,18 +19,18 @@
         var rewardTF = new egret.BitmapText();
         var font: any = RES.getRes("pink_fnt");
         rewardTF.font = font;
-        rewardTF.text = "x" + DataCenter.reward;
+        rewardTF.text = "X" + DataCenter.reward;
         rewardTF.x = 230;
-        rewardTF.y = 40;
+        rewardTF.y = 35;
         this.addChild(rewardTF);
 
 
         var remainTF = new egret.BitmapText();
         font = RES.getRes("white_fnt");
         remainTF.font = font;
-        remainTF.text = "x" + DataCenter.remain;
-        remainTF.x = 380;
-        remainTF.y = 750;
+        remainTF.text = "X" + DataCenter.remain;
+        remainTF.x = 390;
+        remainTF.y = 742;
         this.addChild(remainTF);
     }
 

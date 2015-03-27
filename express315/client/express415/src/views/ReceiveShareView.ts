@@ -10,6 +10,7 @@
         new egret.Rectangle(96, 704, 447, 108)
     ];
 
+    //175.310
     public constructor() {
         super();
         ReceiveShareView.self = this;
@@ -35,20 +36,31 @@
 
         this.updateContent();
 
+        RES.getResByUrl(DataCenter.inviterHeadUrl,
+            function (data: egret.Texture, url: string) {
+                if (null != data) {
+                    var pic: egret.Bitmap = new egret.Bitmap(data);
+                    pic.anchorX = pic.anchorY = 0.5;
+                    pic.x = 200;
+                    pic.y = 333;
+                    this._spr.addChild(pic);
+                }
+            }
+            , this, "image");
     }
 
     private updateContent(): void {
         var tf: egret.TextField = new egret.TextField();
-        tf.x = 72;
-        tf.y = 406;
-        tf.width = 500;
+        tf.x = 108;
+        tf.y = 410;
+        tf.width = 439;
         tf.height = 109;
-        tf.textAlign = egret.HorizontalAlign.CENTER;
-        tf.lineSpacing = 20;
+        tf.textAlign = egret.HorizontalAlign.LEFT;
+        tf.lineSpacing = 10;
         tf.textFlow = <Array<egret.ITextElement>>[
-            { text: "我不知道你是谁击倒了", style: { "textColor": 0x666666, "size": "30", "bold": true } }
-            , { text: "50", style: { "textColor": 0xFF0000, "size": "30", "bold": true } }
-            , { text: "个山寨的什么东西好像很厉害的样子", style: { "textColor": 0x666666, "size": "30", "bold": true } }
+            { text: "Duang~！" + DataCenter.inviterName + "击倒了", style: { "textColor": 0x745645, "size": "30", "bold": true } }
+            , { text: DataCenter.inviterKill.toString(), style: { "textColor": 0xFF0000, "size": "30", "bold": true } }
+            , { text: "个山寨品邮差，青天大老爷Ta一个赞！", style: { "textColor": 0x745645, "size": "30", "bold": true } }
             , { text: "" }
         ];
         this._spr.addChild(tf);
@@ -58,9 +70,9 @@
         var rewardTF = new egret.BitmapText();
         var font: any = RES.getRes("pink_fnt");
         rewardTF.font = font;
-        rewardTF.text = "x" + DataCenter.reward;
+        rewardTF.text = "X" + DataCenter.reward;
         rewardTF.x = 380;
-        rewardTF.y = 300;
+        rewardTF.y = 315;
         this._spr.addChild(rewardTF);
     }
 
@@ -88,12 +100,24 @@
     private hotZoneActive(index: number): void {
 
         switch (index) {
-            case 0:
-                alert("送邀请人包子");
+            case 0:                
+                NetManager.call("present", { targetId: DataCenter.inviter },this.onPresentResponse,this);                
                 break;
             case 1:
                 NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.GAME_VIEW));
                 break;
         }
+    }
+
+    private onPresentResponse(data: any, params: any): void {
+
+        var msg: string = "你不能重复赠送游戏机会给" + DataCenter.inviterName;
+        if (data == true) {
+            msg = "你赠送了" + DataCenter.inviterName + "1次游戏机会";
+        }
+        
+        
+
+        ViewManager.instance.showPanel(new MessagePanel(msg), true);
     }
 }

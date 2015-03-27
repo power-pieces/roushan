@@ -115,6 +115,19 @@ var Main = (function (_super) {
         egret.Profiler.getInstance().run();
         DataCenter.cfg = RES.getRes("config_json");
         NoticeManager.addNoticeAction(Notice.CHANGE_VIEW, this.changeViewNotice);
+        var params = {};
+        params.name = DataCenter.name;
+        params.headUrl = DataCenter.headUrl;
+        if (DataCenter.inviter) {
+            params.inviter = DataCenter.inviter;
+        }
+        NetManager.call("login", params, this.onLoadData, this);
+    };
+    Main.prototype.onLoadData = function (data, params) {
+        DataCenter.reward = +data.user.reward;
+        DataCenter.remain = +data.user.remain;
+        DataCenter.inviterName = data.inviter.name;
+        DataCenter.inviterHeadUrl = data.inviter.head_url;
         if (DataCenter.inviter) {
             NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.RECEIVE_SHARE_VIEW));
         }

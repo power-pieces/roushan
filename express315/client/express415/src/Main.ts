@@ -127,6 +127,20 @@ class Main extends egret.DisplayObjectContainer {
 
         NoticeManager.addNoticeAction(Notice.CHANGE_VIEW, this.changeViewNotice);
 
+        var params: any = {};
+        params.name = DataCenter.name;
+        params.headUrl = DataCenter.headUrl;
+        if (DataCenter.inviter) {
+            params.inviter = DataCenter.inviter;
+        }
+        NetManager.call("login", params, this.onLoadData, this);
+    }
+
+    private onLoadData(data: any, params: any): void {
+        DataCenter.reward = +data.user.reward;
+        DataCenter.remain = +data.user.remain;
+        DataCenter.inviterName = data.inviter.name;
+        DataCenter.inviterHeadUrl = data.inviter.head_url;
 
         if (DataCenter.inviter) {
             NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.RECEIVE_SHARE_VIEW));

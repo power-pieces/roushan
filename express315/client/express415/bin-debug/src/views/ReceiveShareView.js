@@ -6,6 +6,7 @@ var __extends = this.__extends || function (d, b) {
 };
 var ReceiveShareView = (function (_super) {
     __extends(ReceiveShareView, _super);
+    //175.310
     function ReceiveShareView() {
         _super.call(this);
         this._hotZones = [
@@ -27,28 +28,37 @@ var ReceiveShareView = (function (_super) {
         this.addChild(scrollView);
         scrollView.stage = ViewManager.stage;
         this.updateContent();
+        RES.getResByUrl(DataCenter.inviterHeadUrl, function (data, url) {
+            if (null != data) {
+                var pic = new egret.Bitmap(data);
+                pic.anchorX = pic.anchorY = 0.5;
+                pic.x = 200;
+                pic.y = 333;
+                this._spr.addChild(pic);
+            }
+        }, this, "image");
     };
     ReceiveShareView.prototype.updateContent = function () {
         var tf = new egret.TextField();
-        tf.x = 72;
-        tf.y = 406;
-        tf.width = 500;
+        tf.x = 108;
+        tf.y = 410;
+        tf.width = 439;
         tf.height = 109;
-        tf.textAlign = egret.HorizontalAlign.CENTER;
-        tf.lineSpacing = 20;
+        tf.textAlign = egret.HorizontalAlign.LEFT;
+        tf.lineSpacing = 10;
         tf.textFlow = [
-            { text: "我不知道你是谁击倒了", style: { "textColor": 0x666666, "size": "30", "bold": true } },
-            { text: "50", style: { "textColor": 0xFF0000, "size": "30", "bold": true } },
-            { text: "个山寨的什么东西好像很厉害的样子", style: { "textColor": 0x666666, "size": "30", "bold": true } },
+            { text: "Duang~！" + DataCenter.inviterName + "击倒了", style: { "textColor": 0x745645, "size": "30", "bold": true } },
+            { text: DataCenter.inviterKill.toString(), style: { "textColor": 0xFF0000, "size": "30", "bold": true } },
+            { text: "个山寨品邮差，青天大老爷Ta一个赞！", style: { "textColor": 0x745645, "size": "30", "bold": true } },
             { text: "" }
         ];
         this._spr.addChild(tf);
         var rewardTF = new egret.BitmapText();
         var font = RES.getRes("pink_fnt");
         rewardTF.font = font;
-        rewardTF.text = "x" + DataCenter.reward;
+        rewardTF.text = "X" + DataCenter.reward;
         rewardTF.x = 380;
-        rewardTF.y = 300;
+        rewardTF.y = 315;
         this._spr.addChild(rewardTF);
     };
     ReceiveShareView.prototype.addListeners = function () {
@@ -72,12 +82,19 @@ var ReceiveShareView = (function (_super) {
     ReceiveShareView.prototype.hotZoneActive = function (index) {
         switch (index) {
             case 0:
-                alert("送邀请人包子");
+                NetManager.call("present", { targetId: DataCenter.inviter }, this.onPresentResponse, this);
                 break;
             case 1:
                 NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.GAME_VIEW));
                 break;
         }
+    };
+    ReceiveShareView.prototype.onPresentResponse = function (data, params) {
+        var msg = "你不能重复赠送游戏机会给" + DataCenter.inviterName;
+        if (data == true) {
+            msg = "你赠送了" + DataCenter.inviterName + "1次游戏机会";
+        }
+        ViewManager.instance.showPanel(new MessagePanel(msg), true);
     };
     return ReceiveShareView;
 })(AView);

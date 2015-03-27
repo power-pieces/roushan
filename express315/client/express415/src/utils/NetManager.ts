@@ -45,7 +45,7 @@ class NetManager {
         params.sign = DataCenter.sign;
         args.params = JSON.stringify(params);
 
-        np.request(url, this.onCallBack, this, args, egret.URLRequestMethod.POST, egret.URLLoaderDataFormat.TEXT);
+        np.request(url, this.onCallBack, this, args, egret.URLRequestMethod.GET, egret.URLLoaderDataFormat.TEXT);
         this._proxy = np;
     }
 
