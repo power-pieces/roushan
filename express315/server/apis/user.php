@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set("PRC");
 class User
 {
 	/**
@@ -81,8 +82,13 @@ class User
 			return;
 		}
 		
-		$id = $params->id;
+		$id = $params->id;		
+		$senderName = $params->name;
+		$senderUrl = $params->headUrl;
 		$targetId = $params->targetId;
+		$reciverName = $params->inviterName;
+		$reciverUrl = $params->inviterHeadUrl;
+		
 
 		//检查是不是送过
 		$sql = "SELECT i FROM tbl_share_record WHERE sender_id='$id' AND reciver_id='$targetId';";
@@ -101,9 +107,9 @@ class User
 		$res['data'] = $this->changeRemain($targetId, 1);
 		
 		$time = time();
-		$dataTime = date("Y-m-d H:i:s",time());
+		$dataTime = date("Y-m-d",time());
 		//记录这次赠送
-		$sql = "INSERT INTO tbl_share_record(sender_id,reciver_id,time_utc,time) VALUES('$id','$targetId',$time,'$dataTime');";
+		$sql = "INSERT INTO tbl_share_record(sender_id,sender_name,sender_url,reciver_id,reciver_name,reciver_url,time_utc,time) VALUES('$id','$senderName','$senderUrl','$targetId','$reciverName','$reciverUrl',$time,'$dataTime');";
 		//die($sql);
 		$sqlHelper->conn();
 		$sqlHelper->modify($sql);		
@@ -163,8 +169,30 @@ class User
 		{
 			//兑换完了
 			$res['data'] = 0; 
+		}		
+	}
+	
+	/**
+	 * 获取分享列表信息
+	 */
+	public function getShareList(&$params, &$res)
+	{
+		$params = json_decode($params);
+		
+		//安全验证代码
+		if(false == $this->checkSigh($params->id, $params->sign))
+		{
+			$res['error'] = 1;
+			$res['msg'] = 'wrong sign';
+			return;
 		}
 		
+		$reciverId = $params->reciverId;
+		
+		$sql = "SELECT * FROM tbl_share_record WHERE reciver_id = '$reciverId'";
+		$sqlHelper = new SqlHelper();
+		$sqlHelper->conn();
+		$res['data'] = $sqlHelper->query($sql);		
 	}
 	
 	/**
