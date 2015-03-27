@@ -62,24 +62,17 @@
         alert("Egret dose not support your current browser")
     }
 
-    function getInviterId() {
-        return "b";
-    }
 
-    function getHeadUrl() {
-        return "http://wx.qlogo.cn/mmopen/lPfTxuh1YrlzBAx7GhM7icSAdj39hcjINuqSTOtSfIiaGS5iabYicaPXaOj2QRibltymiaHOreuTLjEsRrpS6jSfDzYQstZiaJBmvUA/46";
-    }
-
-    function getName() {
-        return "Jing1";
-    }
-
-    function getOpenId() {
-        return "a";
-    }
-
-    function getSign(){
-        return "86a3caabd778d2887d1cc288f0827751";
+    var obj = {};
+    obj.inviter = "a";
+    obj.id = "b";
+    obj.name = "刘德华";
+    obj.sign = "13d83cb2457601f80da3c5aab69c4187";
+    obj.headUrl = "http://wx.qlogo.cn/mmopen/lPfTxuh1YrlzBAx7GhM7icSAdj39hcjINuqSTOtSfIiaGS5iabYicaPXaOj2QRibltymiaHOreuTLjEsRrpS6jSfDzYQstZiaJBmvUA/64";
+    
+    //获取游戏需要的信息
+    function getInfo(){        
+        return obj;
     }
 </script>
 </body>

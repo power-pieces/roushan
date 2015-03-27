@@ -52,6 +52,7 @@ class NetManager {
     private static onCallBack(jsonStr: string): void {
         console.log(jsonStr);
         ViewManager.instance.closePanel();
+        this._proxy = null;
 
         try {
             var data: any = JSON.parse(jsonStr);
@@ -66,6 +67,6 @@ class NetManager {
             ViewManager.instance.showPanel(new MessagePanel("程序崩溃：" + jsonStr), true, true);
         }
 
-        this._proxy = null;
+        
     }
 }

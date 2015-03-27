@@ -73,8 +73,8 @@
         var tf: egret.BitmapText;
         tf = Texture.createBitmapTF("pink_fnt");
         tf.text = "x" + DataCenter.reward;
-        tf.x = 230;
-        tf.y = 40;
+        tf.x = 180;
+        tf.y = 50;
         this.addChild(tf);
 
         var talk: egret.Bitmap = Texture.create("boss_says_png");

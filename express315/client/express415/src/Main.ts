@@ -36,11 +36,13 @@ class Main extends egret.DisplayObjectContainer {
     public constructor() {
         super();
         //获取接口数据
-        DataCenter.inviter = Extend.callWindow("getInviterId");
-        DataCenter.id = Extend.callWindow("getOpenId");
-        DataCenter.name = Extend.callWindow("getName");
-        DataCenter.sign = Extend.callWindow("getSign");
-        DataCenter.headUrl = Extend.callWindow("getHeadUrl");
+        var info: any = Extend.callWindow("getInfo");
+
+        DataCenter.inviter = info.inviter == ""?null:info.inviter;
+        DataCenter.id = info.id;
+        DataCenter.name = info.name;
+        DataCenter.sign = info.sign;
+        DataCenter.headUrl = info.headUrl;
 
 
         this.init();
@@ -121,7 +123,7 @@ class Main extends egret.DisplayObjectContainer {
      */
     private createGameScene(): void {
 
-        egret.Profiler.getInstance().run();
+       // egret.Profiler.getInstance().run();
 
         DataCenter.cfg = RES.getRes("config_json");
 
@@ -139,8 +141,10 @@ class Main extends egret.DisplayObjectContainer {
     private onLoadData(data: any, params: any): void {
         DataCenter.reward = +data.user.reward;
         DataCenter.remain = +data.user.remain;
-        DataCenter.inviterName = data.inviter.name;
-        DataCenter.inviterHeadUrl = data.inviter.head_url;
+        if (data.inviter) {
+            DataCenter.inviterName = data.inviter.name;
+            DataCenter.inviterHeadUrl = data.inviter.head_url;
+        }
 
         if (DataCenter.inviter) {
             NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.RECEIVE_SHARE_VIEW));

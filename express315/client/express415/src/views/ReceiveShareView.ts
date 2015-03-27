@@ -47,6 +47,24 @@
                 }
             }
             , this, "image");
+
+
+        NetManager.call("getShareList", { reciverId: DataCenter.id }, this.onGetShareList, this);
+    }
+
+    private onGetShareList(data: any, params: any): void {     
+        if (data.length > 10) {
+            data.length = 10;
+        }
+        var posY: number = this._bg.height;
+        for (var i: number = 0; i < data.length; i++) {
+            //创建列表项
+            var item: ShareListItem = new ShareListItem(data[i]);
+            item.x = 0;
+            item.y = posY;
+            this._spr.addChild(item);
+            posY += item.height;
+        }
     }
 
     private updateContent(): void {
@@ -101,7 +119,13 @@
 
         switch (index) {
             case 0:                
-                NetManager.call("present", { targetId: DataCenter.inviter },this.onPresentResponse,this);                
+                var params: any = {};
+                params.targetId = DataCenter.inviter;
+                params.name = DataCenter.name;
+                params.headUrl = DataCenter.headUrl;
+                params.inviterName = DataCenter.inviterName;
+                params.inviterHeadUrl = DataCenter.inviterHeadUrl;
+                NetManager.call("present", params, this.onPresentResponse,this);                
                 break;
             case 1:
                 NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.GAME_VIEW));

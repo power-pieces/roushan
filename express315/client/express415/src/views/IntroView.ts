@@ -64,7 +64,7 @@
                 break;
             case 2:
                 console.log("分享");
-                ViewManager.instance.showPanel(new ShareTipPanel(), true,false);
+                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.SHARE_VIEW));
                 break;
         }
     }

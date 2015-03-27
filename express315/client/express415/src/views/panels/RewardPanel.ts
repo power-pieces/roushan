@@ -14,7 +14,7 @@ class RewardPanel extends AView
         
         var rewardTF: egret.BitmapText = Texture.createBitmapTF("pink_fnt");
         rewardTF.text = (DataCenter.killFake - DataCenter.killReal).toString();
-        rewardTF.x = 227;
+        rewardTF.x = 235;
         rewardTF.y = 345;
         this.addChild(rewardTF);
 

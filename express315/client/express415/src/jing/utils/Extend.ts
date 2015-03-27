@@ -10,4 +10,6 @@
         var result: any = window[funName]();
         return result;
     }
+
+
 }

@@ -13,8 +13,6 @@
     }
 
     public dispose(): void {
-        super.dispose();
-        NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.SHARE_VIEW));
-        
+        super.dispose();       
     }
 } 
