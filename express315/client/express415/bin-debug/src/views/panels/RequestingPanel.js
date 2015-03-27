@@ -26,3 +26,4 @@ var RequestingPanel = (function (_super) {
     };
     return RequestingPanel;
 })(AView);
+//# sourceMappingURL=RequestingPanel.js.map

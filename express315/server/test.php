@@ -9,6 +9,7 @@
     	include "configs/define.php";
 		$id = $_REQUEST['id'];
 		$sign = md5($id.SIGN_KEY);
+		echo "SIGN: ".$sign;
 	?>
 	
 	<form id="form" action="interface.php">
@@ -25,6 +26,8 @@
 			var params = {};
 			params.id = "<?php echo $id?>";
 			params.sign = "<?php echo $sign?>";	
+			params.name = "Hello";
+			params.headUrl = "a";
 			var jsonStr = JSON.stringify(params);
 			document.getElementById("params").value = jsonStr;
         	

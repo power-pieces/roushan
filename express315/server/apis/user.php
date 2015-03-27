@@ -22,12 +22,12 @@ class User
 		}
 		else
 		{
-			$inviter = 0;
+			$inviter = null;
 		}	
 		$name = $params->name;
 		$headUrl = $params->headUrl;
 		
-		$sql = "SELECT remain,reward FROM tbl_user WHERE id=$id";
+		$sql = "SELECT remain,reward FROM tbl_user WHERE id='$id'";
 		$sqlHelper = new SqlHelper();
 		$sqlHelper->conn();
 		
@@ -38,15 +38,8 @@ class User
 		if(0 == count($res['data']))
 		{
 			//初始化玩家数据
-			$remain = $inviter == 0?5:6;
-			$insertSql = "INSERT INTO tbl_user(id, name, remain, reward, head_url) VALUES('$id','$name', $remain,0, '$headUrl');";
+			$insertSql = "INSERT INTO tbl_user(id, name, remain, reward, head_url) VALUES('$id','$name', 3,0, '$headUrl');";
 			$sqlHelper->modify($insertSql);
-			
-//			if(0 != $inviter)
-//			{
-//				//给邀请人加1次
-//				$this->changeRemain($inviter, 1);
-//			}
 		}
 		else 
 		{
@@ -54,19 +47,67 @@ class User
 			$sqlHelper->modify($updateSql);
 		}
 		
-		$res['data'] = $sqlHelper->query($sql)[0];
+		$rec = array();
+		$result = $sqlHelper->query($sql);
+		$rec["user"] = $result[0];
+		if(null != $inviter)
+		{
+			//给邀请人加1次			
+			$sql = "SELECT name,head_url FROM tbl_user WHERE id='$inviter'";
+			$result = $sqlHelper->query($sql);
+			$rec['inviter'] = $result[0];
+		}
 		
 		$sqlHelper->close();
+		
+		
+		$res['data'] = $rec;
 	}
 	
 	/**
-	 * 分享
+	 * 总送体力(只能送给目标一次)
 	 */
-	public function share(&$params, &$res)
+	public function present(&$params, &$res)
 	{
 		$params = json_decode($params);
+		
+			
+		
+		//安全验证代码
+		if(false == $this->checkSigh($params->id, $params->sign))
+		{
+			$res['error'] = 1;
+			$res['msg'] = 'wrong sign';
+			return;
+		}
+		
 		$id = $params->id;
-		$res['data'] = $this->changeRemain($id, 1);
+		$targetId = $params->targetId;
+
+		//检查是不是送过
+		$sql = "SELECT i FROM tbl_share_record WHERE sender_id='$id' AND reciver_id='$targetId';";
+		
+		$sqlHelper = new SqlHelper();
+		$sqlHelper->conn();	
+		$result = $sqlHelper->query($sql);
+		if(count($result) > 0)
+		{
+			//只能送1次
+			$res['data'] = 0;
+			return;
+		}
+		
+		
+		$res['data'] = $this->changeRemain($targetId, 1);
+		
+		$time = time();
+		$dataTime = date("Y-m-d H:i:s",time());
+		//记录这次赠送
+		$sql = "INSERT INTO tbl_share_record(sender_id,reciver_id,time_utc,time) VALUES('$id','$targetId',$time,'$dataTime');";
+		//die($sql);
+		$sqlHelper->conn();
+		$sqlHelper->modify($sql);		
+		$sqlHelper->close();		
 	}
 	
 	/**
@@ -112,7 +153,7 @@ class User
 		//调用API，请求成功后
 		if(true)
 		{
-			$sql = "UPDATE tbl_user SET reward = reward - $need WHERE id = $id;";	
+			$sql = "UPDATE tbl_user SET reward = reward - $need WHERE id = '$id';";	
 			$sqlHelper = new SqlHelper();
 			$sqlHelper->conn();		
 			$res['data'] = $sqlHelper->modify($sql);
@@ -149,11 +190,11 @@ class User
 		$sql = null;
 		if(1 == $isResult)
 		{
-			$sql = "UPDATE tbl_user SET reward = reward + $amount,remain = remain - 1  WHERE id = $id;";
+			$sql = "UPDATE tbl_user SET reward = reward + $amount,remain = remain - 1  WHERE id = '$id';";
 		}
 		else
 		{
-			$sql = "UPDATE tbl_user SET reward = reward + $amount WHERE id = $id;";
+			$sql = "UPDATE tbl_user SET reward = reward + $amount WHERE id = '$id';";
 		}
 		
 		$sqlHelper = new SqlHelper();
@@ -164,7 +205,7 @@ class User
 	
 	private function getUserInfo($id)
 	{
-		$sql = "SELECT remain,reward FROM tbl_user WHERE id=$id";
+		$sql = "SELECT remain,reward FROM tbl_user WHERE id='$id'";
 		$sqlHelper = new SqlHelper();
 		$sqlHelper->conn();		
 		$result = $sqlHelper->query($sql);
@@ -178,7 +219,7 @@ class User
 	private function changeRemain($id, $changeValue, &$sqlHelper = null)
 	{
 		//给分享的人增加一次游戏机会
-		$sql = "UPDATE tbl_user SET remain = remain + $changeValue WHERE id = $id;";
+		$sql = "UPDATE tbl_user SET remain = remain + $changeValue WHERE id = '$id';";
 		if(null == $sqlHelper)
 		{
 			$sqlHelper = new SqlHelper();

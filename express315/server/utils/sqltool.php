@@ -17,15 +17,19 @@ class SqlHelper
 	
 	//查询数据库
 	public function query($sql)
-	{
+	{		
 		mysql_ping($this->conn);
 		$result = mysql_query($sql, $this->conn);
-		return $this->transformSqlResult2Array($result);
+		if($result)
+		{
+			return $this->transformSqlResult2Array($result);	
+		}
+		return false;
 	}
 	
 	//修改数据库
 	public function modify($sql)
-	{
+	{		
 		mysql_ping($this->conn);
 		$result = mysql_query($sql, $this->conn);
 		return $result;
