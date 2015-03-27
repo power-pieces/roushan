@@ -43,6 +43,7 @@ if(isset($_SESSION["openid"])) {
 
 	$p = new Player($backurl);
 	$p->openid = $_SESSION["openid"];
+	
 	//把openid存到session里面
 	$p->saveToSession();
 	$openid = $_SESSION["openid"];
