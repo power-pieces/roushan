@@ -39,6 +39,7 @@ var NetManager = (function () {
     NetManager.onCallBack = function (jsonStr) {
         console.log(jsonStr);
         ViewManager.instance.closePanel();
+        this._proxy = null;
         try {
             var data = JSON.parse(jsonStr);
             if (data.error > 0) {
@@ -51,7 +52,6 @@ var NetManager = (function () {
         catch (e) {
             ViewManager.instance.showPanel(new MessagePanel("程序崩溃：" + jsonStr), true, true);
         }
-        this._proxy = null;
     };
     return NetManager;
 })();

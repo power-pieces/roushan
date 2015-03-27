@@ -3,7 +3,6 @@ var game_file_list = [
 	"views/components/Mask.js",
 	"jing/cores/ViewManager.js",
 	"jing/utils/Texture.js",
-	"views/panels/ShareTipPanel.js",
 	"DataCenter.js",
 	"jing/net/NetProxy.js",
 	"views/panels/MessagePanel.js",
@@ -24,5 +23,7 @@ var game_file_list = [
 	"jing/notice/NoticeManager.js",
 	"jing/utils/Extend.js",
 	"Main.js",
+	"views/components/ShareListItem.js",
+	"views/panels/ShareTipPanel.js",
 	"views/roles/Role.js"
 ];

@@ -54,7 +54,7 @@ var ExchangeView = (function (_super) {
         var goodId = DataCenter.cfg.exchange_id[index];
         var need = DataCenter.cfg.exchange_need[index];
         if (DataCenter.reward < need) {
-            ViewManager.instance.showPanel(new ExchangeResultPanel(3, goodId));
+            ViewManager.instance.showPanel(new MessagePanel("您的赏银不足！"));
             return;
         }
         NetManager.call("exchange", { goodId: goodId, need: need }, this.onExchange, this);

@@ -23,8 +23,8 @@ var ResultMenuPanel = (function (_super) {
         var remainTF = new egret.BitmapText();
         remainTF.font = RES.getRes("white_fnt");
         remainTF.text = "x" + DataCenter.remain;
-        remainTF.x = 445;
-        remainTF.y = 75;
+        remainTF.x = 430;
+        remainTF.y = 82;
         this.addChild(remainTF);
         this.touchEnabled = true;
     };
@@ -51,7 +51,7 @@ var ResultMenuPanel = (function (_super) {
                 NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.GAME_VIEW));
                 break;
             case 1:
-                ViewManager.instance.showPanel(new ShareTipPanel(), true, false);
+                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.SHARE_VIEW));
                 break;
         }
     };

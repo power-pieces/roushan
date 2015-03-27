@@ -63,8 +63,8 @@ var ResultView = (function (_super) {
         var tf;
         tf = Texture.createBitmapTF("pink_fnt");
         tf.text = "x" + DataCenter.reward;
-        tf.x = 230;
-        tf.y = 40;
+        tf.x = 180;
+        tf.y = 50;
         this.addChild(tf);
         var talk = Texture.create("boss_says_png");
         talk.x = 380;

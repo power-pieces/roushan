@@ -35,11 +35,12 @@ var Main = (function (_super) {
     function Main() {
         _super.call(this);
         //获取接口数据
-        DataCenter.inviter = Extend.callWindow("getInviterId");
-        DataCenter.id = Extend.callWindow("getOpenId");
-        DataCenter.name = Extend.callWindow("getName");
-        DataCenter.sign = Extend.callWindow("getSign");
-        DataCenter.headUrl = Extend.callWindow("getHeadUrl");
+        var info = Extend.callWindow("getInfo");
+        DataCenter.inviter = info.inviter == "" ? null : info.inviter;
+        DataCenter.id = info.id;
+        DataCenter.name = info.name;
+        DataCenter.sign = info.sign;
+        DataCenter.headUrl = info.headUrl;
         this.init();
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
@@ -112,7 +113,7 @@ var Main = (function (_super) {
      * Create a game scene
      */
     Main.prototype.createGameScene = function () {
-        egret.Profiler.getInstance().run();
+        // egret.Profiler.getInstance().run();
         DataCenter.cfg = RES.getRes("config_json");
         NoticeManager.addNoticeAction(Notice.CHANGE_VIEW, this.changeViewNotice);
         var params = {};
@@ -126,8 +127,10 @@ var Main = (function (_super) {
     Main.prototype.onLoadData = function (data, params) {
         DataCenter.reward = +data.user.reward;
         DataCenter.remain = +data.user.remain;
-        DataCenter.inviterName = data.inviter.name;
-        DataCenter.inviterHeadUrl = data.inviter.head_url;
+        if (data.inviter) {
+            DataCenter.inviterName = data.inviter.name;
+            DataCenter.inviterHeadUrl = data.inviter.head_url;
+        }
         if (DataCenter.inviter) {
             NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.RECEIVE_SHARE_VIEW));
         }

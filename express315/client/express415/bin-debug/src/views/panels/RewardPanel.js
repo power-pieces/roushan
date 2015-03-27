@@ -17,7 +17,7 @@ var RewardPanel = (function (_super) {
         this.addChild(Texture.create("reward_png"));
         var rewardTF = Texture.createBitmapTF("pink_fnt");
         rewardTF.text = (DataCenter.killFake - DataCenter.killReal).toString();
-        rewardTF.x = 227;
+        rewardTF.x = 235;
         rewardTF.y = 345;
         this.addChild(rewardTF);
         var tf;

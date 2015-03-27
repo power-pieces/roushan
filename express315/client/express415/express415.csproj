@@ -192,6 +192,7 @@
     <Content Include="resource\fonts\white.png" />
     <Content Include="resource\mc\boos_face_mc.png" />
     <Content Include="resource\mc\punish_mc.png" />
+    <TypeScriptCompile Include="src\views\components\ShareListItem.ts" />
     <Content Include="web.config" />
     <TypeScriptCompile Include="src\consts\ViewName.ts" />
     <TypeScriptCompile Include="src\DataCenter.ts" />
@@ -215,7 +216,6 @@
     <TypeScriptCompile Include="src\views\panels\RequestingPanel.ts" />
     <TypeScriptCompile Include="src\views\panels\ResultMenuPanel.ts" />
     <TypeScriptCompile Include="src\views\panels\RewardPanel.ts" />
-    <TypeScriptCompile Include="src\views\panels\ShareResultPanel.ts" />
     <TypeScriptCompile Include="src\views\panels\ShareTipPanel.ts" />
     <TypeScriptCompile Include="src\views\ReceiveShareView.ts" />
     <TypeScriptCompile Include="src\views\ResultView.ts" />

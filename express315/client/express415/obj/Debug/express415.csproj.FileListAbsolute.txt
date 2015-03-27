@@ -8,3 +8,7 @@ C:\inetpub\wwwroot\roushan\trunk\express315\client\express415\bin\express415.pdb
 C:\inetpub\wwwroot\roushan\trunk\express315\client\express415\obj\Debug\express415.csprojResolveAssemblyReference.cache
 C:\inetpub\wwwroot\roushan\trunk\express315\client\express415\obj\Debug\express415.dll
 C:\inetpub\wwwroot\roushan\trunk\express315\client\express415\obj\Debug\express415.pdb
+E:\wwwroot\roushan\trunk\express315\client\express415\bin\express415.dll
+E:\wwwroot\roushan\trunk\express315\client\express415\bin\express415.pdb
+E:\wwwroot\roushan\trunk\express315\client\express415\obj\Debug\express415.dll
+E:\wwwroot\roushan\trunk\express315\client\express415\obj\Debug\express415.pdb

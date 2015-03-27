@@ -25,22 +25,33 @@ var ShareView = (function (_super) {
         scrollView.height = ViewManager.stage.stageHeight;
         this.addChild(scrollView);
         scrollView.stage = ViewManager.stage;
-        this.updateContent();
+        //this.updateContent();
+        NetManager.call("getShareList", { reciverId: DataCenter.id }, this.onGetShareList, this);
     };
-    ShareView.prototype.updateContent = function () {
-        var tf = new egret.TextField();
-        tf.x = 45;
-        tf.y = 420;
-        tf.width = 546;
-        tf.height = 109;
-        tf.textAlign = egret.HorizontalAlign.CENTER;
-        tf.lineSpacing = 20;
-        tf.textFlow = [
-            { text: "呵呵呵人品好，获得朋友赠送\n", style: { "textColor": 0x666666, "size": "30", "bold": true } },
-            { text: "包子", style: { "textColor": 0x666666, "size": "40", "bold": true } },
-            { text: " x1", style: { "textColor": 0xFF0000, "size": "40", "bold": true } },
-            { text: "" }
-        ];
+    ShareView.prototype.onGetShareList = function (data, params) {
+        this.updateContent(data.length);
+        if (data.length > 10) {
+            data.length = 10;
+        }
+        var posY = this._bg.height;
+        for (var i = 0; i < data.length; i++) {
+            //创建列表项
+            var item = new ShareListItem(data[i]);
+            item.x = 0;
+            item.y = posY;
+            this._spr.addChild(item);
+            posY += item.height;
+        }
+        ViewManager.instance.showPanel(new ShareTipPanel(), true, false);
+    };
+    ShareView.prototype.updateContent = function (count) {
+        var tf = new egret.BitmapText();
+        var font = RES.getRes("pink_fnt");
+        tf.font = font;
+        tf.text = "X" + count;
+        tf.x = 316;
+        tf.y = 478;
+        //this.addChild(tf);
         this._spr.addChild(tf);
     };
     ShareView.prototype.addListeners = function () {

@@ -15,7 +15,6 @@ var ShareTipPanel = (function (_super) {
     };
     ShareTipPanel.prototype.dispose = function () {
         _super.prototype.dispose.call(this);
-        NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.SHARE_VIEW));
     };
     return ShareTipPanel;
 })(AView);

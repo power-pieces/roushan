@@ -3,7 +3,6 @@
 	"views\\components\\Mask.ts",
 	"jing\\cores\\ViewManager.ts",
 	"jing\\utils\\Texture.ts",
-	"views\\panels\\ShareTipPanel.ts",
 	"DataCenter.ts",
 	"jing\\net\\NetProxy.ts",
 	"views\\panels\\MessagePanel.ts",
@@ -24,5 +23,7 @@
 	"jing\\notice\\NoticeManager.ts",
 	"jing\\utils\\Extend.ts",
 	"Main.ts",
+	"views\\components\\ShareListItem.ts",
+	"views\\panels\\ShareTipPanel.ts",
 	"views\\roles\\Role.ts"
 ]

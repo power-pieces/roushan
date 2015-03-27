@@ -37,6 +37,21 @@ var ReceiveShareView = (function (_super) {
                 this._spr.addChild(pic);
             }
         }, this, "image");
+        NetManager.call("getShareList", { reciverId: DataCenter.id }, this.onGetShareList, this);
+    };
+    ReceiveShareView.prototype.onGetShareList = function (data, params) {
+        if (data.length > 10) {
+            data.length = 10;
+        }
+        var posY = this._bg.height;
+        for (var i = 0; i < data.length; i++) {
+            //创建列表项
+            var item = new ShareListItem(data[i]);
+            item.x = 0;
+            item.y = posY;
+            this._spr.addChild(item);
+            posY += item.height;
+        }
     };
     ReceiveShareView.prototype.updateContent = function () {
         var tf = new egret.TextField();
@@ -82,7 +97,13 @@ var ReceiveShareView = (function (_super) {
     ReceiveShareView.prototype.hotZoneActive = function (index) {
         switch (index) {
             case 0:
-                NetManager.call("present", { targetId: DataCenter.inviter }, this.onPresentResponse, this);
+                var params = {};
+                params.targetId = DataCenter.inviter;
+                params.name = DataCenter.name;
+                params.headUrl = DataCenter.headUrl;
+                params.inviterName = DataCenter.inviterName;
+                params.inviterHeadUrl = DataCenter.inviterHeadUrl;
+                NetManager.call("present", params, this.onPresentResponse, this);
                 break;
             case 1:
                 NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.GAME_VIEW));
