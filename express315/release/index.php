@@ -32,6 +32,7 @@ else
 $backurl = "http://www.g6game.com/h5game/express/index.php?share=".$shareid;
 //如果sessio失效，并且是第一次点击链接，则向微信发送网页授权许可请求
 if(!isset($_SESSION["openid"]) && !isset($_GET['code'])){
+	//die("发送网页授权许可请求");
 	//发送网页授权许可请求
 	header("Location:https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$appid."&redirect_uri=".urlencode($backurl)."&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect");
 	exit;
@@ -60,7 +61,8 @@ if(isset($_SESSION["openid"])) {
 }else{
 	exit("error");
 }
-
+//var_dump($p);
+//die();
 //到此步，已经拿到用户的openid了，可根据游戏需求，自定义其他逻辑
 
 //获取分享的ticket
@@ -82,13 +84,7 @@ getShareToken($appid,$appsecrect,$noncestr,$file,time());
     signature: '<?php echo getsignature();?>',
     jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage']
   });
-  wx.ready(function () {
-	  setTimeLine(0);
-	  setAppMessage(0);
-    // 在这里调用 API
-	  
-	 
-  });
+
   
   var sharesuccessfunc;
   var sharefuncobj;
@@ -110,7 +106,7 @@ getShareToken($appid,$appsecrect,$noncestr,$file,time());
   function setTimeLine(shareid)
   {
 	  wx.onMenuShareTimeline({
-		    title: '打击山寨', // 分享标题
+		    title: '疯狂打山寨', // 分享标题
 			 desc: '"Duang~！" + DataCenter.inviterName + "击倒了"', // 分享描述
 		    link: 'http://www.g6game.com/h5game/express/index.php?share='+shareid, // 分享链接
 		    imgUrl: '', // 分享图标
@@ -138,7 +134,7 @@ getShareToken($appid,$appsecrect,$noncestr,$file,time());
   function setAppMessage(shareid)
   {
 	  wx.onMenuShareAppMessage({
-		    title: '打击山寨415', // 分享标题
+		    title: '疯狂打山寨', // 分享标题
 		    desc: '测试', // 分享描述
 		    link: 'http://www.g6game.com/h5game/express/index.php?share='+shareid, // 分享链接
 		    imgUrl: '', // 分享图标
@@ -155,16 +151,23 @@ getShareToken($appid,$appsecrect,$noncestr,$file,time());
 
   //准备分享
   function readyShare(){
+	  //alert("分享者ID：" + obj.id + "   名称：" + obj.name);
 	 setTimeLine(obj.id);
 	 setAppMessage(obj.id);  
   }
   	
-  readyShare();  
+   
+
+    wx.ready(function () {
+	  readyShare(); 
+	  
+	 
+  });
 </script>
 
 <head>
     <meta charset="utf-8">
-    <title>HelloWorld</title>
+    <title>疯狂打山寨</title>
     <meta name="viewport"
           content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no,target-densitydpi=device-dpi"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -177,7 +180,7 @@ getShareToken($appid,$appsecrect,$noncestr,$file,time());
     <style>
         body {
             text-align: center;
-            background: #000000;
+            background: #FFFAF4;
             padding: 0;
             border: 0;
             margin: 0;
