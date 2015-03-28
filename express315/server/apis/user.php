@@ -16,18 +16,18 @@ class User
 			return;
 		}
 		
-		$id = mysql_escape_string($params->id);
+		$id = @mysql_escape_string($params->id);
 		if(isset($params->inviter))
 		{
-			$inviter = mysql_escape_string($params->inviter);
+			$inviter = @mysql_escape_string($params->inviter);
 		}
 		else
 		{
 			$inviter = null;
 		}	
-		$name = mysql_escape_string($params->name);
-		$headUrl = mysql_escape_string($params->headUrl);
-		$sql = "SELECT remain,reward FROM tbl_user WHERE id='$id'";
+		$name = @mysql_escape_string($params->name);
+		$headUrl = @mysql_escape_string($params->headUrl);
+		$sql = "SELECT * FROM tbl_user WHERE id='$id'";
 		$sqlHelper = new SqlHelper();
 		$sqlHelper->conn();
 		
@@ -43,7 +43,7 @@ class User
 			//die($result."     ".$insertSql);
 			
 		}
-		else 
+		else if("" != $params->headUrl)
 		{
 			$updateSql = "UPDATE tbl_user SET name='$name',head_url='$headUrl' WHERE id='$id';";
 			$sqlHelper->modify($updateSql);
@@ -55,7 +55,7 @@ class User
 		if(null != $inviter)
 		{
 			//给邀请人加1次			
-			$sql = "SELECT name,head_url FROM tbl_user WHERE id='$inviter'";
+			$sql = "SELECT * FROM tbl_user WHERE id='$inviter'";
 			$result = $sqlHelper->query($sql);
 			$rec['inviter'] = $result[0];
 		}
@@ -83,12 +83,12 @@ class User
 			return;
 		}
 		
-		$id = mysql_escape_string($params->id);		
-		$senderName = mysql_escape_string($params->name);
-		$senderUrl = mysql_escape_string($params->headUrl);
-		$targetId = mysql_escape_string($params->targetId);
-		$reciverName = mysql_escape_string($params->inviterName);
-		$reciverUrl = mysql_escape_string($params->inviterHeadUrl);
+		$id = @mysql_escape_string($params->id);		
+		$senderName = @mysql_escape_string($params->userName);
+		$senderUrl = @mysql_escape_string($params->headUrl);
+		$targetId = @mysql_escape_string($params->targetId);
+		$reciverName = @mysql_escape_string($params->inviterName);
+		$reciverUrl = @mysql_escape_string($params->inviterHeadUrl);
 		
 
 		//检查是不是送过
@@ -133,7 +133,7 @@ class User
 			return;
 		}
 		
-		$id = mysql_escape_string($params->id);
+		$id = @mysql_escape_string($params->id);
 		
 		//物品ID
 		$goodId = $params->goodId;
@@ -188,7 +188,7 @@ class User
 			return;
 		}
 		
-		$reciverId = mysql_escape_string($params->reciverId);
+		$reciverId = @mysql_escape_string($params->reciverId);
 		
 		$sql = "SELECT * FROM tbl_share_record WHERE reciver_id = '$reciverId'";
 		$sqlHelper = new SqlHelper();
@@ -215,11 +215,14 @@ class User
 		//是否是游戏的结算奖励	
 		$isResult = $params->isResult;
 		$amount = $params->amount;
-		
+		$killCount = intval($params->killCount);
+		//var_dump($params);
+		//die();
 		$sql = null;
 		if(1 == $isResult)
 		{
-			$sql = "UPDATE tbl_user SET reward = reward + $amount,remain = remain - 1  WHERE id = '$id';";
+			$sql = "UPDATE tbl_user SET reward = reward + $amount,remain = remain - 1,kill_count = kill_count + $killCount WHERE id = '$id';";
+			//die($sql);
 		}
 		else
 		{
