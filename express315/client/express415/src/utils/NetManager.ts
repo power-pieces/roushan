@@ -45,7 +45,7 @@ class NetManager {
         params.sign = DataCenter.sign;
         args.params = JSON.stringify(params);
 
-        alert("传递的参数：" + args.params);
+        //alert("传递的参数：" + args.params);
 
         np.request(url, this.onCallBack, this, args, egret.URLRequestMethod.GET, egret.URLLoaderDataFormat.TEXT);
         this._proxy = np;

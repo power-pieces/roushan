@@ -137,9 +137,12 @@ class Main extends egret.DisplayObjectContainer {
     private onLoadData(data: any, params: any): void {
         DataCenter.reward = +data.user.reward;
         DataCenter.remain = +data.user.remain;
+        DataCenter.userName = data.user.name;
+        DataCenter.headUrl = data.user.head_url;
         if (data.inviter) {
             DataCenter.inviterName = data.inviter.name;
             DataCenter.inviterHeadUrl = data.inviter.head_url;
+            DataCenter.inviterKill = +data.inviter.kill_count;
         }
 
         if (DataCenter.inviter) {

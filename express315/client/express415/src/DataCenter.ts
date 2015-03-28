@@ -13,7 +13,7 @@
     public static inviterHeadUrl: string = null;
 
     //邀请人杀人数
-    public static inviterKill: number = 999;
+    public static inviterKill: number = 0;
 
     //玩家ID
     public static id: string = "";

@@ -128,7 +128,7 @@
             case 0:                
                 var params: any = {};
                 params.targetId = DataCenter.inviter;
-                params.name = DataCenter.userName;
+                params.userName = DataCenter.userName;
                 params.headUrl = DataCenter.headUrl;
                 params.inviterName = DataCenter.inviterName;
                 params.inviterHeadUrl = DataCenter.inviterHeadUrl;

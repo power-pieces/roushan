@@ -35,7 +35,7 @@ class ViewManager {
             this._nowView.dispose();
         }
         view.addListeners();
-        ViewManager.stage.addChild(view);
+        ViewManager.stage.addChildAt(view, 0);
         view.onAddedToStage();
         this._nowView = view;
         return view;

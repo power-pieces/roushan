@@ -23,8 +23,9 @@
         if (reward > 0) {
             //增加赏金
             DataCenter.reward += reward;
-            NetManager.implicitCall("addReward", { isResult: 1, amount: reward });
         }
+
+        NetManager.implicitCall("addReward", { isResult: 1, amount: reward, killCount: DataCenter.killFake });
 
         
     }
