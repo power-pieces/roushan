@@ -36,11 +36,10 @@ class Main extends egret.DisplayObjectContainer {
     public constructor() {
         super();
         //获取接口数据
-        var info: any = Extend.callWindow("getInfo");
-
+        var info: any = Extend.callWindow("getInfo");        
         DataCenter.inviter = info.inviter == ""?null:info.inviter;
-        DataCenter.id = info.id;
-        DataCenter.name = info.name;
+        DataCenter.id = info.id;        
+        DataCenter.userName = info.name;        
         DataCenter.sign = info.sign;
         DataCenter.headUrl = info.headUrl;
 
@@ -122,15 +121,12 @@ class Main extends egret.DisplayObjectContainer {
      * Create a game scene
      */
     private createGameScene(): void {
-
-       // egret.Profiler.getInstance().run();
-
         DataCenter.cfg = RES.getRes("config_json");
 
         NoticeManager.addNoticeAction(Notice.CHANGE_VIEW, this.changeViewNotice);
 
         var params: any = {};
-        params.name = DataCenter.name;
+        params.name = DataCenter.userName;
         params.headUrl = DataCenter.headUrl;
         if (DataCenter.inviter) {
             params.inviter = DataCenter.inviter;

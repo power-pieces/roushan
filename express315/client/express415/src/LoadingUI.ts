@@ -40,6 +40,7 @@ class LoadingUI extends AView{
         this.textField.width = 480;
         this.textField.height = 100;
         this.textField.textAlign = "center";
+        this.textField.textColor = 0;
         ViewManager.instance.putToCenter(this);
     }
 

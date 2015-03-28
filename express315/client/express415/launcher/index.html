@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>HelloWorld</title>
+    <title>疯狂打山寨</title>
     <meta name="viewport"
           content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no,target-densitydpi=device-dpi"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -22,7 +22,7 @@
     <style>
         body {
             text-align: center;
-            background: #000000;
+            background: #FFFAF4;
             padding: 0;
             border: 0;
             margin: 0;
@@ -64,15 +64,20 @@
 
 
     var obj = {};
-    obj.inviter = "a";
+    obj.inviter = null;
     obj.id = "b";
-    obj.name = "刘德华";
+    obj.name = "don't fuck me";
     obj.sign = "13d83cb2457601f80da3c5aab69c4187";
     obj.headUrl = "http://wx.qlogo.cn/mmopen/lPfTxuh1YrlzBAx7GhM7icSAdj39hcjINuqSTOtSfIiaGS5iabYicaPXaOj2QRibltymiaHOreuTLjEsRrpS6jSfDzYQstZiaJBmvUA/64";
     
     //获取游戏需要的信息
     function getInfo(){        
         return obj;
+    }
+
+    //准备分享
+    function readyShare() {
+        alert("准备分享的ID:" + obj.id);
     }
 </script>
 </body>

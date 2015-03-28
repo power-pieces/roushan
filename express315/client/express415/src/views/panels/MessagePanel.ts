@@ -18,7 +18,7 @@
         tf.y = 120;
         tf.width = 330;
         tf.height = 100;
-        tf.size = 40;
+        tf.size = 30;
         tf.textAlign = "center";
         tf.stroke = 1;
         ViewManager.instance.putToCenter(this);        

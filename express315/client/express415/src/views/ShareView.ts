@@ -34,7 +34,7 @@
 
         //this.updateContent();
 
-
+        Extend.callWindow("readyShare");
         NetManager.call("getShareList", { reciverId: DataCenter.id }, this.onGetShareList, this);
     }
 

@@ -41,9 +41,16 @@
                 if (null != data) {
                     var pic: egret.Bitmap = new egret.Bitmap(data);
                     pic.anchorX = pic.anchorY = 0.5;
+                    pic.width = pic.height = 96
                     pic.x = 200;
                     pic.y = 333;
                     this._spr.addChild(pic);
+
+                    var picBorder: egret.Bitmap = Texture.create("border_96_png");
+                    picBorder.anchorX = picBorder.anchorY = 0.5;
+                    picBorder.x = 200;
+                    picBorder.y = 333;
+                    this._spr.addChild(picBorder);
                 }
             }
             , this, "image");
@@ -77,7 +84,7 @@
         tf.lineSpacing = 10;
         tf.textFlow = <Array<egret.ITextElement>>[
             { text: "Duang~！" + DataCenter.inviterName + "击倒了", style: { "textColor": 0x745645, "size": "30", "bold": true } }
-            , { text: DataCenter.inviterKill.toString(), style: { "textColor": 0xFF0000, "size": "30", "bold": true } }
+            , { text: DataCenter.inviterKill.toString(), style: { "textColor": 0xf471ac, "size": "30", "bold": true } }
             , { text: "个山寨品邮差，青天大老爷Ta一个赞！", style: { "textColor": 0x745645, "size": "30", "bold": true } }
             , { text: "" }
         ];
@@ -121,7 +128,7 @@
             case 0:                
                 var params: any = {};
                 params.targetId = DataCenter.inviter;
-                params.name = DataCenter.name;
+                params.name = DataCenter.userName;
                 params.headUrl = DataCenter.headUrl;
                 params.inviterName = DataCenter.inviterName;
                 params.inviterHeadUrl = DataCenter.inviterHeadUrl;

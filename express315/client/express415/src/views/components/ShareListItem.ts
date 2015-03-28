@@ -18,9 +18,16 @@
                 if (null != data) {
                     var pic: egret.Bitmap = new egret.Bitmap(data);
                     pic.anchorX = pic.anchorY = 0.5;
+                    pic.width = pic.height = 64;
                     pic.x = 74;
                     pic.y = 54;
                     this.addChild(pic);
+
+                    var picBorder: egret.Bitmap = Texture.create("border_64_png");
+                    picBorder.anchorX = picBorder.anchorY = 0.5;
+                    picBorder.x = 74;
+                    picBorder.y = 54;
+                    this.addChild(picBorder);
                 }
             }
             , this, "image");
@@ -34,7 +41,7 @@
         tf.lineSpacing = 10;
         tf.textFlow = <Array<egret.ITextElement>>[
             { text: this._data.sender_name + "送了您", style: { "textColor": 0x745645, "size": "30", "bold": true } }
-            , { text: "1", style: { "textColor": 0xFF0000, "size": "30", "bold": true } }
+            , { text: "1", style: { "textColor": 0xf471ac, "size": "30", "bold": true } }
             , { text: "个包子", style: { "textColor": 0x745645, "size": "30", "bold": true } }
             , { text: "" }
         ];

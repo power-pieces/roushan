@@ -1,6 +1,7 @@
 ﻿class ExchangeView extends AView {
 
     private _bg: egret.Bitmap;
+    private _spr: egret.Sprite;
     private _rewardTF: egret.BitmapText;
 
     private _hotZones: egret.Rectangle[] = [
@@ -18,10 +19,14 @@
     }
 
     private createView(): void {
+
+        this._spr = new egret.Sprite();
+
         var bg: egret.Bitmap = Texture.create("exchange_jpg");
         bg.touchEnabled = true;
         this._bg = bg;
-        var scrollView: egret.ScrollView = new egret.ScrollView(bg);
+        this._spr.addChild(bg);
+        var scrollView: egret.ScrollView = new egret.ScrollView(this._spr);
         this.addChild(scrollView);
         scrollView.height = ViewManager.stage.stageHeight;
 
@@ -31,7 +36,7 @@
         rewardTF.text = "x" + DataCenter.reward;
         rewardTF.x = 240;
         rewardTF.y = 40;
-        this.addChild(rewardTF);
+        this._spr.addChild(rewardTF);        
         this._rewardTF = rewardTF;
 
 

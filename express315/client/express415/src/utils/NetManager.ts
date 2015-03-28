@@ -20,13 +20,13 @@ class NetManager {
         args.action = action;
         params.id = DataCenter.id;
         params.sign = DataCenter.sign;
-        args.params = JSON.stringify(params);
+        args.params = JSON.stringify(params);        
 
         np.request(url, null, null, args);
     }
 
     public static call(action: string, params: any, callBack: Function, thisObject: any): void {
-        ViewManager.instance.showPanel(new MessagePanel("网络通信中..."), true, true);
+        ViewManager.instance.showPanel(new MessagePanel("网络通信中(" + action + ")..."), true, true);
         if (null != this._proxy) {
             ViewManager.instance.showPanel(new MessagePanel("网络冲突，请稍后重试!"), true);
             return;
@@ -44,6 +44,8 @@ class NetManager {
         params.id = DataCenter.id;
         params.sign = DataCenter.sign;
         args.params = JSON.stringify(params);
+
+        alert("传递的参数：" + args.params);
 
         np.request(url, this.onCallBack, this, args, egret.URLRequestMethod.GET, egret.URLLoaderDataFormat.TEXT);
         this._proxy = np;
@@ -64,7 +66,9 @@ class NetManager {
             }
         }        
         catch (e) {
-            ViewManager.instance.showPanel(new MessagePanel("程序崩溃：" + jsonStr), true, true);
+            alert("程序崩溃：" + e.message);
+            alert("程序崩溃：" + jsonStr);
+            //ViewManager.instance.showPanel(new MessagePanel("程序崩溃：" + jsonStr), true, true);
         }
 
         

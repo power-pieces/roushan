@@ -19,7 +19,7 @@
     public static id: string = "";
 
     //玩家名字
-    public static name: string = "";
+    public static userName: string = "";
 
     //玩家头像地址
     public static headUrl: string = "";
