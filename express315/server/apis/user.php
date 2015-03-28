@@ -16,18 +16,17 @@ class User
 			return;
 		}
 		
-		$id = $params->id;
+		$id = mysql_escape_string($params->id);
 		if(isset($params->inviter))
 		{
-			$inviter = $params->inviter;
+			$inviter = mysql_escape_string($params->inviter);
 		}
 		else
 		{
 			$inviter = null;
 		}	
-		$name = $params->name;
-		$headUrl = $params->headUrl;
-		
+		$name = mysql_escape_string($params->name);
+		$headUrl = mysql_escape_string($params->headUrl);
 		$sql = "SELECT remain,reward FROM tbl_user WHERE id='$id'";
 		$sqlHelper = new SqlHelper();
 		$sqlHelper->conn();
@@ -39,8 +38,10 @@ class User
 		if(0 == count($res['data']))
 		{
 			//初始化玩家数据
-			$insertSql = "INSERT INTO tbl_user(id, name, remain, reward, head_url) VALUES('$id','$name', 3,0, '$headUrl');";
-			$sqlHelper->modify($insertSql);
+			$insertSql = "INSERT INTO tbl_user(id, name, remain, reward, head_url) VALUES('$id','$name', 3,0, '$headUrl');";			
+			$result = $sqlHelper->modify($insertSql);
+			//die($result."     ".$insertSql);
+			
 		}
 		else 
 		{
@@ -82,12 +83,12 @@ class User
 			return;
 		}
 		
-		$id = $params->id;		
-		$senderName = $params->name;
-		$senderUrl = $params->headUrl;
-		$targetId = $params->targetId;
-		$reciverName = $params->inviterName;
-		$reciverUrl = $params->inviterHeadUrl;
+		$id = mysql_escape_string($params->id);		
+		$senderName = mysql_escape_string($params->name);
+		$senderUrl = mysql_escape_string($params->headUrl);
+		$targetId = mysql_escape_string($params->targetId);
+		$reciverName = mysql_escape_string($params->inviterName);
+		$reciverUrl = mysql_escape_string($params->inviterHeadUrl);
 		
 
 		//检查是不是送过
@@ -132,7 +133,7 @@ class User
 			return;
 		}
 		
-		$id = $params->id;
+		$id = mysql_escape_string($params->id);
 		
 		//物品ID
 		$goodId = $params->goodId;
@@ -187,7 +188,7 @@ class User
 			return;
 		}
 		
-		$reciverId = $params->reciverId;
+		$reciverId = mysql_escape_string($params->reciverId);
 		
 		$sql = "SELECT * FROM tbl_share_record WHERE reciver_id = '$reciverId'";
 		$sqlHelper = new SqlHelper();
