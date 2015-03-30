@@ -1,4 +1,5 @@
 {
+"isDebug":true,
 "server":"http://localhost/roushan/trunk/express315/server/interface.php",
 "app_link":"http://3g.paopao.163.com/download",
 "real_use_min_time":3000,

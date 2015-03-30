@@ -125,6 +125,12 @@ class Main extends egret.DisplayObjectContainer {
 
         NoticeManager.addNoticeAction(Notice.CHANGE_VIEW, this.changeViewNotice);
 
+        if (DataCenter.cfg.isDebug) {
+            NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.GAME_VIEW));
+            return;
+        }
+
+
         var params: any = {};
         params.name = DataCenter.userName;
         params.headUrl = DataCenter.headUrl;
