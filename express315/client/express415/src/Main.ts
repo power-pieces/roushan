@@ -158,7 +158,7 @@ class Main extends egret.DisplayObjectContainer {
         if (viewName == ViewName.GAME_VIEW) {
             //要进游戏，先检查体力够不够
             if (DataCenter.remain <= 0) {
-                ViewManager.instance.showPanel(new MessagePanel("体力不足"), true);
+                ViewManager.instance.showPanel(new MessagePanel("体力不足", DataCenter.cfg.msg_delay), true);
                 return;
             }
         }

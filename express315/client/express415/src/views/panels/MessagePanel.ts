@@ -1,9 +1,11 @@
 ﻿class MessagePanel extends AView {
     private _tf: egret.TextField = new egret.TextField();
-    
-    public constructor(content:string) {
+    private _closeKey: number = -1;
+    public constructor(content:string, closeDelay:number = 0) {
         super();
-        
+        if (closeDelay > 0) {
+            this._closeKey = egret.setTimeout(ViewManager.instance.closePanel, ViewManager.instance, closeDelay);
+        }
         this.createView();
         this.setContent(content);
     }
@@ -26,5 +28,12 @@
 
     public setContent(content: string): void {
         this._tf.text = content;
+    }
+
+    public dispose(): void {
+        if (this._closeKey != -1) {
+            egret.clearTimeout(this._closeKey);
+        }
+        super.dispose();
     }
 }

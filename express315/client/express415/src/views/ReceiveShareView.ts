@@ -135,7 +135,7 @@
                 NetManager.call("present", params, this.onPresentResponse,this);                
                 break;
             case 1:
-                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.GAME_VIEW));
+                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.INTRO_VIEW));
                 break;
         }
     }
@@ -149,6 +149,6 @@
         
         
 
-        ViewManager.instance.showPanel(new MessagePanel(msg), true);
+        ViewManager.instance.showPanel(new MessagePanel(msg, DataCenter.cfg.msg_delay), true);
     }
 }

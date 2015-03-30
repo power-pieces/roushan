@@ -50,13 +50,14 @@ class ResultMenuPanel extends AView {
     }
 
     private hotZoneActive(index: number): void {
-        ViewManager.instance.closePanel();
+        
         switch (index) {
             case 0:
                 NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.GAME_VIEW));
                 break;
             case 1:
-                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.SHARE_VIEW));                
+                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.SHARE_VIEW));    
+                         
                 break;
         }
 

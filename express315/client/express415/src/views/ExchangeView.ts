@@ -66,7 +66,7 @@
         var goodId: number = DataCenter.cfg.exchange_id[index];
         var need: number = DataCenter.cfg.exchange_need[index];
         if (DataCenter.reward < need) {
-            ViewManager.instance.showPanel(new MessagePanel("您的赏银不足！"));
+            ViewManager.instance.showPanel(new MessagePanel("您的赏银不足！", DataCenter.cfg.msg_delay));
             return;
         }
 

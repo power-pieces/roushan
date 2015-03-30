@@ -27,8 +27,15 @@ class ViewManager {
 
     private _nowView: AView = null;
 
-    //展示指定界面
-    public changeView(viewName: string): egret.Sprite {
+    /**
+    *   展示指定的界面
+    * viewName 界面名称
+    * clearPanel 是否清理面板    
+    */
+    public changeView(viewName: string, clearPanel: boolean = true): egret.Sprite {
+        if (clearPanel) {
+            this.closePanel();
+        }
         var view: AView = new this._viewMap[viewName]();
 
         if (null != this._nowView) {
@@ -83,8 +90,14 @@ class ViewManager {
     }
 
     public putToCenter(view: egret.Sprite): void {
-        view.x = (ViewManager.stage.stageWidth - view.width) >> 1;
-        view.y = (ViewManager.stage.stageHeight - view.height) >> 1;
+        if (view.anchorX == view.anchorY && view.anchorX == 0.5) {
+            view.x = ViewManager.stage.stageWidth >> 1;
+            view.y = ViewManager.stage.stageHeight >> 1;
+        }
+        else {
+            view.x = (ViewManager.stage.stageWidth - view.width) >> 1;
+            view.y = (ViewManager.stage.stageHeight - view.height) >> 1;
+        }
     }
 
 
