@@ -7,9 +7,24 @@
     <body>
     <?php
     	include "configs/define.php";
+    	include "utils/netutil.php";
+    	
+    	
 		$id = $_REQUEST['id'];
 		$sign = md5($id.SIGN_KEY);
 		echo "SIGN: ".$sign;
+		
+		
+		
+//		$vars = array();
+//		$vars['id'] = $id;
+//		$vars['type'] = 1;
+//		$vars['sign'] = md5($id.'1'.SIGN_KEY);
+//		$url = NetUtil::createUrl("http://paopao.163.com/activity/prizeExchange",$vars);
+//		die($url);
+//		$exJson = file_get_contents($url);
+//		echo $exJson;
+		//$exResult = json_decode($exJson);
 	?>
 	
 	<form id="form" action="interface.php">

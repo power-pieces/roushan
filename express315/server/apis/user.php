@@ -157,8 +157,17 @@ class User
 			return;			
 		}
 		
+		
+		$vars = array();
+		$vars['id'] = $id;
+		$vars['type'] = $goodId;
+		$vars['sign'] = md5($id.$goodId.SIGN_KEY);
+		$url = NetUtil::createUrl("http://paopao.163.com/activity/prizeExchange",$vars);
+		$exJson = file_get_contents($url);
+		$exResult = json_decode($exJson);
+		
 		//调用API，请求成功后
-		if(true)
+		if($exResult->code && 0 == $exResult->code)
 		{
 			$sql = "UPDATE tbl_user SET reward = reward - $need WHERE id = '$id';";	
 			$sqlHelper = new SqlHelper();

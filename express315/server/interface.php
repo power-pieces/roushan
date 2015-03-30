@@ -1,7 +1,7 @@
 <?php
 header("Access-Control-Allow-Origin:*");
 //依赖的PHP
-$dependents = array('configs/define','utils/sqltool','utils/sign');
+$dependents = array('configs/define','utils/sqltool','utils/sign','utils/netutil');
 
 foreach( $dependents as $v)
 {
