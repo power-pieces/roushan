@@ -13,6 +13,12 @@
     private createView(): void {
         this.addChild(Texture.create("index_jpg"));
         this.touchEnabled = true;
+
+        var indexClick: egret.Bitmap = Texture.create("index_click_png");
+        indexClick.x = 230;
+        indexClick.y = 580;
+        this.addChild(indexClick);
+        egret.Tween.get(indexClick, { loop: true }).to({ alpha: 0 }, 1000).to({ alpha: 1 }, 1000);
     }
 
     public addListeners(): void {
@@ -45,6 +51,11 @@
                 window.open(DataCenter.cfg.app_link);
                 break;
         }
+    }
+
+    public dispose() {
+        egret.Tween.removeAllTweens();
+        super.dispose();
     }
 
 

@@ -9,10 +9,16 @@ class Notice{
     public get data(): any {
         return this._data;
     }
+
+    private _args: any;
+    public get args(): any {
+        return this._args;
+    }
 		
-	public constructor(type:string, data:any = null){
+	public constructor(type:string, data:any = null, args:any = null){
         this._type = type;
         this._data = data;
+        this._args = args;
     }
 
     //«–ªªΩÁ√Ê

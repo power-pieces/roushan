@@ -5,13 +5,22 @@
         new egret.Rectangle(400, 0, 233, 100),
     ];
 
-    public constructor() {
+    //跳过动画
+    private _jumpEf: boolean = false;
+
+    public constructor(args:any) {
         super();
-        this.updateData();
+        if (args == ViewName.EXCHANGE_VIEW) {
+            this._jumpEf = true;
+        }
+        if (false == this._jumpEf) {
+            this.updateData();
+        }
         this.createView();
     }
 
     private updateData(): void {
+
         //扣体力
         DataCenter.remain -= 1;
 
@@ -52,7 +61,7 @@
         switch (index) {
             case 0:
                 console.log("兑换奖品");
-                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.EXCHANGE_VIEW));
+                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.EXCHANGE_VIEW, ViewName.RESULT_VIEW));
                 break;
         }
     }
@@ -89,8 +98,13 @@
         egret.Tween.get(talk).to({ scaleX: 1, scaleY: 1 }, 500);
     }
 
-    public onAddedToStage(): void {        
-        this._timeoutKey = egret.setTimeout(function () { ViewManager.instance.showPanel(new RewardPanel(),true,true); }, this, 2000);
+    public onAddedToStage(): void {    
+        if (this._jumpEf) {
+            ViewManager.instance.showPanel(new ResultMenuPanel(), false);
+        }
+        else {
+            this._timeoutKey = egret.setTimeout(function () { ViewManager.instance.showPanel(new RewardPanel(), true, true); }, this, 2000);
+        }
     }   
 
     public dispose(): void {

@@ -135,7 +135,7 @@
                 NetManager.call("present", params, this.onPresentResponse,this);                
                 break;
             case 1:
-                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.INTRO_VIEW));
+                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.INDEX_VIEW));
                 break;
         }
     }

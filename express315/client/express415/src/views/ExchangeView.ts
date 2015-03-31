@@ -10,11 +10,15 @@
         new egret.Rectangle(428, 1021, 163, 91),
         new egret.Rectangle(428, 1145, 163, 91),
         new egret.Rectangle(428, 1273, 163, 91),
-        new egret.Rectangle(428, 1399, 163, 91)
+        new egret.Rectangle(428, 1399, 163, 91),
+        new egret.Rectangle(10, 10, 150, 80)
     ];
 
-    public constructor() {
+    private _args: any;
+
+    public constructor(args:any) {
         super();
+        this._args = args;
         this.createView();
     }
 
@@ -34,7 +38,7 @@
         var font: any = RES.getRes("pink_fnt");
         rewardTF.font = font;
         rewardTF.text = "x" + DataCenter.reward;
-        rewardTF.x = 240;
+        rewardTF.x = 536;
         rewardTF.y = 40;
         this._spr.addChild(rewardTF);        
         this._rewardTF = rewardTF;
@@ -59,10 +63,17 @@
                 break;
             }
         }
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        e.stopPropagation();
     }
 
     private hotZoneActive(index: number): void {
-
+        if (index >= 6) {
+            NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, this._args, ViewName.EXCHANGE_VIEW));
+            return;
+        }
         var goodId: number = DataCenter.cfg.exchange_id[index];
         var need: number = DataCenter.cfg.exchange_need[index];
         if (DataCenter.reward < need) {

@@ -3,7 +3,7 @@
 */
 class AView extends egret.Sprite {
 
-    public constructor() {
+    public constructor(args:any = null) {
         super();
     }
 

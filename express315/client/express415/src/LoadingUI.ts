@@ -27,24 +27,78 @@
 
 class LoadingUI extends AView{
 
+    private _role: Role;
+
+    private _mc: egret.Bitmap;
+    private _mcTS: egret.Texture[];
+    private _mcIndex: number = 0;
+    private _progressBar: egret.Bitmap;
+
+    private _timer: egret.Timer = new egret.Timer(200,0);
+
     public constructor(){
         super();
         this.createView();
     }
-    private textField:egret.TextField;
 
-    private createView():void {
-        this.textField = new egret.TextField();
-        this.addChild(this.textField);
-        
-        this.textField.width = 480;
-        this.textField.height = 100;
-        this.textField.textAlign = "center";
-        this.textField.textColor = 0;
-        ViewManager.instance.putToCenter(this);
+    private createView(): void {
+        this.graphics.beginFill(0x9fd9f6);
+        this.graphics.drawRect(0, 0, ViewManager.stage.stageWidth, ViewManager.stage.stageHeight);
+        this.graphics.endFill();
+
+        this._role = new Role(1);
+        this._role.x = 210;
+        this._role.y = 470;
+        this.addChild(this._role);
+
+        var loading: egret.DisplayObject = this.addChild(Texture.create("loading_png"));
+        loading.x = 280;
+        loading.y = 450;
+
+        this._mcTS = [];
+        for (var i: number = 1; i <= 3; i++) {
+            this._mcTS.push(Texture.createTexture("loading_" + i + "_png"));
+        }
+        this._mc = new egret.Bitmap(this._mcTS[this._mcIndex]);
+        this._mc.x = 424;
+        this._mc.y = 450;
+        this.addChild(this._mc);
+
+        var loadingBG: egret.DisplayObject = this.addChild(Texture.create("progress_bg_png"));
+        loadingBG.x = 280;
+        loadingBG.y = 500;
+        this.addChild(loadingBG);
+        this._progressBar = Texture.create("progress_bar_png");
+        this.addChild(this._progressBar);
+
+        this._progressBar.x = loadingBG.x;
+        this._progressBar.y = loadingBG.y;
+
+
+        this._timer.start();
+    }
+
+    public addListeners(): void {
+        //this.addEventListener(egret.Event.ENTER_FRAME, this.enterFrameHandler, this);
+        this._timer.addEventListener(egret.TimerEvent.TIMER, this.timerHandler, this);
+    }
+
+    public removeListeners(): void {
+        //this.removeEventListener(egret.Event.ENTER_FRAME, this.enterFrameHandler, this);
+        this._timer.removeEventListener(egret.TimerEvent.TIMER, this.timerHandler, this);
+    }
+
+    private timerHandler(e: egret.TimerEvent): void {
+        this._role.update();
+
+        this._mcIndex++;
+        if (this._mcIndex >= this._mcTS.length) {
+            this._mcIndex = 0;
+        }
+        this._mc.texture = this._mcTS[this._mcIndex];
     }
 
     public setProgress(current, total):void {
-        this.textField.text = "Loading..." + current + "/" + total;
+        this._progressBar.scrollRect = new egret.Rectangle(0, 0, current / total * this._progressBar.width, this._progressBar.height);
     }
 }

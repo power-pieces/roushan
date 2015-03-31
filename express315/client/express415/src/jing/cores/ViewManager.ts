@@ -30,13 +30,14 @@ class ViewManager {
     /**
     *   展示指定的界面
     * viewName 界面名称
+    * args 向目标界面传递的参数
     * clearPanel 是否清理面板    
     */
-    public changeView(viewName: string, clearPanel: boolean = true): egret.Sprite {
+    public changeView(viewName: string, args:any = null, clearPanel: boolean = true): egret.Sprite {
         if (clearPanel) {
             this.closePanel();
         }
-        var view: AView = new this._viewMap[viewName]();
+        var view: AView = new this._viewMap[viewName](args);
 
         if (null != this._nowView) {
             this._nowView.dispose();

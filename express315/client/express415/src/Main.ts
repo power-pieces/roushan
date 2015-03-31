@@ -61,8 +61,7 @@ class Main extends egret.DisplayObjectContainer {
 
     private onAddToStage(event: egret.Event) {
         ViewManager.stage = this.stage;
-        //设置加载进度界面
-        this.loadingView = <LoadingUI>ViewManager.instance.changeView(ViewName.LOADING);
+
 
         //初始化Resource资源加载库
         //initiate Resource loading library
@@ -78,7 +77,8 @@ class Main extends egret.DisplayObjectContainer {
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
-        RES.loadGroup("preload");
+
+        RES.loadGroup("initial");
     }
     /**
      * preload资源组加载完成
@@ -93,12 +93,19 @@ class Main extends egret.DisplayObjectContainer {
             RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
             this.createGameScene();
         }
+        else if (event.groupName == "initial") {
+            DataCenter.cfg = RES.getRes("config_json");
+            //设置加载进度界面
+            this.loadingView = <LoadingUI>ViewManager.instance.changeView(ViewName.LOADING);
+
+            RES.loadGroup("preload");
+        }
     }
     /**
     * 资源组加载出错
      *  The resource group loading failed
     */
-    private onResourceLoadError(event: RES.ResourceEvent): void {
+    private onResourceLoadError(event: RES.ResourceEvent): void {        
         //TODO
         console.warn("Group:" + event.groupName + " has failed to load");
         //忽略加载失败的项目
@@ -120,9 +127,7 @@ class Main extends egret.DisplayObjectContainer {
      * 创建游戏场景
      * Create a game scene
      */
-    private createGameScene(): void {
-        DataCenter.cfg = RES.getRes("config_json");
-
+    private createGameScene(): void {        
         NoticeManager.addNoticeAction(Notice.CHANGE_VIEW, this.changeViewNotice);
 
         if (DataCenter.cfg.isDebug) {
@@ -168,7 +173,7 @@ class Main extends egret.DisplayObjectContainer {
                 return;
             }
         }
-        ViewManager.instance.changeView(viewName);
+        ViewManager.instance.changeView(viewName,n.args);
     }
 }
 

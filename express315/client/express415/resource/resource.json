@@ -5,7 +5,7 @@
 		"name":"preload"
 	},
 	{
-		"keys":"real_1_png,real_2_png,real_3_png,loading_1_png,loading_2_png,loading_3_png,loading_png,config_json",
+		"keys":"real_1_png,real_2_png,real_3_png,loading_1_png,loading_2_png,loading_3_png,loading_png,config_json,progress_bar_png,progress_bg_png",
 		"name":"initial"
 	}],
 	"resources":[
@@ -198,5 +198,15 @@
 		"name":"loading_3_png",
 		"type":"image",
 		"url":"assets/loading/loading_3.png"
+	},
+	{
+		"name":"progress_bar_png",
+		"type":"image",
+		"url":"assets/loading/progress_bar.png"
+	},
+	{
+		"name":"progress_bg_png",
+		"type":"image",
+		"url":"assets/loading/progress_bg.png"
 	}]
 }

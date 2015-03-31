@@ -56,7 +56,7 @@
         switch (index) {
             case 0:
                 console.log("兑换奖品");   
-                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.EXCHANGE_VIEW));             
+                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.EXCHANGE_VIEW, ViewName.INTRO_VIEW));             
                 break;
             case 1:
                 console.log("开始游戏");
