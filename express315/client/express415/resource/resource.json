@@ -1,7 +1,7 @@
 {
 	"groups":[
 	{
-		"keys":"fake_1_png,fake_2_png,fake_3_png,fake_die_png,bun_panel_png,exchange_fail_png,exchange_success_png,real_1_png,real_2_png,real_3_png,real_die_png,boss_says_png,result_bg_png,reward_png,exchange_jpg,game_jpg,index_jpg,intro_jpg,receive_share_jpg,share_jpg,config_json,share_png,green_fnt,pink_fnt,red_fnt,white_fnt,boos_face_mc_json,boos_face_mc_png,result_menu_png,punish_mc_json,punish_mc_png,border_96_png,border_64_png,index_click_png,loading_png,loading_1_png,loading_2_png,loading_3_png",
+		"keys":"fake_1_png,fake_2_png,fake_3_png,fake_die_png,bun_panel_png,exchange_fail_png,exchange_success_png,real_1_png,real_2_png,real_3_png,real_die_png,boss_says_png,result_bg_png,reward_png,exchange_jpg,game_jpg,index_jpg,intro_jpg,receive_share_jpg,share_jpg,config_json,share_png,green_fnt,pink_fnt,red_fnt,white_fnt,boos_face_mc_json,boos_face_mc_png,result_menu_png,punish_mc_json,punish_mc_png,border_96_png,border_64_png,index_click_png,loading_png,loading_1_png,loading_2_png,loading_3_png,game_over_png",
 		"name":"preload"
 	},
 	{
@@ -208,5 +208,10 @@
 		"name":"progress_bg_png",
 		"type":"image",
 		"url":"assets/loading/progress_bg.png"
+	},
+	{
+		"name":"game_over_png",
+		"type":"image",
+		"url":"assets/game_over.png"
 	}]
 }

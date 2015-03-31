@@ -140,6 +140,17 @@
 
     private gameOver(): void {
         egret.Tween.removeAllTweens();
-        NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.RESULT_VIEW));
+        this.removeListeners();
+        var gameOver: egret.Bitmap = Texture.create("game_over_png");
+        gameOver.anchorX = gameOver.anchorY = 0.5;
+        this.addChild(gameOver);
+        gameOver.x = ViewManager.stage.stageWidth >> 1;
+        gameOver.y = 380;
+        gameOver.scaleX = gameOver.scaleY = 0;
+        egret.Tween.get(gameOver).to({ scaleX: 1, scaleY: 1 }, 500, egret.Ease.backOut).wait(1000).call(
+            function () {
+                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.RESULT_VIEW));
+            },this
+            );        
     }
 }
