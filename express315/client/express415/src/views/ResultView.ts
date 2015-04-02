@@ -24,7 +24,10 @@
         //扣体力
         DataCenter.remain -= 1;
 
-        var reward: number = DataCenter.killFake - DataCenter.killReal;
+        var fakeScore: number = DataCenter.killFake * DataCenter.cfg.fake_die_score;
+        var realScore: number = DataCenter.killReal * DataCenter.cfg.real_die_score;
+
+        var reward: number = fakeScore + realScore;
         if (reward < 0) {
             reward = 0;
         }
@@ -81,7 +84,7 @@
         mc.play(-1);
 
         var tf: egret.BitmapText;
-        tf = Texture.createBitmapTF("pink_fnt");
+        tf = Texture.createBitmapTF("pink_35_b_fnt");
         tf.text = "x" + DataCenter.reward;
         tf.x = 180;
         tf.y = 50;

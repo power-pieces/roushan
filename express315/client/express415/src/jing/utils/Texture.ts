@@ -30,10 +30,13 @@ class Texture {
     /**
     * 创建一个位图文本框
     */
-    public static createBitmapTF(fntName: string): egret.BitmapText {
+    public static createBitmapTF(fntName: string, content: string = "", anchorX: number = 0, anchorY: number= 0): egret.BitmapText {
         var tf = new egret.BitmapText();
+        tf.anchorX = anchorX;
+        tf.anchorY = anchorY;
         var font: any = RES.getRes(fntName);
         tf.font = font;
+        tf.text = content;
         return tf;
     }
 }

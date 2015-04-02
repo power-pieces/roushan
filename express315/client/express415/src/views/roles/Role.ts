@@ -84,10 +84,10 @@ class Role extends AView {
         }
 
         var fntRes: string = "green_fnt";
-        var text: string = "+1";
+        var text: string = "+" + DataCenter.cfg.fake_die_score;
         if (this._type == 1) {
             fntRes = "red_fnt";
-            text = "-1";
+            text = DataCenter.cfg.real_die_score.toString();
         }
 
         var tf = new egret.BitmapText();

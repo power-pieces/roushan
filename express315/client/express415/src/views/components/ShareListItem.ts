@@ -19,13 +19,13 @@
                     var pic: egret.Bitmap = new egret.Bitmap(data);
                     pic.anchorX = pic.anchorY = 0.5;
                     pic.width = pic.height = 64;
-                    pic.x = 74;
+                    pic.x = 64;
                     pic.y = 54;
                     this.addChild(pic);
 
                     var picBorder: egret.Bitmap = Texture.create("border_64_png");
                     picBorder.anchorX = picBorder.anchorY = 0.5;
-                    picBorder.x = 74;
+                    picBorder.x = 64;
                     picBorder.y = 54;
                     this.addChild(picBorder);
                 }
@@ -48,7 +48,7 @@
         this.addChild(tf);        
 
         var timeTf: egret.TextField = new egret.TextField();
-        timeTf.x = 480;
+        timeTf.x = 520;
         timeTf.y = 40;
         timeTf.size = 20;
         //timeTf.stroke = 1;

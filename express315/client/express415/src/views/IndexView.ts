@@ -15,8 +15,8 @@
         this.touchEnabled = true;
 
         var indexClick: egret.Bitmap = Texture.create("index_click_png");
-        indexClick.x = 230;
-        indexClick.y = 580;
+        indexClick.x = 185;
+        indexClick.y = 646;
         this.addChild(indexClick);
         egret.Tween.get(indexClick, { loop: true }).to({ alpha: 0 }, 1000).to({ alpha: 1 }, 1000);
     }

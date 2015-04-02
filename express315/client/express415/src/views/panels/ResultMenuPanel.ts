@@ -18,10 +18,10 @@ class ResultMenuPanel extends AView {
         this.y = ViewManager.stage.stageHeight - this.height;
 
         var remainTF = new egret.BitmapText();
-        remainTF.font = RES.getRes("white_fnt");
+        remainTF.font = RES.getRes("white_40_b_fnt");
         remainTF.text = "x" + DataCenter.remain;
         remainTF.x = 430;
-        remainTF.y = 82;
+        remainTF.y = 74;
         this.addChild(remainTF);
 
         this.touchEnabled = true;

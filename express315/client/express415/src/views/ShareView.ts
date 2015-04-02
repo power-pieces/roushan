@@ -60,11 +60,11 @@
 
     private updateContent(count:number): void {
         var tf = new egret.BitmapText();
-        var font: any = RES.getRes("pink_fnt");
+        var font: any = RES.getRes("pink_58_b_fnt");
         tf.font = font;
         tf.text = "X" + count;
         tf.x = 316;
-        tf.y = 478;
+        tf.y = 465;
         //this.addChild(tf);
         this._spr.addChild(tf);
     }

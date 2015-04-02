@@ -93,11 +93,11 @@
 
 
         var rewardTF = new egret.BitmapText();
-        var font: any = RES.getRes("pink_fnt");
+        var font: any = RES.getRes("pink_58_b_fnt");
         rewardTF.font = font;
         rewardTF.text = "X" + DataCenter.reward;
         rewardTF.x = 380;
-        rewardTF.y = 315;
+        rewardTF.y = 295;
         this._spr.addChild(rewardTF);
     }
 

@@ -35,7 +35,7 @@
         scrollView.height = ViewManager.stage.stageHeight;
 
         var rewardTF = new egret.BitmapText();
-        var font: any = RES.getRes("pink_fnt");
+        var font: any = RES.getRes("pink_35_b_fnt");
         rewardTF.font = font;
         rewardTF.text = "x" + DataCenter.reward;
         rewardTF.x = 536;

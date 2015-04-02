@@ -127,7 +127,12 @@ class Main extends egret.DisplayObjectContainer {
      * 创建游戏场景
      * Create a game scene
      */
-    private createGameScene(): void {        
+    private createGameScene(): void {     
+        //DataCenter.killFake = 80;
+        //DataCenter.killReal = 10;
+        //ViewManager.instance.showPanel(new RewardPanel());
+        //return;
+           
         NoticeManager.addNoticeAction(Notice.CHANGE_VIEW, this.changeViewNotice);
 
         if (DataCenter.cfg.isDebug) {

@@ -87,11 +87,11 @@
         }    
 
         if (DataCenter.killFake > 0) {
-            this._killFakeTF.text = "+" + DataCenter.killFake;
+            this._killFakeTF.text = "+" + (DataCenter.killFake * DataCenter.cfg.fake_die_score);
         }
 
         if (DataCenter.killReal > 0) {
-            this._killRealTF.text = "-" + DataCenter.killReal;
+            this._killRealTF.text = (DataCenter.killReal * DataCenter.cfg.real_die_score).toString();
         }
     }
 
