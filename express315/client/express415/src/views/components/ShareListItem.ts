@@ -40,16 +40,16 @@
         tf.textAlign = egret.HorizontalAlign.LEFT;
         tf.lineSpacing = 10;
         tf.textFlow = <Array<egret.ITextElement>>[
-            { text: this._data.sender_name + "送了您", style: { "textColor": 0x745645, "size": "30", "bold": true } }
-            , { text: "1", style: { "textColor": 0xf471ac, "size": "30", "bold": true } }
-            , { text: "个包子", style: { "textColor": 0x745645, "size": "30", "bold": true } }
+            { text: this._data.sender_name + "送了您", style: { "textColor": 0x745645, "size": "25", "bold": true } }
+            , { text: "1", style: { "textColor": 0xf471ac, "size": "25", "bold": true } }
+            , { text: "个包子", style: { "textColor": 0x745645, "size": "25", "bold": true } }
             , { text: "" }
         ];
         this.addChild(tf);        
 
         var timeTf: egret.TextField = new egret.TextField();
         timeTf.x = 520;
-        timeTf.y = 40;
+        timeTf.y = 45;
         timeTf.size = 20;
         //timeTf.stroke = 1;
         timeTf.width = 160;
