@@ -151,6 +151,7 @@ class Main extends egret.DisplayObjectContainer {
     }
 
     private onLoadData(data: any, params: any): void {
+        DataCenter.killCount = +data.user.kill_count;
         DataCenter.reward = +data.user.reward;
         DataCenter.remain = +data.user.remain;
         DataCenter.userName = data.user.name;

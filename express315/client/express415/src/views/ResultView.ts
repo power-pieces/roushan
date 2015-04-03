@@ -37,6 +37,8 @@
             DataCenter.reward += reward;
         }
 
+        DataCenter.killCount += DataCenter.killFake;
+
         NetManager.implicitCall("addReward", { isResult: 1, amount: reward, killCount: DataCenter.killFake });
 
         

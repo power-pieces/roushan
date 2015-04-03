@@ -34,7 +34,7 @@
 
         //this.updateContent();
 
-        Extend.callWindow("readyShare");
+        Extend.callReadyShare(DataCenter.killCount);
         NetManager.call("getShareList", { reciverId: DataCenter.id }, this.onGetShareList, this);
     }
 

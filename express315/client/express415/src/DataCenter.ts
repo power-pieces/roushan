@@ -38,4 +38,7 @@
 
     //杀死山寨数
     public static killFake: number = 0;
+
+    //杀死山寨总数
+    public static killCount: number = 0;
 }

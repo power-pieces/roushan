@@ -11,5 +11,13 @@
         return result;
     }
 
+    public static callReadyShare(record:number): any {
+        if (null == window["readyShare"]) {
+            return null;
+        }
+        var result: any = window["readyShare"](record);
+        return result;
+    }
+
 
 }
