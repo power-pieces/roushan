@@ -162,7 +162,7 @@ class User
 		$vars['id'] = $id;
 		$vars['type'] = $goodId;
 		$vars['sign'] = md5($id.$goodId.SIGN_KEY);
-		$url = NetUtil::createUrl("http://paopao.163.com/activity/prizeExchange",$vars);
+		$url = NetUtil::createUrl("http://223.252.220.189:8181/activity/prizeExchange",$vars);
 		$exJson = file_get_contents($url);
 		$exResult = json_decode($exJson);
 		
