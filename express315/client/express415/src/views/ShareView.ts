@@ -91,7 +91,7 @@
     }
 
     private hotZoneActive(index: number): void {
-
+        AudioDevice.playEffect("btn_click_mp3");
         switch (index) {
             case 0:
                 NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.GAME_VIEW));

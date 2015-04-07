@@ -68,7 +68,7 @@ class RewardPanel extends AView
     }
 
     public onAddedToStage(): void {  
-    
+        AudioDevice.playEffect("score_show_mp3");
         egret.Tween.get(this).to({ alpha: 1, scaleX: 1, scaleY: 1 }, 500).wait(2000, true).to({ alpha: 0, scaleX: 0, scaleY: 0},500).call(this.onHidden,this);
     }   
 

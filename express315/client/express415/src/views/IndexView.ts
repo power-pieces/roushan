@@ -41,9 +41,12 @@
 
     private hotZoneActive(index: number): void {
 
+        AudioDevice.playEffect("btn_click_mp3");
         switch (index) {
             case 0:
                 console.log("进入游戏");
+                //这个时候开始播放BGM
+                AudioDevice.playBGM("bgm_mp3");                
                 NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.INTRO_VIEW));
                 break;
             case 1:

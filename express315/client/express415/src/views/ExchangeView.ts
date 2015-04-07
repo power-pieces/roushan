@@ -70,6 +70,7 @@
     }
 
     private hotZoneActive(index: number): void {
+        AudioDevice.playEffect("btn_click_mp3");
         if (index >= 6) {
             NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, this._args, ViewName.EXCHANGE_VIEW));
             return;

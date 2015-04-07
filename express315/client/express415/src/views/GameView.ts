@@ -15,6 +15,9 @@
         this.createView();
         this._startTime = egret.getTimer();
         this._realShowTime = this._fakeShowTime = this._startTime + 1000;
+
+
+        AudioDevice.playEffect("ready_mp3");
     }
 
     private createView(): void {
@@ -139,6 +142,8 @@
     }
 
     private gameOver(): void {
+        AudioDevice.playEffect("game_over_mp3");
+
         egret.Tween.removeAllTweens();
         this.removeListeners();
         var gameOver: egret.Bitmap = Texture.create("game_over_png");

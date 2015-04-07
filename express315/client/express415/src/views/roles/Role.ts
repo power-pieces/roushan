@@ -76,9 +76,11 @@ class Role extends AView {
 
         switch (this._type) {
             case 1:
+                AudioDevice.playEffect("hit_real_mp3");
                 DataCenter.killReal++;
                 break;
             case 2:
+                AudioDevice.playEffect("hit_fake_mp3");
                 DataCenter.killFake++;
                 break;
         }

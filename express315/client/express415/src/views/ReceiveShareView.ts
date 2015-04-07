@@ -123,7 +123,7 @@
     }
 
     private hotZoneActive(index: number): void {
-
+        AudioDevice.playEffect("btn_click_mp3");
         switch (index) {
             case 0:                
                 var params: any = {};
