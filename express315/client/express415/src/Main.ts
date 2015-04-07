@@ -133,6 +133,8 @@ class Main extends egret.DisplayObjectContainer {
         //ViewManager.instance.showPanel(new RewardPanel());
         //return;
            
+        AudioDevice.prep(["btn_click_mp3", "game_over_mp3", "hit_fake_mp3", "hit_fake_combo_mp3", "hit_real_mp3", "ready_mp3", "score_show_mp3"], this.stage);
+
         NoticeManager.addNoticeAction(Notice.CHANGE_VIEW, this.changeViewNotice);
 
         if (DataCenter.cfg.isDebug) {
