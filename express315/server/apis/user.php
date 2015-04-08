@@ -243,6 +243,21 @@ class User
 		$res['data'] = $sqlHelper->modify($sql);
 		$sqlHelper->close();
 	}
+
+    /**
+     * 统计数据
+     * @param $params
+     * @param $res
+     */
+    public function statistic(&$params, &$res)
+    {
+        $params = json_decode($params);
+        $sql = "INSERT INTO tbl_statistic(content, count) VALUES('%s', 1) ON DUPLICATE KEY UPDATE count = count + 1;";
+        $sql = sprintf($sql, mysql_escape_string($params->content));
+        $sqlHelper = new SqlHelper();
+        $sqlHelper->conn();
+        $sqlHelper->modify($sql);
+    }
 	
 	private function getUserInfo($id)
 	{
