@@ -164,8 +164,15 @@ class Main extends egret.DisplayObjectContainer {
             DataCenter.inviterKill = +data.inviter.kill_count;
         }
 
+        Extend.callReadyShare(DataCenter.killCount);
+
         if (DataCenter.inviter) {
-            NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.RECEIVE_SHARE_VIEW));
+            if (DataCenter.inviter == DataCenter.id) {
+                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.SHARE_VIEW));
+            }
+            else {
+                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.RECEIVE_SHARE_VIEW));
+            }
         }
         else {
             NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.INDEX_VIEW));

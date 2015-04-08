@@ -26,7 +26,7 @@ class NetManager {
     }
 
     public static call(action: string, params: any, callBack: Function, thisObject: any): void {
-        ViewManager.instance.showPanel(new MessagePanel("网络通信中(" + action + ")..."), true, true);
+        ViewManager.instance.showPanel(new MessagePanel("网络通信中..."), true, true);
         if (null != this._proxy) {
             ViewManager.instance.showPanel(new MessagePanel("网络冲突，请稍后重试!"), true);
             return;
