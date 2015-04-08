@@ -43,7 +43,7 @@ class Main extends egret.DisplayObjectContainer {
         DataCenter.sign = info.sign;
         DataCenter.headUrl = info.headUrl;
 
-
+        
         this.init();
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
@@ -95,6 +95,7 @@ class Main extends egret.DisplayObjectContainer {
         }
         else if (event.groupName == "initial") {
             DataCenter.cfg = RES.getRes("config_json");
+            NetManager.statistic("游戏访问统计");
             //设置加载进度界面
             this.loadingView = <LoadingUI>ViewManager.instance.changeView(ViewName.LOADING);
 
@@ -133,7 +134,9 @@ class Main extends egret.DisplayObjectContainer {
         //ViewManager.instance.showPanel(new RewardPanel());
         //return;
            
-        AudioDevice.prep(["btn_click_mp3", "game_over_mp3", "hit_fake_mp3", "hit_fake_combo_mp3", "hit_real_mp3", "ready_mp3", "score_show_mp3"], this.stage);
+        AudioDevice.prep(["btn_click_mp3", "game_over_mp3", "hit_fake_mp3", "hit_fake_combo_mp3", "hit_real_mp3", "ready_mp3", "score_show_mp3", "fake_cry_mp3", "bgm_mp3"], this.stage,
+            function (): void { AudioDevice.playBGM("bgm_mp3"); });
+        
 
         NoticeManager.addNoticeAction(Notice.CHANGE_VIEW, this.changeViewNotice);
 
@@ -168,7 +171,7 @@ class Main extends egret.DisplayObjectContainer {
 
         if (DataCenter.inviter) {
             if (DataCenter.inviter == DataCenter.id) {
-                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.SHARE_VIEW));
+                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.SHARE_VIEW, true));
             }
             else {
                 NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.RECEIVE_SHARE_VIEW));

@@ -44,12 +44,14 @@
         AudioDevice.playEffect("btn_click_mp3");
         switch (index) {
             case 0:
+                NetManager.statistic("点我开打按钮");
                 console.log("进入游戏");
                 //这个时候开始播放BGM
-                AudioDevice.playBGM("bgm_mp3");                
+                //AudioDevice.playBGM("bgm_mp3");                
                 NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.INTRO_VIEW));
                 break;
             case 1:
+                NetManager.statistic("APP下载按钮");
                 console.log("下载");
                 window.open(DataCenter.cfg.app_link);
                 break;

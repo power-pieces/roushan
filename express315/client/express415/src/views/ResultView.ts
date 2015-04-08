@@ -17,6 +17,8 @@
             this.updateData();
         }
         this.createView();
+
+        AudioDevice.playBGM("fake_cry_mp3");
     }
 
     private updateData(): void {
@@ -113,6 +115,7 @@
     }   
 
     public dispose(): void {
+        AudioDevice.pause("fake_cry_mp3");
         egret.Tween.removeAllTweens();
         egret.clearTimeout(this._timeoutKey);
         super.dispose();

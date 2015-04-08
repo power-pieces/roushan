@@ -54,15 +54,17 @@
     private hotZoneActive(index: number): void {
         AudioDevice.playEffect("btn_click_mp3");
         switch (index) {
-            case 0:
+            case 0:                
                 console.log("兑换奖品");   
                 NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.EXCHANGE_VIEW, ViewName.INTRO_VIEW));             
                 break;
             case 1:
+                NetManager.statistic("开始按钮");
                 console.log("开始游戏");
                 NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.GAME_VIEW));
                 break;
             case 2:
+                NetManager.statistic("召唤小伙伴获得包子按钮");
                 console.log("分享");
                 NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.SHARE_VIEW));
                 break;

@@ -53,6 +53,7 @@ class ResultMenuPanel extends AView {
         AudioDevice.playEffect("btn_click_mp3");
         switch (index) {
             case 0:
+                NetManager.statistic("再来一次按钮");
                 NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.GAME_VIEW));
                 break;
             case 1:

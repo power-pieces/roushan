@@ -126,6 +126,7 @@
         AudioDevice.playEffect("btn_click_mp3");
         switch (index) {
             case 0:                
+                NetManager.statistic("送小伙伴包子按钮");
                 var params: any = {};
                 params.targetId = DataCenter.inviter;
                 params.userName = DataCenter.userName;
@@ -135,6 +136,7 @@
                 NetManager.call("present", params, this.onPresentResponse,this);                
                 break;
             case 1:
+                NetManager.statistic("我也要玩按钮");
                 NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.INDEX_VIEW));
                 break;
         }

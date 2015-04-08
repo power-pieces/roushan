@@ -1,7 +1,7 @@
 {
 	"groups":[
 	{
-		"keys":"fake_1_png,fake_2_png,fake_3_png,fake_die_png,bun_panel_png,exchange_fail_png,exchange_success_png,real_1_png,real_2_png,real_3_png,real_die_png,boss_says_png,result_bg_png,reward_png,exchange_jpg,game_jpg,index_jpg,intro_jpg,receive_share_jpg,share_jpg,config_json,share_png,green_fnt,red_fnt,boos_face_mc_json,boos_face_mc_png,result_menu_png,punish_mc_json,punish_mc_png,border_96_png,border_64_png,index_click_png,loading_png,loading_1_png,loading_2_png,loading_3_png,game_over_png,white_40_b_fnt,pink_35_b_fnt,pink_58_b_fnt,pink_80_b_fnt,reward_behind_png,reward_front_png,bgm_mp3,btn_click_mp3,game_over_mp3,hit_fake_mp3,hit_fake_combo_mp3,hit_real_mp3,ready_mp3,score_show_mp3",
+		"keys":"fake_1_png,fake_2_png,fake_3_png,fake_die_png,bun_panel_png,exchange_fail_png,exchange_success_png,real_1_png,real_2_png,real_3_png,real_die_png,boss_says_png,result_bg_png,reward_png,exchange_jpg,game_jpg,index_jpg,intro_jpg,receive_share_jpg,share_jpg,config_json,share_png,green_fnt,red_fnt,boos_face_mc_json,boos_face_mc_png,result_menu_png,punish_mc_json,punish_mc_png,border_96_png,border_64_png,index_click_png,loading_png,loading_1_png,loading_2_png,loading_3_png,game_over_png,white_40_b_fnt,pink_35_b_fnt,pink_58_b_fnt,pink_80_b_fnt,reward_behind_png,reward_front_png,bgm_mp3,btn_click_mp3,game_over_mp3,hit_fake_mp3,hit_fake_combo_mp3,hit_real_mp3,ready_mp3,score_show_mp3,fake_cry_mp3",
 		"name":"preload"
 	},
 	{
@@ -273,5 +273,10 @@
 		"name":"score_show_mp3",
 		"type":"sound",
 		"url":"audio/score_show.mp3"
+	},
+	{
+		"name":"fake_cry_mp3",
+		"type":"sound",
+		"url":"audio/fake_cry.mp3"
 	}]
 }

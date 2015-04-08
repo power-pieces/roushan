@@ -4,13 +4,17 @@
 
     private _spr: egret.Sprite;
     private _bg: egret.Bitmap;
+    private _jump: boolean = false;
 
     private _hotZones: egret.Rectangle[] = [
         new egret.Rectangle(100, 563, 440, 110)
     ];
 
-    public constructor() {
+    public constructor(args:any = null) {
         super();
+        if (args) {
+            this._jump = true;
+        }
         ShareView.self = this;
         this.createView();
     }
@@ -55,7 +59,9 @@
             posY += item.height;
         }
 
-        ViewManager.instance.showPanel(new ShareTipPanel(), true, false);
+        if (false == this._jump) {
+            ViewManager.instance.showPanel(new ShareTipPanel(), true, false);
+        }
     }
 
     private updateContent(count:number): void {
@@ -94,7 +100,12 @@
         AudioDevice.playEffect("btn_click_mp3");
         switch (index) {
             case 0:
-                NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.GAME_VIEW));
+                if (this._jump) {
+                    NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.INDEX_VIEW));
+                }
+                else {
+                    NoticeManager.sendNotice(new Notice(Notice.CHANGE_VIEW, ViewName.GAME_VIEW));
+                }
                 break;
         }
     }

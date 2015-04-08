@@ -51,6 +51,13 @@ class NetManager {
         this._proxy = np;
     }
 
+    /**
+    * 发送统计数据
+    */
+    public static statistic(content: string): void {
+        NetManager.implicitCall("statistic", { content: content });
+    }
+
     private static onCallBack(jsonStr: string): void {
         console.log(jsonStr);
         ViewManager.instance.closePanel();
@@ -69,8 +76,6 @@ class NetManager {
             alert("程序崩溃：" + e.message);
             alert("程序崩溃：" + jsonStr);
             //ViewManager.instance.showPanel(new MessagePanel("程序崩溃：" + jsonStr), true, true);
-        }
-
-        
+        }        
     }
 }

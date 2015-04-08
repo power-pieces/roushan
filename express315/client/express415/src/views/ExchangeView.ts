@@ -46,6 +46,8 @@
 
         this.touchEnabled = true;
         this.touchChildren = true;
+
+        NetManager.statistic("兑换奖品按钮");
     }
 
     public addListeners(): void {
