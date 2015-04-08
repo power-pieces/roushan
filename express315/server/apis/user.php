@@ -159,7 +159,7 @@ class User
 		
 		
 		$vars = array();
-		$vars['id'] = $id;
+		$vars['userId'] = $id;
 		$vars['type'] = $goodId;
 		$vars['sign'] = md5($id.$goodId.SIGN_KEY);
 		$url = NetUtil::createUrl("http://223.252.220.189:8181/activity/prizeExchange",$vars);
@@ -167,7 +167,7 @@ class User
 		$exResult = json_decode($exJson);
 		
 		//调用API，请求成功后
-		if($exResult->code && 0 == $exResult->code)
+		if(isset($exResult->code) && 0 == $exResult->code)
 		{
 			$sql = "UPDATE tbl_user SET reward = reward - $need WHERE id = '$id';";	
 			$sqlHelper = new SqlHelper();
