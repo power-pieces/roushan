@@ -8,6 +8,8 @@
     private _killRealTF:egret.BitmapText = null;
     private _killFakeTF: egret.BitmapText = null;
 
+    
+
     public constructor() {
         super();
         DataCenter.killFake = 0;
@@ -19,6 +21,28 @@
 
         AudioDevice.playEffect("ready_mp3");
     }
+
+    public onAddedToStage(): void {
+        var ready: egret.Bitmap = Texture.create("ready_png");
+        var go: egret.Bitmap = Texture.create("go_png");
+
+        go.anchorX = go.anchorY = ready.anchorX = ready.anchorY = 0.5;
+        go.x = ready.x = ViewManager.stage.stageWidth >> 1;
+        go.y = ready.y = 300;
+        this.addChild(ready);
+        egret.setTimeout(function () {
+            this.removeChild(ready);
+            this.addChild(go);
+
+            egret.setTimeout(function () {
+                this.removeChild(go);
+            }, this, 500);
+        }, this, 1000);
+        
+        
+
+           
+    }  
 
     private createView(): void {
         this.addChild(Texture.create("game_jpg"));
