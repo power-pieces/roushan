@@ -162,24 +162,31 @@ class User
 		$vars['userId'] = $id;
 		$vars['type'] = $goodId;
 		$vars['sign'] = md5($id.$goodId.SIGN_KEY);
-		$url = NetUtil::createUrl("http://223.252.220.189:8181/activity/prizeExchange",$vars);
+		$url = NetUtil::createUrl(EXCHANGE_SERVER, $vars);
 		$exJson = file_get_contents($url);
 		$exResult = json_decode($exJson);
 		
 		//调用API，请求成功后
-		if(isset($exResult->code) && 0 == $exResult->code)
+		if(isset($exResult->code))
 		{
-			$sql = "UPDATE tbl_user SET reward = reward - $need WHERE id = '$id';";	
-			$sqlHelper = new SqlHelper();
-			$sqlHelper->conn();		
-			$res['data'] = $sqlHelper->modify($sql);
-			$sqlHelper->close();
+			if(0 == $exResult->code)
+			{
+				$sql = "UPDATE tbl_user SET reward = reward - $need WHERE id = '$id';";	
+				$sqlHelper = new SqlHelper();
+				$sqlHelper->conn();		
+				$res['data'] = $sqlHelper->modify($sql);
+				$sqlHelper->close();				
+			}
+			else 
+			{
+				//错误码
+				$res['data'] = $exResult->code; 
+			}
 		}
 		else
 		{
-			//兑换完了
-			$res['data'] = 0; 
-		}		
+			$res['data'] = -1; 
+		}	
 	}
 	
 	/**
