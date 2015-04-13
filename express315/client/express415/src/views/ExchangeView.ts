@@ -88,13 +88,53 @@
     }
 
     private onExchange(data: any, params: any): void {
-        if (0 == data) {
-            ViewManager.instance.showPanel(new ExchangeResultPanel(2, params.goodId));
-        }
-        else {
+        if (true == data) {
             ViewManager.instance.showPanel(new ExchangeResultPanel(1, params.goodId));
             DataCenter.reward -= params.need;
             this._rewardTF.text = "x" + DataCenter.reward;
         }
+        else {
+
+            var msg = "请求失败！";
+            switch (data) {
+                case -1:                    
+                    break;
+                case 2000:
+                    msg = "兑奖尚未开始，请耐心等待";
+                    break;
+                case 2100:
+                    msg = "兑奖已结束";
+                    break;
+                case 3000:
+                    msg = "奖品领取失败，每个奖品每人只能兑换一次";
+                    break;
+                case 3100:
+                    msg = "该奖品已领完，请明天再来";
+                    break;
+                case 4000:
+                    msg = "无效的访问请求";
+                    break;
+                case 5000:
+                    msg = "奖品领取失败，每个奖品每人只能兑换一次";
+                    break;
+                case 6000:
+                    msg = "无访问权限";
+                    break;
+                default:
+                    break;
+            }
+
+
+            ViewManager.instance.showPanel(new MessagePanel(msg, DataCenter.cfg.msg_delay));
+        }
+
+        //if (0 == data) {
+        //    ViewManager.instance.showPanel(new ExchangeResultPanel(2, params.goodId));
+        //}
+        //else {
+        //    ViewManager.instance.showPanel(new ExchangeResultPanel(1, params.goodId));
+        //    DataCenter.reward -= params.need;
+        //    this._rewardTF.text = "x" + DataCenter.reward;
+        //}
     }
 }
