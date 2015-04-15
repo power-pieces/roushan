@@ -42,7 +42,7 @@ class Main extends egret.DisplayObjectContainer {
         DataCenter.userName = info.name;        
         DataCenter.sign = info.sign;
         DataCenter.headUrl = info.headUrl;
-
+	    DataCenter.unionid = info.unionid;
         
         this.init();
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);

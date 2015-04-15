@@ -95,6 +95,7 @@ getShareToken($appid,$appsecrect,$noncestr,$file,time());
 	obj.name = "<?php echo $p->username;?>";
 	obj.sign = "<?php echo md5($p->openid.'express_315');?>";
 	obj.headUrl = "<?php echo $p->avatar;?>";
+	obj.unionid = "<?php echo $p->unionid;?>";
 	if("0" == obj.inviter)
 	{
 		obj.inviter = null;

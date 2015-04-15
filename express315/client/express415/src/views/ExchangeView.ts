@@ -5,12 +5,12 @@
     private _rewardTF: egret.BitmapText;
 
     private _hotZones: egret.Rectangle[] = [
-        new egret.Rectangle(428, 767, 163, 91),
-        new egret.Rectangle(428, 895, 163, 91),
-        new egret.Rectangle(428, 1021, 163, 91),
-        new egret.Rectangle(428, 1145, 163, 91),
-        new egret.Rectangle(428, 1273, 163, 91),
-        new egret.Rectangle(428, 1399, 163, 91),
+        new egret.Rectangle(430, 2000, 195, 98),
+        new egret.Rectangle(430, 2115, 195, 98),
+        new egret.Rectangle(430, 2230, 195, 98),
+        new egret.Rectangle(430, 2345, 195, 98),
+        new egret.Rectangle(430, 2460, 195, 98),
+        new egret.Rectangle(430, 2575, 195, 98),
         new egret.Rectangle(10, 10, 150, 80)
     ];
 
@@ -62,6 +62,7 @@
         for (var i: number = 0; i < this._hotZones.length; i++) {
             if (this._hotZones[i].contains(e.localX, e.localY)) {
                 this.hotZoneActive(i);
+                alert(DataCenter.cfg.exchange_id[i]);
                 break;
             }
         }

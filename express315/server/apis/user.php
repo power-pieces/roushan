@@ -27,6 +27,7 @@ class User
 		}	
 		$name = @mysql_escape_string($params->name);
 		$headUrl = @mysql_escape_string($params->headUrl);
+		$unionid = @mysql_escape_string($params->unionid);
 		$sql = "SELECT * FROM tbl_user WHERE id='$id'";
 		$sqlHelper = new SqlHelper();
 		$sqlHelper->conn();
@@ -38,7 +39,7 @@ class User
 		if(0 == count($res['data']))
 		{
 			//初始化玩家数据
-			$insertSql = "INSERT INTO tbl_user(id, name, remain, reward, head_url) VALUES('$id','$name', 3,0, '$headUrl');";			
+			$insertSql = "INSERT INTO tbl_user(id, name, remain, reward, head_url,`unionid`) VALUES('$id','$name', 3,0, '$headUrl','$unionid');";			
 			$result = $sqlHelper->modify($insertSql);
 			//die($result."     ".$insertSql);
 			
@@ -48,6 +49,7 @@ class User
 			$updateSql = "UPDATE tbl_user SET name='$name',head_url='$headUrl' WHERE id='$id';";
 			$sqlHelper->modify($updateSql);
 		}
+		
 		
 		$rec = array();
 		$result = $sqlHelper->query($sql);
@@ -135,6 +137,12 @@ class User
 		
 		$id = @mysql_escape_string($params->id);
 		
+		$sql = "SELECT `unionid` FROM tbl_user WHERE `id`='$id';";
+		$sqlHelper = new SqlHelper();
+		$sqlHelper->conn();	
+		$result = $sqlHelper->query($sql);
+		
+		$unionid = @mysql_escape_string($result[0]["unionid"]);
 		//物品ID
 		$goodId = $params->goodId;
 		$costDic = array(
@@ -159,9 +167,9 @@ class User
 		
 		
 		$vars = array();
-		$vars['userId'] = $id;
+		$vars['userId'] = $unionid;
 		$vars['type'] = $goodId;
-		$vars['sign'] = md5($id.$goodId.SIGN_KEY);
+		$vars['sign'] = md5($unionid.$goodId.SIGN_KEY);
 		$url = NetUtil::createUrl(EXCHANGE_SERVER, $vars);
 		$exJson = file_get_contents($url);
 		$exResult = json_decode($exJson);

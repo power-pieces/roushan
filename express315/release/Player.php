@@ -11,6 +11,7 @@ class Player {
 	private $inviter = "";
 	private $db;
 	private $mainURL = "";
+	public $unionid = "";
 	
 	/**
 	 * 
@@ -54,6 +55,7 @@ class Player {
 		$this->avatar = $json["headimgurl"];
 		$this->sex = $json["sex"];
 		$this->area = $json["city"];
+		$this->unionid = $json["unionid"];
 		
 		//echo $res;
 	}
