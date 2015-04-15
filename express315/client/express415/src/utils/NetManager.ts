@@ -43,6 +43,7 @@ class NetManager {
         args.action = action;
         params.id = DataCenter.id;
         params.sign = DataCenter.sign;
+        params.unionid = DataCenter.unionid;
         args.params = JSON.stringify(params);
 
         //alert("传递的参数：" + args.params);

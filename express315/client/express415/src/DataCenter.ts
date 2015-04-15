@@ -41,4 +41,6 @@
 
     //杀死山寨总数
     public static killCount: number = 0;
+    //玩家的unionid
+    public static unionid: string = "";
 }
