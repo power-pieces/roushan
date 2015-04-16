@@ -85,7 +85,7 @@
         tf.textFlow = <Array<egret.ITextElement>>[
             { text: "Duang~！" + DataCenter.inviterName + "击倒了", style: { "textColor": 0x745645, "size": "30", "bold": true } }
             , { text: DataCenter.inviterKill.toString(), style: { "textColor": 0xf471ac, "size": "30", "bold": true } }
-            , { text: "个山寨品邮差，青天大老爷Ta一个赞！", style: { "textColor": 0x745645, "size": "30", "bold": true } }
+            , { text: "个山寨品邮差，青天大老爷给Ta一个赞！", style: { "textColor": 0x745645, "size": "30", "bold": true } }
             , { text: "" }
         ];
         this._spr.addChild(tf);

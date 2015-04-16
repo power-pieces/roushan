@@ -62,7 +62,7 @@
         for (var i: number = 0; i < this._hotZones.length; i++) {
             if (this._hotZones[i].contains(e.localX, e.localY)) {
                 this.hotZoneActive(i);
-                alert(DataCenter.cfg.exchange_id[i]);
+                //alert(DataCenter.cfg.exchange_id[i]);
                 break;
             }
         }
