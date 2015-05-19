@@ -7,3 +7,4 @@ C:\inetpub\wwwroot\roushan\trunk\Alpha\Alpha\bin\Alpha.dll
 C:\inetpub\wwwroot\roushan\trunk\Alpha\Alpha\bin\Alpha.pdb
 C:\inetpub\wwwroot\roushan\trunk\Alpha\Alpha\obj\Debug\Alpha.dll
 C:\inetpub\wwwroot\roushan\trunk\Alpha\Alpha\obj\Debug\Alpha.pdb
+C:\inetpub\wwwroot\roushan\trunk\Alpha\Alpha\obj\Debug\Alpha.csprojResolveAssemblyReference.cache

@@ -1,0 +1,19 @@
+[
+    "views/ViewBase.ts",
+    "DataCenter.ts",
+    "jinglibs/notice/Notice.ts",
+    "views/battle/Block.ts",
+    "Util.ts",
+    "jinglibs/notice/NoticeManager.ts",
+    "vo/NoticeCode.ts",
+    "views/BitmapNumber.ts",
+    "views/ShareView.ts",
+    "views/TipsView.ts",
+    "views/battle/Boss.ts",
+    "views/battle/BossHP.ts",
+    "LoadingUI.ts",
+    "views/ResultView.ts",
+    "views/StartView.ts",
+    "views/battle/Battle.ts",
+    "Roushan.ts"
+]
