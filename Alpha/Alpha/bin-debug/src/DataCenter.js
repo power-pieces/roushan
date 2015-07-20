@@ -1,6 +1,7 @@
 var DataCenter = (function () {
     function DataCenter() {
     }
+    var __egretProto__ = DataCenter.prototype;
     //配置文件
     /**
      {

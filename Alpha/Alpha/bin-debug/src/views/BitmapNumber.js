@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 /**
  * Created by Owen on 2015/2/15.
  */
@@ -17,10 +11,11 @@ var BitmapNumber = (function (_super) {
         //数字图片数组
         this._numBits = [];
     }
+    var __egretProto__ = BitmapNumber.prototype;
     /*
      * 设置显示数值
      */
-    BitmapNumber.prototype.setShowNumber = function (data) {
+    __egretProto__.setShowNumber = function (data) {
         this._showNumber = data;
         this.clearNumBits();
         this.showNumBits();
@@ -28,7 +23,7 @@ var BitmapNumber = (function (_super) {
     /*
      * 清理数字图片数组
      */
-    BitmapNumber.prototype.clearNumBits = function () {
+    __egretProto__.clearNumBits = function () {
         if (this._numBits.length == 0) {
             return;
         }
@@ -45,7 +40,7 @@ var BitmapNumber = (function (_super) {
     /*
      * 显示数字图片
      */
-    BitmapNumber.prototype.showNumBits = function () {
+    __egretProto__.showNumBits = function () {
         var geLevel = Util.getNumberByLevel(this._showNumber, 1);
         var geBit = Util.getNumPicByNum(geLevel);
         this.addChild(geBit);

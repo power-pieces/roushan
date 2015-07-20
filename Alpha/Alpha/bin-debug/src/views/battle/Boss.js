@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var Boss = (function (_super) {
     __extends(Boss, _super);
     function Boss() {
@@ -18,7 +12,8 @@ var Boss = (function (_super) {
         this.setHP(DataCenter.cfg.bossHP);
         this.createView();
     }
-    Boss.prototype.setHP = function (v) {
+    var __egretProto__ = Boss.prototype;
+    __egretProto__.setHP = function (v) {
         if (v < 0) {
             v = 0;
         }
@@ -53,10 +48,10 @@ var Boss = (function (_super) {
         }
         this._hp = v;
     };
-    Boss.prototype.getHP = function () {
+    __egretProto__.getHP = function () {
         return this._hp;
     };
-    Boss.prototype.createView = function () {
+    __egretProto__.createView = function () {
         this.leftWing = Util.createBitmapByName("r2_png");
         this.rightWing = Util.createBitmapByName("r3_png");
         this.body = Util.createBitmapByName("r1_png");
@@ -73,7 +68,7 @@ var Boss = (function (_super) {
         //var tween: egret.Tween = egret.Tween.get(this.leftWing, {loop:true});
         //tween.to({ y: this.leftWing.y + 10 },1000).to({y:this.leftWing.y - 10},1000);
     };
-    Boss.prototype.setState = function (state) {
+    __egretProto__.setState = function (state) {
         if (this.face) {
             this.removeChild(this.face);
         }
@@ -82,25 +77,25 @@ var Boss = (function (_super) {
         this.addChild(this.face);
     };
     //设置水平速度
-    Boss.prototype.setVelocity = function (value) {
+    __egretProto__.setVelocity = function (value) {
         this._velocity = value;
         this.updateMove();
     };
     //更新移动
-    Boss.prototype.updateMove = function () {
+    __egretProto__.updateMove = function () {
         for (var i = 0; i < this.p2Bodys.length; i++) {
             this.p2Bodys[i].velocity[0] = this._velocity * this._dir;
         }
     };
     //改变移动方向
-    Boss.prototype.changeDirection = function (dir) {
+    __egretProto__.changeDirection = function (dir) {
         if (this._dir == dir) {
             return;
         }
         this._dir = dir;
         this.updateMove();
     };
-    Boss.prototype.getRect = function () {
+    __egretProto__.getRect = function () {
         var bossRect = this.getBounds();
         bossRect.x += this.x;
         bossRect.y += this.y;

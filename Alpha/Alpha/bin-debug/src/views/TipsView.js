@@ -1,12 +1,6 @@
 /**
  * Created by Owen on 2015/2/11.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var TipsView = (function (_super) {
     __extends(TipsView, _super);
     function TipsView(contents) {
@@ -27,7 +21,8 @@ var TipsView = (function (_super) {
         }
         this.createUI();
     }
-    TipsView.prototype.createUI = function () {
+    var __egretProto__ = TipsView.prototype;
+    __egretProto__.createUI = function () {
         this._mask.graphics.beginFill(0, 0.5);
         this._mask.graphics.drawRect(0, 0, Util.getStageWidth(), Util.getStageHeight());
         this._mask.graphics.endFill();
@@ -46,21 +41,21 @@ var TipsView = (function (_super) {
         this._closeBtn.y = 0 - this._closeBtn.height / 2 + 8;
         this.addChild(this._closeBtn);
     };
-    TipsView.prototype.addListeners = function () {
+    __egretProto__.addListeners = function () {
         this.touchEnabled = true;
         Util.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.stage_touchBeginHandler, this);
     };
-    TipsView.prototype.removeListeners = function () {
+    __egretProto__.removeListeners = function () {
         this.touchEnabled = false;
         Util.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.stage_touchBeginHandler, this);
     };
-    TipsView.prototype.stage_touchBeginHandler = function (e) {
+    __egretProto__.stage_touchBeginHandler = function (e) {
         this.showTip();
     };
     /*
      * 显示tip
      */
-    TipsView.prototype.showTip = function () {
+    __egretProto__.showTip = function () {
         this._contentIndex++;
         if (this._contents.length <= this._contentIndex) {
             this.touchCloseHandler(null);
@@ -82,7 +77,7 @@ var TipsView = (function (_super) {
     /*
      * 清理tip
      */
-    TipsView.prototype.clearTip = function () {
+    __egretProto__.clearTip = function () {
         if (this._currentTip == null) {
             return;
         }
@@ -94,7 +89,7 @@ var TipsView = (function (_super) {
     /*
      * 显示新的tip
      */
-    TipsView.prototype.showNewTip = function () {
+    __egretProto__.showNewTip = function () {
         this._currentTip = Util.createBitmapByName("tip_" + this._tipIndex);
         this.addChild(this._currentTip);
         this.addChild(this._closeBtn);
@@ -107,7 +102,7 @@ var TipsView = (function (_super) {
     /*
      * 点击关闭按钮
      */
-    TipsView.prototype.touchCloseHandler = function (e) {
+    __egretProto__.touchCloseHandler = function (e) {
         NoticeManager.sendNotice(new Notice(NoticeCode.CLOSE_TIP_VIEW));
         this._closeBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchCloseHandler, this);
         this._tipIndex = 0;
@@ -122,7 +117,7 @@ var TipsView = (function (_super) {
     /*
      * 显示tiptxt
      */
-    TipsView.prototype.showTipTxt = function () {
+    __egretProto__.showTipTxt = function () {
         this._tipTxt.text = DataCenter.cfg.tipContents[this._tipIndex - 1];
         this._tipTxt.x = (this._bg.width - this._tipTxt.width) / 2;
         this.addChild(this._tipTxt);
@@ -130,14 +125,14 @@ var TipsView = (function (_super) {
     /*
      * 清理之前显示的并显示新的tip
      */
-    TipsView.prototype.clearAndShowTip = function () {
+    __egretProto__.clearAndShowTip = function () {
         this.clearTip();
         this.showNewTip();
     };
     /*
      * 获取背景宽度
      */
-    TipsView.prototype.getBgWidth = function () {
+    __egretProto__.getBgWidth = function () {
         return this._bg.width;
     };
     return TipsView;

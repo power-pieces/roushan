@@ -1,42 +1,41 @@
-/**
- * Copyright (c) 2014,Egret-Labs.org
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Egret-Labs.org nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
+//////////////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright (c) 2014-2015, Egret Technology Inc.
+//  All rights reserved.
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
+//       documentation and/or other materials provided with the distribution.
+//     * Neither the name of the Egret nor the
+//       names of its contributors may be used to endorse or promote products
+//       derived from this software without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
+//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+//////////////////////////////////////////////////////////////////////////////////////
 var egret;
 (function (egret) {
     /**
-     * Ticker是egret引擎的心跳控制器，是游戏唯一的时间处理入口。开发者务必不要使用Ticker,应该使用egret.Timer。
+     * Ticker是egret引擎的心跳控制器，是游戏唯一的时间处理入口。
      */
     var Ticker = (function (_super) {
         __extends(Ticker, _super);
+        /**
+         * 创建一个Ticker对象，不可以创建
+         */
         function Ticker() {
             _super.call(this);
             this._timeScale = 1;
@@ -44,26 +43,26 @@ var egret;
             this._callIndex = -1;
             this.callBackList = [];
             if (Ticker.instance != null) {
-                egret.Logger.fatalWithErrorId(1002);
+                egret.$error(1002);
             }
         }
+        var __egretProto__ = Ticker.prototype;
         /**
          * 启动心跳控制器。
          * 这个函数应只在游戏初始化时调用一次
          * @method egret.Ticker#run
          * @stable A
          */
-        Ticker.prototype.run = function () {
+        __egretProto__.run = function () {
             egret.__START_TIME = new Date().getTime();
             var context = egret.MainContext.instance.deviceContext;
             context.executeMainLoop(this.update, this);
         };
-        Ticker.prototype.update = function (advancedTime) {
+        __egretProto__.update = function (advancedTime) {
             if (this._paused) {
                 return;
             }
             var frameTime = advancedTime * this._timeScale;
-            frameTime *= this._timeScale;
             this._callList = this.callBackList.concat();
             this._callIndex = 0;
             for (; this._callIndex < this._callList.length; this._callIndex++) {
@@ -81,7 +80,7 @@ var egret;
          * @param priority {number} 事件优先级，开发者请勿传递 Number.NEGATIVE_INFINITY 和 Number.POSITIVE_INFINITY
          * @stable A-
          */
-        Ticker.prototype.register = function (listener, thisObject, priority) {
+        __egretProto__.register = function (listener, thisObject, priority) {
             if (priority === void 0) { priority = 0; }
             var list = this.callBackList;
             this._insertEventBin(list, listener, thisObject, priority);
@@ -93,7 +92,7 @@ var egret;
          * @param thisObject {any} 侦听函数的this对象
          * @stable A-
          */
-        Ticker.prototype.unregister = function (listener, thisObject) {
+        __egretProto__.unregister = function (listener, thisObject) {
             var list = this.callBackList;
             this._removeEventBin(list, listener, thisObject);
             if (this._callList && this._callIndex > -1) {
@@ -109,40 +108,46 @@ var egret;
          * @param ...parameter {any}
          * @deprecated
          */
-        Ticker.prototype.setTimeout = function (listener, thisObject, delay) {
+        __egretProto__.setTimeout = function (listener, thisObject, delay) {
             var parameters = [];
             for (var _i = 3; _i < arguments.length; _i++) {
                 parameters[_i - 3] = arguments[_i];
             }
-            egret.Logger.warningWithErrorId(1003);
+            egret.$warn(1003);
             egret.setTimeout.apply(null, [listener, thisObject, delay].concat(parameters));
         };
         /**
-         * @method egret.Ticker#setTimeScale
+         * @deprecated
          * @param timeScale {number}
+         * @private
          */
-        Ticker.prototype.setTimeScale = function (timeScale) {
+        __egretProto__.setTimeScale = function (timeScale) {
             this._timeScale = timeScale;
         };
         /**
+         * @deprecated
          * @method egret.Ticker#getTimeScale
+         * @private
          */
-        Ticker.prototype.getTimeScale = function () {
+        __egretProto__.getTimeScale = function () {
             return this._timeScale;
         };
         /**
+         * 暂停
          * @method egret.Ticker#pause
          */
-        Ticker.prototype.pause = function () {
+        __egretProto__.pause = function () {
             this._paused = true;
         };
         /**
+         * 继续
          * @method egret.Ticker#resume
          */
-        Ticker.prototype.resume = function () {
+        __egretProto__.resume = function () {
             this._paused = false;
         };
         /**
+         * 获取Ticker当前单例
          * @method egret.Ticker.getInstance
          * @returns {Ticker}
          */

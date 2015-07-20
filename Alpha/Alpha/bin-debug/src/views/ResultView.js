@@ -1,19 +1,14 @@
 /**
  * Created by Owen on 2015/2/12.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var ResultView = (function (_super) {
     __extends(ResultView, _super);
     function ResultView() {
         _super.call(this);
         this.createUI();
     }
-    ResultView.prototype.createUI = function () {
+    var __egretProto__ = ResultView.prototype;
+    __egretProto__.createUI = function () {
         this._bg = DataCenter.isFail ? Util.createBitmapByName("game_fail_bg") : Util.createBitmapByName("game_bg");
         this.addChild(this._bg);
         this._result = DataCenter.isIceMode ? Util.createBitmapByName("ice_result") : Util.createBitmapByName("result_bg");
@@ -75,7 +70,7 @@ var ResultView = (function (_super) {
         this._remarkTxt.y = this._percentBit.y + 100;
         this.addChild(this._remarkTxt);
     };
-    ResultView.prototype.createTxt = function (content, align) {
+    __egretProto__.createTxt = function (content, align) {
         if (content === void 0) { content = ""; }
         if (align === void 0) { align = egret.HorizontalAlign.LEFT; }
         var txt = new egret.TextField();
@@ -89,17 +84,17 @@ var ResultView = (function (_super) {
         this.addChild(txt);
         return txt;
     };
-    ResultView.prototype.addListeners = function () {
+    __egretProto__.addListeners = function () {
         this._bg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchBgHandler, this);
         this._againBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchAgainBtnHandler, this);
         this._shareBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchShareBtnHandler, this);
     };
-    ResultView.prototype.removeListeners = function () {
+    __egretProto__.removeListeners = function () {
         this._bg.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchBgHandler, this);
         this._againBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchAgainBtnHandler, this);
         this._shareBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchShareBtnHandler, this);
     };
-    ResultView.prototype.requestRank = function () {
+    __egretProto__.requestRank = function () {
         this.touchEnabled = false;
         if (DataCenter.score <= DataCenter.cfg.bestScore) {
             DataCenter.percent = 100;
@@ -125,7 +120,7 @@ var ResultView = (function (_super) {
         Util.setUserInfo(DataCenter.score, DataCenter.percent);
         this.showGameInfo();
     };
-    ResultView.prototype.onRequestData = function (e) {
+    __egretProto__.onRequestData = function (e) {
         this.touchEnabled = true;
         var loader = e.target;
         var json = loader.data;
@@ -145,7 +140,7 @@ var ResultView = (function (_super) {
     /*
      * 显示游戏信息
      */
-    ResultView.prototype.showGameInfo = function () {
+    __egretProto__.showGameInfo = function () {
         if (DataCenter.isFail) {
             this.showFail();
         }
@@ -153,7 +148,7 @@ var ResultView = (function (_super) {
             this.showWin();
         }
     };
-    ResultView.prototype.showWin = function () {
+    __egretProto__.showWin = function () {
         this._useBlocksBit.setShowNumber(DataCenter.score);
         this._percentBit.setShowNumber(DataCenter.percent);
         this._useBlocksBit.x = (this._bg.width - this._useBlocksBit.width) / 2 + 15;
@@ -179,7 +174,7 @@ var ResultView = (function (_super) {
         txt.x = this._percentBit.x + this._percentBit.width;
         txt.y = this._percentBit.y + this._percentBit.height - txt.height;
     };
-    ResultView.prototype.showFail = function () {
+    __egretProto__.showFail = function () {
         var txt = null;
         txt = this.createTxt(DataCenter.cfg.failContents[0]);
         txt.textAlign = egret.HorizontalAlign.CENTER;
@@ -194,20 +189,20 @@ var ResultView = (function (_super) {
     /*
      * 点击游戏屏幕
      */
-    ResultView.prototype.touchBgHandler = function (e) {
+    __egretProto__.touchBgHandler = function (e) {
         console.log("游戏界面点击屏幕");
     };
     /*
      * 点击再一次
      */
-    ResultView.prototype.touchAgainBtnHandler = function (e) {
+    __egretProto__.touchAgainBtnHandler = function (e) {
         console.log("点击再一次");
         NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_GAME_VIEW));
     };
     /*
      * 点击分享
      */
-    ResultView.prototype.touchShareBtnHandler = function (e) {
+    __egretProto__.touchShareBtnHandler = function (e) {
         console.log("点击分享");
         var shareView = new ShareView();
         this.addChild(shareView);

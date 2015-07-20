@@ -5,15 +5,18 @@
 			"name": "core"
 		},
 		{
+			"name": "version_old"
+		},
+		{
 			"name": "RES"
 		},
 		{
-			"name": "p2",
-			"path": "."
+			"name": "physics",
+			"path": "../libsrc/physics"
 		}
 	],
 	"native": {
 		"path_ignore": []
 	},
-	"egret_version": "1.6.0"
+	"egret_version": "2.0.2"
 }

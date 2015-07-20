@@ -1,7 +1,7 @@
 ﻿class Battle extends egret.Sprite {
     //方块掉落位置
     public static BLOCK_DROP_POS: number = 750;
-
+    
     //比例
     public static FACTOR:number = 0;
     private _p2World: p2.World = null;

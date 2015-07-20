@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 /**
  * Created by Owen on 2015/2/11.
  * 开始界面
@@ -16,7 +10,8 @@ var StartView = (function (_super) {
         _super.call(this);
         this.creatUI();
     }
-    StartView.prototype.creatUI = function () {
+    var __egretProto__ = StartView.prototype;
+    __egretProto__.creatUI = function () {
         this._bg = Util.createBitmapByName("start_bg");
         this.addChild(this._bg);
         this._start = Util.createBitmapByName("start_tip");
@@ -42,7 +37,7 @@ var StartView = (function (_super) {
         this._specialBtn.touchEnabled = true;
         //this._tipViewShow = false;
     };
-    StartView.prototype.addListeners = function () {
+    __egretProto__.addListeners = function () {
         this._bg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchBgHandler, this);
         this._start.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchStartHandler, this);
         this._desBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDesBtnHandler, this);
@@ -53,7 +48,7 @@ var StartView = (function (_super) {
         //        this.closeTipViewHandler();
         //    }.bind(this));
     };
-    StartView.prototype.removeListeners = function () {
+    __egretProto__.removeListeners = function () {
         this._bg.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchBgHandler, this);
         this._start.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchStartHandler, this);
         this._desBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDesBtnHandler, this);
@@ -67,7 +62,7 @@ var StartView = (function (_super) {
     /*
      * 点击屏幕
      */
-    StartView.prototype.touchBgHandler = function (e) {
+    __egretProto__.touchBgHandler = function (e) {
         //if(this._tipViewShow)
         //{
         //    this._tipView.showTip();
@@ -78,7 +73,7 @@ var StartView = (function (_super) {
     /*
      * 点击开始
      */
-    StartView.prototype.touchStartHandler = function (e) {
+    __egretProto__.touchStartHandler = function (e) {
         //if(this._tipViewShow)
         //{
         //    this._tipView.showTip();
@@ -89,7 +84,7 @@ var StartView = (function (_super) {
     /*
      * 点击说明按钮
      */
-    StartView.prototype.touchDesBtnHandler = function (e) {
+    __egretProto__.touchDesBtnHandler = function (e) {
         //if(this._tipViewShow == false)
         //{
         //    if(this._tipView == null)
@@ -123,7 +118,7 @@ var StartView = (function (_super) {
     /*
      * 点击普通模式按钮
      */
-    StartView.prototype.touchNormalBtnHandler = function (e) {
+    __egretProto__.touchNormalBtnHandler = function (e) {
         //this.closeTipViewHandler();
         DataCenter.isIceMode = false;
         DataCenter.friction = DataCenter.cfg.normalFriction;
@@ -132,7 +127,7 @@ var StartView = (function (_super) {
     /*
      * 点击特殊模式按钮
      */
-    StartView.prototype.touchSpecialBtnHandler = function (e) {
+    __egretProto__.touchSpecialBtnHandler = function (e) {
         //this.closeTipViewHandler();
         DataCenter.isIceMode = true;
         DataCenter.friction = DataCenter.cfg.iceFriction;

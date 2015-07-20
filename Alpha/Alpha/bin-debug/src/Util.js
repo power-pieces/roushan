@@ -1,6 +1,7 @@
 var Util = (function () {
     function Util() {
     }
+    var __egretProto__ = Util.prototype;
     /*
      * 获取舞台宽度
      */

@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var Block = (function (_super) {
     __extends(Block, _super);
     function Block() {
@@ -27,30 +21,31 @@ var Block = (function (_super) {
         this.isDamaged = false;
         this.createView();
     }
+    var __egretProto__ = Block.prototype;
     /**
     *获得上方方块数
     */
-    Block.prototype.getUpBlock = function () {
+    __egretProto__.getUpBlock = function () {
         return this._upBlock;
     };
-    Block.prototype.isStop = function () {
+    __egretProto__.isStop = function () {
         return this._state == Block.STATE_STOP ? true : false;
     };
-    Block.prototype.createView = function () {
+    __egretProto__.createView = function () {
         //this.anchorX = this.anchorY = 0.5;
         this.setState(Block.STATE_FALL);
     };
-    Block.prototype.setBody = function (body) {
+    __egretProto__.setBody = function (body) {
         this._body = body;
         var pos = this.getPos();
         this._lastPostion[0] = pos[0];
         this._lastPostion[1] = pos[1];
     };
-    Block.prototype.getBody = function () {
+    __egretProto__.getBody = function () {
         return this._body;
     };
     //压在上面的方块数
-    Block.prototype.setUpBlock = function (count) {
+    __egretProto__.setUpBlock = function (count) {
         this._upBlock = count;
         if (this._state == Block.STATE_STOP) {
             var pngNames = this._icons[this._state];
@@ -59,12 +54,12 @@ var Block = (function (_super) {
         }
     };
     //获得位置（处理过的，主要用来比较)
-    Block.prototype.getPos = function () {
+    __egretProto__.getPos = function () {
         var posX = this.x >> 0;
         var posY = this.y >> 0;
         return [posX, posY];
     };
-    Block.prototype.update = function () {
+    __egretProto__.update = function () {
         this.getRect();
         var pos = this.getPos();
         //移动状态 0静止 1掉落 2弹飞
@@ -105,7 +100,7 @@ var Block = (function (_super) {
             this._posUnchangedTime = 0;
         }
     };
-    Block.prototype.setState = function (state) {
+    __egretProto__.setState = function (state) {
         if (this._state == state) {
             return;
         }
@@ -120,13 +115,13 @@ var Block = (function (_super) {
         }
         this.changeImg(imgName);
     };
-    Block.prototype.changeImg = function (name) {
+    __egretProto__.changeImg = function (name) {
         this.removeChildren();
         var block = Util.createBitmapByName(name);
         this.addChild(block);
         block.anchorX = block.anchorY = 0.5;
     };
-    Block.prototype.getRect = function () {
+    __egretProto__.getRect = function () {
         var x = this.x - this.width / 2;
         var y = this.y - this.height / 2;
         return new egret.Rectangle(x, y, this.width, this.height);

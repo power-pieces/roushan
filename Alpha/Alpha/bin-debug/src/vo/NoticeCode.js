@@ -4,6 +4,7 @@
 var NoticeCode = (function () {
     function NoticeCode() {
     }
+    var __egretProto__ = NoticeCode.prototype;
     /*
      * 开始界面
      */

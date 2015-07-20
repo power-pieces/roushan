@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var Battle = (function (_super) {
     __extends(Battle, _super);
     function Battle() {
@@ -39,10 +33,11 @@ var Battle = (function (_super) {
         this.createP2World();
         this.createView();
     }
+    var __egretProto__ = Battle.prototype;
     /**
     * 创建物理世界
     */
-    Battle.prototype.createP2World = function () {
+    __egretProto__.createP2World = function () {
         var world = new p2.World();
         //摩擦力
         world.defaultContactMaterial.friction = DataCenter.friction;
@@ -66,7 +61,7 @@ var Battle = (function (_super) {
         }
         this._p2World = world;
     };
-    Battle.prototype.createView = function () {
+    __egretProto__.createView = function () {
         var bg = Util.createBitmapByName("battle_bg");
         bg.scrollRect = new egret.Rectangle(0, bg.height - Util.stage.stageHeight, Util.stage.stageWidth, Util.stage.stageHeight);
         this._bg = bg;
@@ -90,20 +85,20 @@ var Battle = (function (_super) {
         this.addChild(hpLabel);
         hpLabel.y = this._hp.y - hpLabel.height;
     };
-    Battle.prototype.addListeners = function () {
+    __egretProto__.addListeners = function () {
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegionHandler, this);
         this._btnRestart.addEventListener(egret.TouchEvent.TOUCH_TAP, this._btnRestart_tapHandler, this);
         egret.Ticker.getInstance().register(this.onTick, this);
     };
-    Battle.prototype.removeListeners = function () {
+    __egretProto__.removeListeners = function () {
         this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegionHandler, this);
         this._btnRestart.removeEventListener(egret.TouchEvent.TOUCH_TAP, this._btnRestart_tapHandler, this);
         egret.Ticker.getInstance().unregister(this.onTick, this);
     };
-    Battle.prototype._btnRestart_tapHandler = function (e) {
+    __egretProto__._btnRestart_tapHandler = function (e) {
         NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_GAME_VIEW));
     };
-    Battle.prototype.touchBegionHandler = function (e) {
+    __egretProto__.touchBegionHandler = function (e) {
         if (egret.getTimer() < this._blockCD) {
             return;
         }
@@ -113,10 +108,10 @@ var Battle = (function (_super) {
         this.createBlock(e.stageX);
         this._blockCD = egret.getTimer() + DataCenter.cfg.blockInterval;
     };
-    Battle.prototype.angle2 = function (angle) {
+    __egretProto__.angle2 = function (angle) {
         return angle * Math.PI / 180;
     };
-    Battle.prototype.createBoss = function () {
+    __egretProto__.createBoss = function () {
         var boss = new Boss();
         var positionX = (Util.stage.stageWidth >> 1) / Battle.FACTOR;
         var positionY = (boss.body.height >> 1) / Battle.FACTOR;
@@ -148,7 +143,7 @@ var Battle = (function (_super) {
         boss.setVelocity(DataCenter.cfg.bossSpeed / Battle.FACTOR); //设置BOSS速度
         this._boss = boss;
     };
-    Battle.prototype.createBlock = function (x) {
+    __egretProto__.createBlock = function (x) {
         var block = new Block();
         if (false == DataCenter.cfg.isDebug) {
             x = this._arrow.x;
@@ -170,7 +165,7 @@ var Battle = (function (_super) {
             this._scrollTime = egret.getTimer() + DataCenter.cfg.scrollInterval;
         }
     };
-    Battle.prototype.scrollMap = function () {
+    __egretProto__.scrollMap = function () {
         if (this._bg.scrollRect.y <= 0) {
             //游戏失败
             this.gameOver();
@@ -182,7 +177,7 @@ var Battle = (function (_super) {
             egret.Tween.get(this._bg.scrollRect).to({ y: this._bg.scrollRect.y - DataCenter.cfg.scrollHeight }, DataCenter.cfg.scrollDuration);
         }
     };
-    Battle.prototype.onTick = function (dt) {
+    __egretProto__.onTick = function (dt) {
         if (2 == this.gameState) {
             return;
         }
@@ -239,7 +234,7 @@ var Battle = (function (_super) {
         this.scrollMap();
     };
     //游戏结束
-    Battle.prototype.gameOver = function () {
+    __egretProto__.gameOver = function () {
         //this.gameState = 2;
         //this.removeListeners();
         //alert("game over " + this._useBlockCount);
@@ -249,7 +244,7 @@ var Battle = (function (_super) {
         NoticeManager.sendNotice(new Notice(NoticeCode.SHOW_RESULT_VIEW));
     };
     //更新方块
-    Battle.prototype.updateBlocks = function () {
+    __egretProto__.updateBlocks = function () {
         //清空分层信息
         this._blockLayers = {};
         //开始算层的位置
@@ -280,7 +275,7 @@ var Battle = (function (_super) {
         //分层信息算好了，计算一下方块的压力(方块上压住它的方块数量)
         this.updateUpBlocks();
     };
-    Battle.prototype.updateUpBlocks = function () {
+    __egretProto__.updateUpBlocks = function () {
         var deep = 0;
         for (var i = 0; i < 8; i++) {
             if (null == this._blockLayers[i] || 0 == this._blockLayers[i].length) {
@@ -310,7 +305,7 @@ var Battle = (function (_super) {
         }
     };
     //计算伤害
-    Battle.prototype.calculateDamage = function () {
+    __egretProto__.calculateDamage = function () {
         var damage = 0;
         var dmgDatas = DataCenter.cfg.damage;
         var deep = dmgDatas.length;
@@ -338,7 +333,7 @@ var Battle = (function (_super) {
         }
         return damage;
     };
-    Battle.prototype.removeBlock = function (block, index) {
+    __egretProto__.removeBlock = function (block, index) {
         if (index === void 0) { index = -1; }
         if (index == -1) {
             index = this._blocks.indexOf(block);
@@ -352,7 +347,7 @@ var Battle = (function (_super) {
     /**
      * debug模式，使用图形绘制
      */
-    Battle.prototype.debug = function (world) {
+    __egretProto__.debug = function (world) {
         var factor = Battle.FACTOR;
         var canvas = document.createElement("canvas");
         var stage = egret.MainContext.instance.stage;

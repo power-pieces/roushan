@@ -8,3 +8,9 @@ C:\inetpub\wwwroot\roushan\trunk\Alpha\Alpha\bin\Alpha.pdb
 C:\inetpub\wwwroot\roushan\trunk\Alpha\Alpha\obj\Debug\Alpha.dll
 C:\inetpub\wwwroot\roushan\trunk\Alpha\Alpha\obj\Debug\Alpha.pdb
 C:\inetpub\wwwroot\roushan\trunk\Alpha\Alpha\obj\Debug\Alpha.csprojResolveAssemblyReference.cache
+E:\projects\html5\roushan\trunk\Alpha\Alpha\obj\Debug\Alpha.csprojResolveAssemblyReference.cache
+E:\projects\html5\roushan\trunk\Alpha\Alpha\obj\Debug\Alpha.dll
+E:\projects\html5\roushan\trunk\Alpha\Alpha\obj\Debug\Alpha.pdb
+E:\projects\html5\roushan\trunk\Alpha\Alpha\bin\Alpha.dll.config
+E:\projects\html5\roushan\trunk\Alpha\Alpha\bin\Alpha.dll
+E:\projects\html5\roushan\trunk\Alpha\Alpha\bin\Alpha.pdb

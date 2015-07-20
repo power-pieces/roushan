@@ -1,0 +1,5 @@
+E:\projects\html5\roushan\trunk\Alpha\Alpha\bin\Alpha.dll.config
+E:\projects\html5\roushan\trunk\Alpha\Alpha\bin\Alpha.dll
+E:\projects\html5\roushan\trunk\Alpha\Alpha\bin\Alpha.pdb
+E:\projects\html5\roushan\trunk\Alpha\Alpha\obj\Release\Alpha.dll
+E:\projects\html5\roushan\trunk\Alpha\Alpha\obj\Release\Alpha.pdb

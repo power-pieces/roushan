@@ -2,7 +2,8 @@ var Notice = (function () {
     function Notice(type) {
         this._type = type;
     }
-    Object.defineProperty(Notice.prototype, "type", {
+    var __egretProto__ = Notice.prototype;
+    Object.defineProperty(__egretProto__, "type", {
         get: function () {
             return this._type;
         },

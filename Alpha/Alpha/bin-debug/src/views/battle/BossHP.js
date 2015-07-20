@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 /**
 * BOSS的血条
 */
@@ -13,7 +7,8 @@ var BossHP = (function (_super) {
         _super.call(this);
         this.createView();
     }
-    BossHP.prototype.createView = function () {
+    var __egretProto__ = BossHP.prototype;
+    __egretProto__.createView = function () {
         this._bg = Util.createBitmapByName("life_bg");
         this._life = Util.createBitmapByName("life");
         this.addChild(this._bg);
@@ -21,7 +16,7 @@ var BossHP = (function (_super) {
         var mask = new egret.Rectangle(0, 0, this._life.width, this._life.height);
         this._life.mask = mask;
     };
-    BossHP.prototype.update = function (hp) {
+    __egretProto__.update = function (hp) {
         var per = 1 - (hp / DataCenter.cfg.bossHP);
         var mask = this._life.mask;
         mask.y = mask.height * per;
