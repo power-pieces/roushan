@@ -42,6 +42,12 @@ class ResultView extends ViewBase
         this.addChild(this._shareBtn);
         this._shareBtn.touchEnabled = true;
 
+        if (DataCenter.isWX == false)
+        {
+            this._shareBtn.visible = false;
+            this._againBtn.x = (Util.stage.stageWidth - this._againBtn.width) >> 1;
+        }
+
         var r2:egret.Bitmap = Util.createBitmapByName("r2");
         r2.x = (this._bg.width - r2.width) / 5;
         r2.y = this._bg.height - r2.height;
@@ -149,8 +155,14 @@ class ResultView extends ViewBase
         request.data = values;
         loader.load(request);
         */
-
-        Util.setUserInfo(DataCenter.score, DataCenter.percent);
+        if (DataCenter.isFail == false)
+        {
+            Util.setUserInfo(DataCenter.score, DataCenter.percent);
+        }
+        else
+        {
+            Util.setUserInfo(0, 0);
+        }
 
         this.showGameInfo();
     }

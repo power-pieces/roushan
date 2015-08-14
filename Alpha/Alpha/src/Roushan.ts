@@ -10,11 +10,30 @@ class Roushan extends egret.DisplayObjectContainer
         super();
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
+
+        /**
+     * 调用外部方法
+     */
+    public static callWindow(funName: string): any
+    {
+        if (null == window[funName])
+        {
+            //alert("找不到外部方法：" + funName);
+            return null;
+        }
+        var result: any = window[funName]();
+        return result;
+    }
     /*
      * 添加到舞台
      */
     private onAddToStage(event:egret.Event)
     {
+        if (null != Roushan.callWindow("getType"))
+        {
+            DataCenter.isWX = false;
+        }
+
         this.loadingView = new LoadingUI();
         this.stage.addChild(this.loadingView);
         this.loadingView.x = (this.stage.stageWidth - this.loadingView.width) / 2;

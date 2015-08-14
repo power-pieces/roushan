@@ -22,7 +22,7 @@
 "wingOffX":180, 
 "damageCheckCD":1000, 
 "stopCheckInterval":1000, 
-"bossSpeed":30,
+"bossSpeed":0,
 "scrollInterval":9000,
 "iceScrollInterval":10000,
 "scrollHeight":120,

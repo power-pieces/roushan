@@ -26,4 +26,7 @@
 
     //是否是全新的
     public static isNew: boolean = true;
+
+    //是否是微信平台
+    public static isWX: boolean = true;
 }

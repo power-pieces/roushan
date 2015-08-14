@@ -38,7 +38,7 @@
 
     public constructor() {
         super();
-        egret.Profiler.getInstance().run();
+        //egret.Profiler.getInstance().run();
         Battle.FACTOR = DataCenter.cfg.factor;
         this._isDebug = DataCenter.cfg.isDebug;
 
